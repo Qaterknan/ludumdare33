@@ -1,4 +1,5 @@
-function Psychology(){
+function Psychology(parent){
+	this.parent = parent;
 	
 	this.temperature = 1.0;
 	this.fatigue = 0;

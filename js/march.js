@@ -1,7 +1,7 @@
 var March = function (game) {
     Phaser.Group.call(this, game, game.world, 'March', false, true, Phaser.Physics.ARCADE);
 
-    this.psychology = new Psychology();
+    this.psychology = new Psychology(this);
 
     for (var i = 0; i < 30; i++)
     {
@@ -33,4 +33,12 @@ March.prototype.update = function() {
 
 March.prototype.setSpeed = function(speed) {
     this.speed = speed/3;
+};
+
+March.prototype.killOne = function() {
+    this.getRandom().die();
+};
+
+March.prototype.fleeOne = function() {
+    this.getRandom().flee()
 };

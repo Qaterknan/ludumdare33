@@ -68,3 +68,17 @@ Prisoner.prototype.die = function() {
     this.input.useHandCursor = false;
     game.canvas.style.cursor="default";
 };
+
+Prisoner.prototype.flee = function() {
+    var pos = this.worldPosition.clone();
+    pos.add(game.camera.view.x, game.camera.view.y);
+    this.parent.removeChild(this);
+    game.world.add(this);
+    this.position = pos;
+    if(this.position.y < game.world.height/2){
+        this.body.velocity.y = -100;
+    }
+    else {
+        this.body.velocity.y = 100;
+    }
+};

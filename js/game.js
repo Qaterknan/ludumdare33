@@ -110,6 +110,20 @@ PhaserGame.prototype = {
             new Progressbar(this, 650, 30 + i*20, this.march.psychology, watch[i]);
         }
 
+        var fleeButton = game.make.button(650, 180, "buttons", function(){
+            this.march.fleeOne();
+        }, this, 1, 1);
+        fleeButton.scale.set(2);
+        fleeButton.smoothed = false;
+        this.gui.add(fleeButton);
+
+        var killButton = game.make.button(690, 180, "buttons", function(){
+            this.march.killOne();
+        }, this, 0, 0);
+        killButton.scale.set(2);
+        killButton.smoothed = false;
+        this.gui.add(killButton);
+
         game.camera.follow(this.guard);
 
         game.world.sort();
