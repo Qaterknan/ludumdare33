@@ -29,6 +29,7 @@ March.prototype.update = function() {
     // :(((
     this.__proto__.__proto__.update.call(this);
     this.x += this.speed;
+    this.psychology.update(game.time.physicsElapsed);
 };
 
 March.prototype.setSpeed = function(speed) {

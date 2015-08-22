@@ -124,6 +124,20 @@ PhaserGame.prototype = {
         killButton.smoothed = false;
         this.gui.add(killButton);
 
+        this.datgui = new dat.GUI();
+        this.datgui.add(this.march.psychology, "speed");
+
+        this.datgui.add(this.march.psychology, "temperatureToRunning");
+        this.datgui.add(this.march.psychology, "fatigueToRunning");
+        this.datgui.add(this.march.psychology, "fatigueToSpeed");
+        this.datgui.add(this.march.psychology, "speedToEffort");
+        this.datgui.add(this.march.psychology, "speedToTemperature");
+        this.datgui.add(this.march.psychology, "freezingToTemperature");
+        this.datgui.add(this.march.psychology, "breakToTemperature");
+        this.datgui.add(this.march.psychology, "breakToFatigue");
+        this.datgui.add(this.march.psychology, "runKillToRun");
+        this.datgui.add(this.march.psychology, "walkKillToSpeed");
+
         game.camera.follow(this.guard);
 
         game.world.sort();
