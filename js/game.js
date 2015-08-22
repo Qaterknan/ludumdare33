@@ -65,6 +65,10 @@ PhaserGame.prototype = {
         }
 
         // groupy
+        // Hřbitov
+        game.graveyard = new Graveyard(0,0,0);
+        game.world.add(game.graveyard);
+        // Pochod
         this.march = new March(this.game);
         game.world.add(this.march);
         this.march.position.set(400, 240);

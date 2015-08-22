@@ -10,6 +10,7 @@ var Prisoner = function (game) {
     this.input.useHandCursor = true;
     this.events.onInputDown.add(this.die, this);
 
+    this.alive = true;
 
 }
 Prisoner.prototype = Object.create(Person.prototype);
@@ -21,7 +22,7 @@ Prisoner.prototype.update = function() {
     this.super.update.call(this);
     // select circle
     if(this.input.pointerOver()) {
-        this.circle.visible = true;
+        this.circle.visible = this.alive;
     }
     else {
         this.circle.visible = false;
@@ -57,6 +58,9 @@ Prisoner.prototype.die = function() {
     var pos = this.worldPosition.clone();
     pos.add(game.camera.view.x, game.camera.view.y);
     this.parent.removeChild(this);
-    game.world.addChild(this);
+    game.graveyard.add(this);
     this.position = pos;
+    this.alive=false;
+    this.input.useHandCursor = false;
+    game.canvas.style.cursor="default";
 };
