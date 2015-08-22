@@ -60,9 +60,16 @@ Prisoner.prototype.update = function() {
     // this.body.acceleration.subtract(drag.x*dragMult, drag.y*dragMult);
 };
 
-Prisoner.prototype.die = function() {
+Prisoner.prototype.die = function(how) {
     if(this.alive){
-        if(Math.random() > 0.5){
+		if(how == "kill"){
+			this.blood.start(true, 0, 0, 100);
+            this.loadTexture("corpse");
+		}
+		else if(how == "freeze"){
+			this.loadTexture("frozen");
+		}
+        else if(Math.random() > 0.5){
             this.blood.start(true, 0, 0, 100);
             this.loadTexture("corpse");
         }

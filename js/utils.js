@@ -36,12 +36,17 @@ utils = {
 	probMul : function(a,n){
 		var m = 0;
 		for(var i = 0; i < n; i++){
-			m = (m+a)/(1+m*a);
-		}
+			m = utils.probSum(a,m);
+		};
+		console.log(m);
 		return m;
 	},
 	
 	probSum : function (a,b){
-		return (a+b)/(1+a*b);
+		return a*(1-b)+b;
+	},
+	
+	probSub : function(a,b){ // Není inverzní k probSum
+		return a*(1-b);
 	},
 };

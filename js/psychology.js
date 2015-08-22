@@ -11,37 +11,47 @@ function Psychology(parent){
 		this.temperature*this.temperatureToRunning,
 		this.fatigue*this.fatigueToRunning
 	);
-	this.fatigueToSpeed = 0.5;
-	this.speed = 0.3;
+	this.fatigueToSpeed = 0.8;
+	this.baseSpeed = 1.0;
+	this.speedBonus = 0;
+	this.speed = this.baseSpeed;
 	
 	this.speedToEffort = 0.1;
 	this.speedToTemperature = 0.2;
-	this.freezing = 0.05-this.speed*this.speedToTemperature;
-	this.freezingToTemperature = 0.1;
-	this.effort = 0.02+this.speed*this.speedToEffort;
 	
-	this.breakToTemperature=0.3;
+	this.baseFreezing = 0.15;
+	this.freezing = this.baseFreezing;
+	this.freezingToTemperature = 0.1;
+	
+	this.baseEffort = 0.05;
+	this.effort = this.baseEffort;
+	this.effortToFatigue = 0.5;
+	
+	this.breakToTemperature=0.9;
 	this.breakToFatigue = 0.3;
 	
 	this.runKillToRun = 0.1;
 	this.lastKill = 0;
 	this.halfTimeOfFear = 10000;
-	this.walkKillToSpeed = 2;
+	this.walkKillToSpeed = 0.9;
 }
 Psychology.prototype.update = function (dt){
 	var sum = utils.probSum;
-	this.temperature -= this.freezing*this.freezingToTemperature*dt;
-	this.fatigue = sum(this.fatigue,this.effort*dt);
+	var sub = utils.probSub;
+	this.temperature = this.freezing > 0 ? sub(this.temperature, this.freezing*this.freezingToTemperature*dt) : sum(this.temperature, -this.freezing*this.freezingToTemperature*dt);
+	this.fatigue = sum(this.fatigue,this.effort*this.effortToFatigue*dt);
 	
 	this.runningProb = sum(
 		this.temperature*this.temperatureToRunning,
 		this.fatigue*this.fatigueToRunning
-	)
+	);
 	
-	this.speed -= this.fatigueToSpeed*this.fatigue;
+	this.speed = sub(this.baseSpeed, this.fatigueToSpeed*this.fatigue);
+	this.speed = sum(this.speed, this.speedBonus);
+	this.speedBonus = sub(this.speedBonus, 0.001);
 	
-	this.freezing = 0.05-this.speed*this.speedToTemperature;
-	this.effort = 0.02+this.speed*this.speedToEffort;
+	this.freezing = this.baseFreezing-this.speed*this.speedToTemperature;
+	this.effort = sum(this.baseEffort,this.speed*this.speedToEffort);
 	
 }
 Psychology.prototype.timeForABreak = function(){
@@ -52,5 +62,7 @@ Psychology.prototype.runKill = function(){
 	this.lastKill = new Date().getTime();
 }
 Psychology.prototype.walkKill = function(){
-	this.speed = utils.probMul(this.walkKillToSpeed, this.speed);
+	console.log(this.speed);
+	this.speedBonus = this.walkKillToSpeed;
+	console.log(this.speed);
 }

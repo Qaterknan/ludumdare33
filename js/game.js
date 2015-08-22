@@ -109,6 +109,7 @@ PhaserGame.prototype = {
             "speed",
             "freezing",
             "effort",
+            "speedBonus"
         ];
         
         for(var i=0; i<watch.length; i++){
@@ -124,10 +125,18 @@ PhaserGame.prototype = {
 
         var killButton = game.make.button(690, 180, "buttons", function(){
             this.march.killOne();
-        }, this, 0, 0);
+            this.march.psychology.walkKill();
+        }, this, 2, 2);
         killButton.scale.set(2);
         killButton.smoothed = false;
         this.gui.add(killButton);
+        
+        var pauseButton = game.make.button(650, 220, "buttons", function(){
+            this.march.psychology.timeForABreak();
+        }, this, 0, 0);
+        pauseButton.scale.set(2);
+        pauseButton.smoothed = false;
+        this.gui.add(pauseButton);
 
         this.datgui = new dat.GUI();
         this.datgui.add(this.march.psychology, "speed");
