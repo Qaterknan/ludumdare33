@@ -5,11 +5,13 @@ var PhaserGame = function () {
 PhaserGame.prototype = {
     preload: function () {
         game.load.image('tree','images/smrk2.png');
+        game.load.image('tree2','images/smrk3.png');
         game.load.image('blood','images/blood.png');
         game.load.spritesheet('buttons','images/buttons.png', 16, 16);
         game.load.spritesheet('soldier', 'images/nazi.png', 8, 8);
         game.load.spritesheet('prisoner1', 'images/pow1.png', 8, 8);
         game.load.spritesheet('prisoner2', 'images/pow2.png', 8, 8);
+        game.load.spritesheet('corpse', 'images/corpse.png', 8, 8);
     },
     create: function () {
         // centrování canvasu
@@ -56,9 +58,9 @@ PhaserGame.prototype = {
         for(var i=0; i<100; i++){
             var tree;
             if(Math.random() < 0.5)
-                tree = game.add.sprite(utils.random(0,1600), utils.random(0,100), "tree");
+                tree = game.add.sprite(utils.random(0,1600), utils.random(0,100), "tree"+(Math.random() < 0.5 ? "" : "2"));
             else
-                tree = game.add.sprite(utils.random(0,1600), utils.random(380,480), "tree");
+                tree = game.add.sprite(utils.random(0,1600), utils.random(380,480), "tree"+(Math.random() < 0.5 ? "" : "2"));
             tree.scale.set(2);
             tree.smoothed = false;
             // tree.rotation = utils.random(0, Math.PI);

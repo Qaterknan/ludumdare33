@@ -55,7 +55,10 @@ Prisoner.prototype.update = function() {
 
 Prisoner.prototype.die = function() {
     this.blood.start(true, 0, 0, 100);
-    this.play("stand");
+    // this.play("stand");
+    this.loadTexture("corpse");
+    this.resetFrame();
+
     var pos = this.worldPosition.clone();
     pos.add(game.camera.view.x, game.camera.view.y);
     this.parent.removeChild(this);
