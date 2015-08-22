@@ -15,4 +15,13 @@ utils = {
 	randomInt: function (min, max) {
 		return min + Math.floor(Math.random()*(max-min+1));
 	},
+
+	sgn: function (x) {
+		if(x > 0)
+			return 1;
+		else if(x < 0)
+			return -1;
+		else
+			return 0;
+	}
 };
