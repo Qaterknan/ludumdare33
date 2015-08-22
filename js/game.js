@@ -7,6 +7,7 @@ PhaserGame.prototype = {
         game.load.image('tree','images/smrk2.png');
         game.load.image('tree2','images/smrk3.png');
         game.load.image('blood','images/blood.png');
+        game.load.image('footstep','images/footstep.png');
         game.load.spritesheet('buttons','images/buttons.png', 16, 16);
         game.load.spritesheet('soldier', 'images/nazi.png', 8, 8);
         game.load.spritesheet('prisoner1', 'images/pow1.png', 8, 8);
@@ -25,7 +26,7 @@ PhaserGame.prototype = {
 
         this.gui = game.add.group(game.world, "gui");
         this.gui.fixedToCamera = true;
-        this.gui.z = 1000;
+        this.gui.z = 100;
         // gui
         var pauseButton = game.make.button(400-60, 400, "buttons", function(){
             this.guard.setSpeed(0);
@@ -54,7 +55,10 @@ PhaserGame.prototype = {
         speed3Button.scale.set(2);
         speed3Button.smoothed = false;
         this.gui.add(speed3Button);
-
+        
+        // Particles group
+        game.emittors = game.add.group(game.world, "emittors");
+        game.emittors.z = 30000;
         // stromy pro kontext
         for(var i=0; i<100; i++){
             var tree;

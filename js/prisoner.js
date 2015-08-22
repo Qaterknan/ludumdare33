@@ -62,8 +62,12 @@ Prisoner.prototype.update = function() {
 
 Prisoner.prototype.die = function() {
     if(this.alive){
-        this.blood.start(true, 0, 0, 100);
-        this.loadTexture("corpse");
+        if(Math.random() > 0.5){
+            this.blood.start(true, 0, 0, 100);
+            this.loadTexture("corpse");
+        }
+        else
+            this.loadTexture("frozen");
         this.rotation = utils.random(0, Math.PI*2);
         this.animations.add("fall", null, 14, false);
         this.play("fall");
