@@ -23,5 +23,9 @@ utils = {
 			return -1;
 		else
 			return 0;
+	},
+
+	randomElement: function (a) {
+		return a[Math.floor(Math.random() * a.length)];
 	}
 };

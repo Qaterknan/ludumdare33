@@ -8,7 +8,8 @@ PhaserGame.prototype = {
         game.load.image('blood','images/blood.png');
         game.load.spritesheet('buttons','images/buttons.png', 16, 16);
         game.load.spritesheet('soldier', 'images/soldier.png', 8, 8);
-        game.load.spritesheet('prisoner', 'images/prisoner.png', 8, 8);
+        game.load.spritesheet('prisoner1', 'images/pow1.png', 8, 8);
+        game.load.spritesheet('prisoner2', 'images/pow2.png', 8, 8);
     },
     create: function () {
         // centrování canvasu
