@@ -3,7 +3,8 @@ var Prisoner = function (game) {
     Person.call(this, game, utils.randomElement(prisonerKeys));
 
     this.animations.add("stand", [0]);
-    this.animations.add("walk", [0, 1, 2, 3], 4, true);
+    var animationSpeed = 4 + Math.random();
+    this.animations.add("walk", [0, 1, 2, 3], animationSpeed, true);
     this.play("walk");
 
     this.inputEnabled = true;
