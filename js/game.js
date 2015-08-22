@@ -21,6 +21,15 @@ PhaserGame.prototype = {
         this.march = new March(this.game);
         game.world.add(this.march);
         this.march.position.set(300, 300);
+	// stopování hry
+	game.input.keyboard.addCallbacks(
+		game,
+		function ( event ) {
+			if( event.keyCode == 32 ){
+				game.paused=!game.paused;
+			}
+		}
+	);
     },
 
     update: function () {
