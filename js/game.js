@@ -8,6 +8,7 @@ PhaserGame.prototype = {
         game.load.image('blood','images/blood.png');
         game.load.spritesheet('buttons','images/buttons.png', 16, 16);
         game.load.spritesheet('soldier', 'images/soldier.png', 8, 8);
+        game.load.spritesheet('prisoner', 'images/prisoner.png', 8, 8);
     },
     create: function () {
         // centrování canvasu
@@ -20,31 +21,34 @@ PhaserGame.prototype = {
 
         // gui
         var pauseButton = game.add.button(400-60, 400, "buttons", function(){
-            this.march.setSpeed(0);
+            this.guard.setSpeed(0);
         }, this, 0, 0);
         pauseButton.scale.set(2);
         pauseButton.smoothed = false;
         var speed1Button = game.add.button(400-20, 400, "buttons", function(){
-            this.march.setSpeed(1);
+            this.guard.setSpeed(1);
         }, this, 1, 1);
         speed1Button.scale.set(2);
         speed1Button.smoothed = false;
         var speed2Button = game.add.button(400+20, 400, "buttons", function(){
-            this.march.setSpeed(2);
+            this.guard.setSpeed(2);
         }, this, 2, 2);
         speed2Button.scale.set(2);
         speed2Button.smoothed = false;
         var speed3Button = game.add.button(400+60, 400, "buttons", function(){
-            this.march.setSpeed(3);
+            this.guard.setSpeed(3);
         }, this, 3, 3);
         speed3Button.scale.set(2);
         speed3Button.smoothed = false;
 
-
-        // pokusy
+        // groupy
         this.march = new March(this.game);
         game.world.add(this.march);
-        this.march.position.set(300, 300);
+        this.march.position.set(300, 240);
+
+        this.guard = new Guard(this.game);
+        game.world.add(this.guard);
+        this.guard.position.set(300, 240);
     },
 
     update: function () {
