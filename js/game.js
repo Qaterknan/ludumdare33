@@ -49,6 +49,16 @@ PhaserGame.prototype = {
         this.guard = new Guard(this.game);
         game.world.add(this.guard);
         this.guard.position.set(300, 240);
+        
+        // stopování hry
+        game.input.keyboard.addCallbacks(
+            game,
+            function ( event ) {
+                if( event.keyCode == 32 ){
+                    game.paused=!game.paused;
+                }
+            }
+        );
     },
 
     update: function () {
