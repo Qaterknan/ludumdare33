@@ -27,5 +27,21 @@ utils = {
 
 	randomElement: function (a) {
 		return a[Math.floor(Math.random() * a.length)];
-	}
+	},
+	
+	relativSum : function(a,b,limit){
+		return (a+b)/(1+a*b/(limit*limit));
+	},
+	
+	probMul : function(a,n){
+		var m = 0;
+		for(var i = 0; i < n; i++){
+			m = (m+a)/(1+m*a);
+		}
+		return m;
+	},
+	
+	probSum : function (a,b){
+		return (a+b)/(1+a*b);
+	},
 };
