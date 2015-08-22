@@ -5,9 +5,9 @@ var Guard = function (game) {
     {
         var person = new Soldier(game);
         if(Math.random() > 0.5)
-        	person.position.set(utils.random(-300, 0), utils.sgn(Math.random()-0.5)*80 + utils.random(-10, 10));
+            person.position.set(utils.random(-300, 0), utils.sgn(Math.random()-0.5)*80 + utils.random(-10, 10));
         else
-        	person.position.set(utils.random(20, 30), utils.random(-70, 70));
+            person.position.set(utils.random(20, 30), utils.random(-70, 70));
         this.add(person);
     }
 
