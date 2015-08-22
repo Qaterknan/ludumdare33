@@ -1,17 +1,28 @@
 var March = function (game) {
     Phaser.Group.call(this, game, game.world, 'March', true, true, Phaser.Physics.ARCADE);
 
-    // game.physics.enable(this, Phaser.Physics.ARCADE);
-    // this.body.drag = 10;
-    // this.body.acceleration.set(1, 0);
-
-    for (var i = 0; i < 10; i++)
+    for (var i = 0; i < 30; i++)
     {
         var person = new Prisoner(game);
-        person.position.set(utils.random(-100, 100), utils.random(-100, 100));
+        person.position.set(utils.random(-300, 0), utils.random(-70, 70));
         this.add(person);
     }
+
+    // debug axes
+    var debugAxes = new Phaser.Graphics(game, 0, 0);
+    debugAxes.lineStyle(1, 0x00ff00, 1);
+    debugAxes.moveTo(0, -50);
+    debugAxes.lineTo(0, 50);
+    debugAxes.moveTo(0, 0);
+    debugAxes.lineTo(-300, 0);
+    this.addChild(debugAxes);
 }
 
 March.prototype = Object.create(Phaser.Group.prototype);
 March.prototype.constructor = March;
+
+March.prototype.update = function() {
+    // :(((
+    this.__proto__.__proto__.update.call(this);
+    this.x += 0.3;
+};

@@ -36,4 +36,4 @@ PhaserGame.prototype = {
     }
 };
 
-var game = new Phaser.Game(800, 480, Phaser.CANVAS, document.body, PhaserGame);
+var game = new Phaser.Game(800, 480, Phaser.AUTO, document.body, PhaserGame);
