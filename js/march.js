@@ -1,5 +1,5 @@
 var March = function (game) {
-    Phaser.Group.call(this, game, game.world, 'March', true, true, Phaser.Physics.ARCADE);
+    Phaser.Group.call(this, game, game.world, 'March', false, true, Phaser.Physics.ARCADE);
 
     for (var i = 0; i < 30; i++)
     {

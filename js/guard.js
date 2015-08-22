@@ -1,5 +1,5 @@
 var Guard = function (game) {
-    Phaser.Group.call(this, game, game.world, 'Guard', true, true, Phaser.Physics.ARCADE);
+    Phaser.Group.call(this, game, game.world, 'Guard', false, true, Phaser.Physics.ARCADE);
 
     for (var i = 0; i < 7; i++)
     {
