@@ -113,8 +113,6 @@ PhaserGame.prototype = {
 
         game.debug.cameraInfo(game.camera, 32, 32);
         // game.debug.spriteCoords(player, 32, 500);
-        game.debug.body(this.march.getTop());
-        // game.debug.body(sprite2);
     }
 };
 

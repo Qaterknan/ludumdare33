@@ -11,13 +11,13 @@ var March = function (game) {
     this.speed = 0.3;
 
     // debug axes
-    var debugAxes = new Phaser.Graphics(game, 0, 0);
-    debugAxes.lineStyle(1, 0x00ff00, 1);
-    debugAxes.moveTo(0, -50);
-    debugAxes.lineTo(0, 50);
-    debugAxes.moveTo(0, 0);
-    debugAxes.lineTo(-300, 0);
-    this.addChild(debugAxes);
+    // var debugAxes = new Phaser.Graphics(game, 0, 0);
+    // debugAxes.lineStyle(1, 0x00ff00, 1);
+    // debugAxes.moveTo(0, -50);
+    // debugAxes.lineTo(0, 50);
+    // debugAxes.moveTo(0, 0);
+    // debugAxes.lineTo(-300, 0);
+    // this.addChild(debugAxes);
 }
 
 March.prototype = Object.create(Phaser.Group.prototype);
