@@ -1,6 +1,8 @@
 var March = function (game) {
     Phaser.Group.call(this, game, game.world, 'March', false, true, Phaser.Physics.ARCADE);
 
+    this.psychology = new Psychology();
+
     for (var i = 0; i < 30; i++)
     {
         var person = new Prisoner(game);

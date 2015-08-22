@@ -21,6 +21,7 @@ PhaserGame.prototype = {
         game.physics.startSystem(Phaser.Physics.ARCADE);
 
         this.gui = game.add.group(game.world, "gui");
+        this.gui.fixedToCamera = true;
         this.gui.z = 1000;
         // gui
         var pauseButton = game.make.button(400-60, 400, "buttons", function(){
@@ -28,7 +29,6 @@ PhaserGame.prototype = {
         }, this, 0, 0);
         pauseButton.scale.set(2);
         pauseButton.smoothed = false;
-        pauseButton.fixedToCamera = true;
         this.gui.add(pauseButton);
 
         var speed1Button = game.make.button(400-20, 400, "buttons", function(){
@@ -36,7 +36,6 @@ PhaserGame.prototype = {
         }, this, 1, 1);
         speed1Button.scale.set(2);
         speed1Button.smoothed = false;
-        speed1Button.fixedToCamera = true;
         this.gui.add(speed1Button);
 
         var speed2Button = game.make.button(400+20, 400, "buttons", function(){
@@ -44,7 +43,6 @@ PhaserGame.prototype = {
         }, this, 2, 2);
         speed2Button.scale.set(2);
         speed2Button.smoothed = false;
-        speed2Button.fixedToCamera = true;
         this.gui.add(speed2Button);
 
         var speed3Button = game.make.button(400+60, 400, "buttons", function(){
@@ -52,9 +50,7 @@ PhaserGame.prototype = {
         }, this, 3, 3);
         speed3Button.scale.set(2);
         speed3Button.smoothed = false;
-        speed3Button.fixedToCamera = true;
         this.gui.add(speed3Button);
-
 
         // stromy pro kontext
         for(var i=0; i<100; i++){
@@ -91,6 +87,26 @@ PhaserGame.prototype = {
                 }
             }
         );
+
+        // debug gui
+        var background = game.make.graphics(650, 30);
+        background.beginFill(0x000000, 0.7);
+        background.drawRect(0, 0, 100, 400);
+        background.endFill();
+        this.gui.add(background);
+
+        var watch = [
+            "temperature",
+            "fatigue",
+            "runningProb",
+            "speed",
+            "freezing",
+            "effort",
+        ];
+        
+        for(var i=0; i<watch.length; i++){
+            new Progressbar(this, 650, 30 + i*20, this.march.psychology, watch[i]);
+        }
 
         game.camera.follow(this.guard);
 
