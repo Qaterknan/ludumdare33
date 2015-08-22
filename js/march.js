@@ -4,7 +4,7 @@ var March = function (game) {
     for (var i = 0; i < 30; i++)
     {
         var person = new Prisoner(game);
-        person.position.set(utils.random(-300, 0), utils.random(-70, 70));
+        person.position.set(utils.random(-300, 0), utils.random(-20, 20));
         this.add(person);
     }
 
