@@ -11,7 +11,7 @@ PhaserGame.prototype = {
         game.load.spritesheet('soldier', 'images/nazi.png', 8, 8);
         game.load.spritesheet('prisoner1', 'images/pow1.png', 8, 8);
         game.load.spritesheet('prisoner2', 'images/pow2.png', 8, 8);
-        game.load.spritesheet('corpse', 'images/corpse.png', 8, 8);
+        game.load.spritesheet('corpse', 'images/corpse.png', 16, 16);
     },
     create: function () {
         // centrování canvasu

@@ -12,7 +12,6 @@ var Prisoner = function (game) {
     this.events.onInputDown.add(this.die, this);
 
     this.alive = true;
-
 }
 Prisoner.prototype = Object.create(Person.prototype);
 Prisoner.prototype.constructor = Prisoner;
@@ -28,6 +27,12 @@ Prisoner.prototype.update = function() {
     else {
         this.circle.visible = false;
     }
+    // náhodný pohyb
+    this.body.velocity.add(
+        utils.random(-1, 1), 
+        utils.random(-1, 1)
+        );
+
     // tendence se shlukovat u bodu 0;0 celé parent groupy
     // this.body.acceleration.set(0, 0);
     // var force = this.position.clone();
@@ -35,17 +40,19 @@ Prisoner.prototype.update = function() {
     // force.y = utils.sgn(force.y);
     // force.multiply(-20, -20);
     // this.body.acceleration.add(force.x, force.y);
-    // // tendence si udržovat odstup
-    // var repulsion = new Phaser.Point();
-    // // OPTIMALIZOVAT :(((
-    // this.parent.forEach(function(child){
-    //  if(this != child){
-    //      var vec = child.position.clone().subtract(this.position.x, this.position.y);
-    //      var mag = vec.getMagnitudeSq();
-    //      repulsion.subtract(100*vec.x/mag, 100*vec.y/mag);
-    //  }
-    // }, this);
-    // this.body.acceleration.add(repulsion.x, repulsion.y);
+    // tendence si udržovat odstup
+    var repulsion = new Phaser.Point();
+    // OPTIMALIZOVAT :(((
+    this.parent.forEach(function(child){
+     if(this != child){
+         var vec = child.position.clone().subtract(this.position.x, this.position.y);
+         var mag = vec.getMagnitudeSq();
+         var mult = 5;
+         if(mag < 16*16)
+            repulsion.subtract(mult*vec.x/mag, mult*vec.y/mag);
+     }
+    }, this);
+    this.body.velocity.add(repulsion.x, repulsion.y);
     // // drag, protože v phaseru je cri
     // var velocityMag = this.body.velocity.getMagnitude();
     // var drag = this.body.velocity.clone().multiply(velocityMag, velocityMag);
@@ -54,19 +61,25 @@ Prisoner.prototype.update = function() {
 };
 
 Prisoner.prototype.die = function() {
-    this.blood.start(true, 0, 0, 100);
-    // this.play("stand");
-    this.loadTexture("corpse");
-    this.resetFrame();
+    if(this.alive){
+        this.blood.start(true, 0, 0, 100);
+        this.loadTexture("corpse");
+        this.rotation = utils.random(0, Math.PI*2);
+        this.animations.add("fall", [0, 1, 2], 6, false);
+        this.play("fall");
+        // this.resetFrame();
 
-    var pos = this.worldPosition.clone();
-    pos.add(game.camera.view.x, game.camera.view.y);
-    this.parent.removeChild(this);
-    game.graveyard.add(this);
-    this.position = pos;
-    this.alive=false;
-    this.input.useHandCursor = false;
-    game.canvas.style.cursor="default";
+        var pos = this.worldPosition.clone();
+        pos.add(game.camera.view.x, game.camera.view.y);
+        this.parent.removeChild(this);
+        game.graveyard.add(this);
+        this.position = pos;
+        this.alive = false;
+        // zastaví jakýkoli pohyb z fyziky
+        this.body.enable = false;
+        this.input.useHandCursor = false;
+        game.canvas.style.cursor="default";
+    }
 };
 
 Prisoner.prototype.flee = function() {

@@ -9,7 +9,7 @@ jQuery.fn.center = function () {
 
 utils = {
 	random: function (min, max) {
-		return min + Math.random()*(max-min+1);
+		return min + Math.random()*(max-min);
 	},
 
 	randomInt: function (min, max) {
