@@ -65,9 +65,8 @@ Prisoner.prototype.die = function() {
         this.blood.start(true, 0, 0, 100);
         this.loadTexture("corpse");
         this.rotation = utils.random(0, Math.PI*2);
-        this.animations.add("fall", [0, 1, 2], 6, false);
+        this.animations.add("fall", null, 14, false);
         this.play("fall");
-        // this.resetFrame();
 
         var pos = this.worldPosition.clone();
         pos.add(game.camera.view.x, game.camera.view.y);
