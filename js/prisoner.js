@@ -8,6 +8,8 @@ var Prisoner = function (game) {
     this.inputEnabled = true;
     this.input.useHandCursor = true;
     this.events.onInputDown.add(this.die, this);
+
+
 }
 Prisoner.prototype = Object.create(Person.prototype);
 Prisoner.prototype.constructor = Prisoner;
@@ -23,5 +25,6 @@ Prisoner.prototype.update = function() {
 };
 
 Prisoner.prototype.die = function() {
-	console.log("ahoj")
+	// this.blood.start(true, 0);
+	this.blood.start(true, 0, 0, 100);
 };

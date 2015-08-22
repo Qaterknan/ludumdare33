@@ -5,6 +5,7 @@ var PhaserGame = function () {
 PhaserGame.prototype = {
     preload: function () {
         game.load.image('tree','images/tree.png');
+        game.load.image('blood','images/blood.png');
         game.load.spritesheet('soldier', 'images/soldier.png', 8, 8);
     },
     create: function () {
