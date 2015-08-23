@@ -41,7 +41,7 @@ Psychology.prototype.update = function (dt){
 	var sum = utils.probSum;
 	var sub = utils.probSub;
 	this.temperature = this.freezing > 0 ? sub(this.temperature, this.freezing*this.freezingToTemperature*dt) : sum(this.temperature, -this.freezing*this.freezingToTemperature*dt);
-	this.fatigue = sum(this.fatigue,this.effort*this.effortToFatigue*dt);
+	this.fatigue = this.effort > 0 ? sum(this.fatigue,this.effort*this.effortToFatigue*dt) : sub(this.fatigue, -this.effort*this.effortToFatigue*dt);
 	
 	this.runningProb = sum(
 		this.temperature*this.temperatureToRunning,
