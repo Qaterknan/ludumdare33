@@ -136,8 +136,8 @@ PhaserGame.prototype = {
             tree.smoothed = false;
             tree.rotation = utils.randomInt(0, 4)/2 * Math.PI;
             tree.update = function (){
-                if(game.camera.position.x - this.position.x > game.camera.view.width/2){
-                    this.position.x += game.camera.view.width;
+                if(game.camera.position.x - game.camera.width/2 > this.position.x + this.width){
+                    this.position.x += game.camera.view.width+this.width*2;
                 }
             };
 
