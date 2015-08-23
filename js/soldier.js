@@ -18,7 +18,7 @@ Soldier.prototype = Object.create(Person.prototype);
 Soldier.prototype.constructor = Soldier;
 Soldier.prototype.shoot = function(prisoner) {
     this.lookAt = prisoner.worldPosition;
-
+    this.events.onFire.removeAll();
     this.loadTexture(this.shootKey);
     var shoot = this.animations.add("shoot", null, 12, false);
     shoot.enableUpdate = true;

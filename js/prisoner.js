@@ -79,8 +79,8 @@ Prisoner.prototype.update = function() {
 Prisoner.prototype.onClick = function(t, pointer) {
     if(this.alive){
         var soldier = game.guard.getNearest(this.worldPosition);
-        soldier.events.onFire.addOnce(this.onShot, this);
         soldier.shoot(this);
+        soldier.events.onFire.addOnce(this.onShot, this);
     }
 };
 

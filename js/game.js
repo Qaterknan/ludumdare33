@@ -14,6 +14,7 @@ PhaserGame.prototype = {
         game.load.image('arrow','images/arrow.png');
         game.load.image('footstep','images/footstep.png');
         game.load.image('paper','images/paper.jpg');
+        game.load.image('buttonBorder','images/button-border.png');
         game.load.spritesheet('buttons','images/buttons.png', 16, 16);
         
         game.load.spritesheet('general', 'images/u.png', 10, 10);
@@ -77,28 +78,28 @@ PhaserGame.prototype = {
         // gui
         var pauseButton = game.make.button(400-60, 400, "buttons", function(){
             game.guard.setSpeed(0);
-        }, this, 12, 0, 8);
+        }, this, 8, 0, 12);
         pauseButton.scale.set(2);
         pauseButton.smoothed = false;
         this.gui.add(pauseButton);
 
         var speed1Button = game.make.button(400-20, 400, "buttons", function(){
             game.guard.setSpeed(1);
-        }, this, 13, 1, 9);
+        }, this, 9, 1, 13);
         speed1Button.scale.set(2);
         speed1Button.smoothed = false;
         this.gui.add(speed1Button);
 
         var speed2Button = game.make.button(400+20, 400, "buttons", function(){
             game.guard.setSpeed(2);
-        }, this, 14, 2, 10);
+        }, this, 10, 2, 14);
         speed2Button.scale.set(2);
         speed2Button.smoothed = false;
         this.gui.add(speed2Button);
 
         var speed3Button = game.make.button(400+60, 400, "buttons", function(){
             game.guard.setSpeed(3);
-        }, this, 15, 3, 11);
+        }, this, 11, 3, 15);
         speed3Button.scale.set(2);
         speed3Button.smoothed = false;
         this.gui.add(speed3Button);
@@ -108,11 +109,49 @@ PhaserGame.prototype = {
         game.distanceCounter = game.make.text(400, 50, "");
         this.gui.add(game.distanceCounter);
 
-        // var paper = game.make.sprite(game.width/2, 0, "paper");
-        // paper.anchor.set(0, 0);
-        // var stats = game.make.bitmapText(0, 0, "typewriter", "Executions: 30", 32);
-        // paper.addChild(stats);
-        // this.gui.add(paper);
+        var paper = game.make.sprite(game.width/2 - 150, 30, "paper");
+        paper.anchor.set(0, 0);
+        var stats = game.make.bitmapText(20, 50, "typewriter", 
+            "transport summary\n\n"+
+            "prisoners transported: 10\n"+
+            "escapes: 2\n"+
+            "casulties:\n"+
+            " - hypothermia: 6\n"+
+            " - exhaustion: 11\n"+
+            " - executions: 7\n\n"+
+            "distance walked: 18km\n"+
+            "days elapsed: 2 days\n"+
+            "next page"
+            , 32);
+        stats.tint = 0x000000;
+        paper.addChild(stats);
+        var nextPage = game.make.button(paper.width/2, paper.height-50, "buttonBorder", function(){
+            console.log("asdf");
+        });
+        nextPage.anchor.set(0.5, 1);
+        nextPage.tint = 0x000000;
+        nextPage.alpha = 0.4;
+        nextPage.onInputOver.add(function(){
+            console.log(this)
+            var tween = game.add.tween(this);
+            tween.to({alpha : 1}, 500);
+            tween.easing(Phaser.Easing.Circular.In);
+            tween.start();
+        }, nextPage);
+        nextPage.onInputOut.add(function(){
+            console.log(this)
+            var tween = game.add.tween(this);
+            tween.to({alpha : 0.4}, 500);
+            tween.easing(Phaser.Easing.Circular.Out);
+            tween.start();
+        }, nextPage);
+        var next = game.make.bitmapText(0, -nextPage.height+4, "typewriter", "next page", 32);
+        next.anchor.set(0.5, 0);
+        next.tint = 0x000000;
+        nextPage.addChild(next);
+        paper.addChild(nextPage)
+
+        this.gui.add(paper);
 
         // Particles group
         game.emitters = game.add.group(game.world, "emitters");
@@ -122,29 +161,28 @@ PhaserGame.prototype = {
 
         var enviroment = game.add.group(game.world, "enviroment");
         // stromy pro kontext
-        for(var i=0; i<100; i++){
-            var tree;
-            if(Math.random() < 0.5)
-                tree = game.make.sprite(utils.random(0,1600), utils.random(0,100), "tree"+(Math.random() < 0.5 ? "" : "2"));
-            else
-                tree = game.make.sprite(utils.random(0,1600), utils.random(380,480), "tree"+(Math.random() < 0.5 ? "" : "2"));
-            tree.scale.set(2);
-            tree.smoothed = false;
-            // tree.rotation = utils.random(0, Math.PI);
-            tree.rotation = utils.randomInt(0, 4)/2 * Math.PI;
-            tree.update = function (){
-                if(game.camera.position.x - this.position.x > game.camera.view.width/2+100){
-                    this.position.x += 1600;
-                }
-            };
+        // for(var i=0; i<70; i++){
+        //     var tree;
+        //     if(i%2==0)
+        //         tree = game.make.sprite(utils.random(0,800), utils.random(0,100), "tree"+(Math.random() < 0.5 ? "" : "2"));
+        //     else
+        //         tree = game.make.sprite(utils.random(0,800), utils.random(380,480), "tree"+(Math.random() < 0.5 ? "" : "2"));
+        //     tree.scale.set(2);
+        //     tree.smoothed = false;
+        //     tree.rotation = utils.randomInt(0, 4)/2 * Math.PI;
+        //     tree.update = function (){
+        //         if(game.camera.position.x - this.position.x > game.camera.view.width/2){
+        //             this.position.x += game.camera.view.width;
+        //         }
+        //     };
 
-            enviroment.addChild(tree);
-        }
+        //     enviroment.addChild(tree);
+        // }
         
         var yard = game.add.sprite(0, 0, "yard");
         yard.scale.set(2, 2);
         yard.smoothed = false;
-        var gate = game.add.sprite(400, -100, "gate");
+        var gate = game.add.sprite(400, 50, "gate");
         gate.scale.set(2, 2);
         gate.smoothed = false;
         // groupy
