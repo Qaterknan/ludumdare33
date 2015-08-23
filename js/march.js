@@ -49,6 +49,24 @@ March.prototype.update = function() {
 		this.killOne("freeze");
 		this.totalTemperature = 10;
 	}
+
+    // tendence si udržovat odstup
+    for(var i=0; i<this.length; i++){
+        var child1 = this.children[i];
+        for(var j=i+1; j<this.length; j++){
+            var child2 = this.children[j];
+
+            var dx = child1.position.x - child2.position.x;
+            var dy = child1.position.y - child2.position.y;
+            var mag = dx*dx + dy*dy;
+            var mult = 5;
+
+            if(mag < 256){// odstup 16
+                child1.repulsion.subtract(-mult*dx/mag, -mult*dy/mag);
+                child2.repulsion.subtract(mult*dx/mag, mult*dy/mag);
+            }
+        }
+    }
 };
 
 March.prototype.setSpeed = function(speed) {

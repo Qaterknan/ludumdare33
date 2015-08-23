@@ -11,6 +11,8 @@ var Prisoner = function (game) {
     this.input.useHandCursor = true;
     this.events.onInputDown.add(this.onClick, this);
 
+    this.repulsion = new Phaser.Point();
+
     this.alive = true;
 }
 Prisoner.prototype = Object.create(Person.prototype);
@@ -34,8 +36,7 @@ Prisoner.prototype.update = function() {
         utils.random(-1.5, 1.5)
         );
 
-    // tendence se shlukovat u bodu 0;0 celé parent groupy
-    // this.body.acceleration.set(0, 0);
+    // zůstávají v řadě
     var force = this.position.clone();
     force.x = -force.x;
     force.y = -0.1 * force.y;
@@ -44,24 +45,16 @@ Prisoner.prototype.update = function() {
         this.body.velocity.x += force.x;
     if(Math.abs(this.position.y) > this.parent.marchHeight)
         this.body.velocity.y += force.y;
-    // tendence si udržovat odstup
-    var repulsion = new Phaser.Point();
-    // OPTIMALIZOVAT :(((
-    this.parent.forEach(function(child){
-     if(this != child){
-         var vec = child.position.clone().subtract(this.position.x, this.position.y);
-         var mag = vec.getMagnitudeSq();
-         var mult = 5;
-         if(mag < 16*16)
-            repulsion.subtract(mult*vec.x/mag, mult*vec.y/mag);
-     }
-    }, this);
-    this.body.velocity.add(repulsion.x, repulsion.y);
-    // // drag, protože v phaseru je cri
-    // var velocityMag = this.body.velocity.getMagnitude();
-    // var drag = this.body.velocity.clone().multiply(velocityMag, velocityMag);
-    // var dragMult = 0.1;
-    // this.body.acceleration.subtract(drag.x*dragMult, drag.y*dragMult);
+
+    // repulsion
+    this.body.velocity.add(this.repulsion.x, this.repulsion.y);
+    this.repulsion.set(0, 0);
+    
+    // mazání mimo kameru
+    if(!this.inCamera && !this.alive){
+        console.log("destroyed!")
+        this.destroy();
+    }
 };
 
 Prisoner.prototype.onClick = function(t, pointer) {
@@ -73,6 +66,7 @@ Prisoner.prototype.die = function(how) {
         console.log(arguments)
 		if(how == "kill"){
             game.jukebox.playEffect("gunshot");
+            this.blood.makeParticles("blood", 10, 40);
 			this.blood.start(true, 0, 0, 100);
             this.loadTexture("corpse");
 		}

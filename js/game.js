@@ -36,6 +36,7 @@ PhaserGame.prototype = {
         game.world.setBounds(0, 0, 8000, 480);
         game.stage.backgroundColor = '#dddddd';
         game.physics.startSystem(Phaser.Physics.ARCADE);
+        game.time.advancedTiming = true;
 
         game.jukebox = new Jukebox(game);
         game.jukebox.addEffect("cough", "sfx", 0.1).startLoop(10, 30);
@@ -124,6 +125,11 @@ PhaserGame.prototype = {
         );
 
         // debug gui
+        game.fpsCounter = game.make.text(50, 50, "fps: ", {
+            color: 0xFF0000
+        })
+        this.gui.add(game.fpsCounter);
+
         var background = game.make.graphics(650, 30);
         background.beginFill(0x000000, 0.7);
         background.drawRect(0, 0, 100, 400);
@@ -195,11 +201,13 @@ PhaserGame.prototype = {
         // game.camera.view.y += (game.guard.position.y - game.camera.view.y - game.camera.view.height/2) * t;
         // game.camera.view.x = Math.ceil(game.camera.view.x);
         // game.camera.view.y = Math.ceil(game.camera.view.y);
+
+        game.fpsCounter.text = game.time.fps+" "+game.time.fpsMin+" "+game.time.fpsMax;
     },
 
     render: function () {
 
-        game.debug.cameraInfo(game.camera, 32, 32);
+        // game.debug.cameraInfo(game.camera, 32, 32);
         // game.debug.spriteCoords(player, 32, 500);
     }
 };
