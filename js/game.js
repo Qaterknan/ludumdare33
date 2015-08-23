@@ -12,8 +12,13 @@ PhaserGame.prototype = {
         game.load.image('footstep','images/footstep.png');
         game.load.image('paper','images/paper.jpg');
         game.load.spritesheet('buttons','images/buttons.png', 16, 16);
-        game.load.spritesheet('soldier', 'images/u.png', 10, 10);
-        game.load.spritesheet('shoot', 'images/shoot.png', 30, 10);
+        
+        game.load.spritesheet('general', 'images/u.png', 10, 10);
+        game.load.spritesheet('generalShoot', 'images/shoot.png', 30, 10);
+
+        game.load.spritesheet('soldier', 'images/wehr.png', 8, 8);
+        game.load.spritesheet('soldierShoot', 'images/shootwehr.png', 24, 8);
+
         game.load.spritesheet('prisoner1', 'images/pow1.png', 8, 8);
         game.load.spritesheet('prisoner2', 'images/pow2.png', 8, 8);
         game.load.spritesheet('corpse', 'images/corpse.png', 16, 16);

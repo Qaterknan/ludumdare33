@@ -68,14 +68,22 @@ Prisoner.prototype.update = function() {
 };
 
 Prisoner.prototype.onClick = function(t, pointer) {
+    if(this.alive){
+        var soldier = game.guard.getNearest(this.worldPosition);
+        soldier.events.onFire.addOnce(this.onShot, this);
+        soldier.shoot(this);
+    }
+};
+
+Prisoner.prototype.onShot = function(soldier) {
     this.die("kill");
-	if(this.fleeing){
-		game.march.psychology.runKill();
-		this.fleeing = false;
-	}
-	else {
-		game.march.psychology.walkKill();
-	}
+    if(this.fleeing){
+        game.march.psychology.runKill();
+        this.fleeing = false;
+    }
+    else {
+        game.march.psychology.walkKill();
+    }
 };
 
 Prisoner.prototype.die = function(how) {

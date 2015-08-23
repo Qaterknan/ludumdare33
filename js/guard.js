@@ -2,14 +2,14 @@ var Guard = function (game) {
     Phaser.Group.call(this, game, game.world, 'Guard', false, true, Phaser.Physics.ARCADE);
 
     var soldier;
-    soldier = new Soldier(game);
+    soldier = new Soldier(game, "general", "generalShoot");
     soldier.position.set(40, 0);
     this.add(soldier);
 
-    soldier = new Soldier(game);
+    soldier = new Soldier(game, "soldier", "soldierShoot");
     soldier.position.set(-100, game.march.marchHeight+30);
     this.add(soldier);
-    soldier = new Soldier(game);
+    soldier = new Soldier(game, "soldier", "soldierShoot");
     soldier.position.set(-100, -(game.march.marchHeight+30));
     this.add(soldier);
 
@@ -36,4 +36,17 @@ Guard.prototype.update = function() {
 
 Guard.prototype.setSpeed = function(speed) {
     this.speed = speed/3;
+};
+
+Guard.prototype.getNearest = function(position) {
+    var minDistance = -1;
+    var minChild = false;
+    this.forEach(function(child){
+        var dist = child.worldPosition.distance(position);
+        if(dist < minDistance || minDistance < 0){
+            minDistance = dist;
+            minChild = child;
+        }
+    }, this);
+    return minChild;
 };

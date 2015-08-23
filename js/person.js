@@ -46,11 +46,13 @@ Person.prototype = Object.create(Phaser.Sprite.prototype);
 Person.prototype.constructor = Person;
 Person.prototype.update = function() {
     if(this.parent !== undefined){
-        if(this.parent.speed === 0){
-            this.play("stand");
-        }
-        else if(this.parent.speed > 0) {
-            this.play("walk");
+        if(this.animations.currentAnim.name == "walk"){
+            if(this.parent.speed === 0){
+                this.play("stand");
+            }
+            else if(this.parent.speed > 0) {
+                this.play("walk");
+            }
         }
 
         var pos = this.worldPosition.clone();
