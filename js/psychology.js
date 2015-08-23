@@ -16,7 +16,7 @@ function Psychology(parent){
 	this.speedBonus = 0;
 	this.speed = this.baseSpeed;
 	
-	this.speedToEffort = 0.1;
+	this.speedToEffort = 0.05;
 	this.speedToTemperature = 0.2;
 	
 	this.baseFreezing = 0.15;
