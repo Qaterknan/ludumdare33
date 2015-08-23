@@ -9,7 +9,7 @@ var Prisoner = function (game) {
 
     this.inputEnabled = true;
     this.input.useHandCursor = true;
-    this.events.onInputDown.add(this.die, this);
+    this.events.onInputDown.add(this.onClick, this);
 
     this.alive = true;
 	this.timeOfDeath = 0;
@@ -46,17 +46,21 @@ Prisoner.prototype.update = function() {
 	}
     // náhodný pohyb
     this.body.velocity.add(
-        utils.random(-1, 1), 
-        utils.random(-1, 1)
+        // utils.random(0, 0), 
+        0,
+        utils.random(-1.5, 1.5)
         );
 
     // tendence se shlukovat u bodu 0;0 celé parent groupy
     // this.body.acceleration.set(0, 0);
-    // var force = this.position.clone();
-    // force.x = utils.sgn(force.x);
-    // force.y = utils.sgn(force.y);
-    // force.multiply(-20, -20);
-    // this.body.acceleration.add(force.x, force.y);
+    var force = this.position.clone();
+    force.x = -force.x;
+    force.y = -0.1 * force.y;
+
+    if(this.position.x > 0)
+        this.body.velocity.x += force.x;
+    if(Math.abs(this.position.y) > this.parent.marchHeight)
+        this.body.velocity.y += force.y;
     // tendence si udržovat odstup
     var repulsion = new Phaser.Point();
     // OPTIMALIZOVAT :(((
@@ -77,9 +81,15 @@ Prisoner.prototype.update = function() {
     // this.body.acceleration.subtract(drag.x*dragMult, drag.y*dragMult);
 };
 
+Prisoner.prototype.onClick = function(t, pointer) {
+    this.die("kill");
+};
+
 Prisoner.prototype.die = function(how) {
     if(this.alive){
+        console.log(arguments)
 		if(how == "kill"){
+            game.jukebox.playEffect("gunshot");
 			this.blood.start(true, 0, 0, 100);
             this.loadTexture("corpse");
 			this.startText("kill");
