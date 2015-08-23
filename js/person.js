@@ -46,7 +46,7 @@ Person.prototype = Object.create(Phaser.Sprite.prototype);
 Person.prototype.constructor = Person;
 Person.prototype.update = function() {
     if(this.parent !== undefined){
-        if(this.animations.currentAnim.name == "walk"){
+        if(this.animations.currentAnim.name == "walk" || this.animations.currentAnim.name == "stand"){
             if(this.parent.speed === 0){
                 this.play("stand");
             }
