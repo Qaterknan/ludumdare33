@@ -42,29 +42,32 @@ Prisoner.prototype.update = function() {
 			delete this.causeOfDeath;
 		}
 	}
-    // náhodný pohyb
-    this.body.velocity.add(
-        // utils.random(0, 0), 
-        0,
-        utils.random(-1.5, 1.5)
-        );
+    
+    if(!this.fleeing){
+        // náhodný pohyb
+        this.body.velocity.add(
+            // utils.random(0, 0), 
+            0,
+            utils.random(-1.5, 1.5)
+            );
 
-    // zůstávají v řadě
-    var force = this.position.clone();
-    force.x = -force.x;
-    force.y = -0.1 * force.y;
+        // zůstávají v řadě
+        var force = this.position.clone();
+        force.x = -force.x;
+        force.y = -0.1 * force.y;
 
-    if(this.position.x > 0)
-        this.body.velocity.x += force.x;
-    if(Math.abs(this.position.y) > this.parent.marchHeight)
-        this.body.velocity.y += force.y;
+        if(this.position.x > 0)
+            this.body.velocity.x += force.x;
+        if(Math.abs(this.position.y) > this.parent.marchHeight)
+            this.body.velocity.y += force.y;
 
-    // repulsion
-    this.body.velocity.add(this.repulsion.x, this.repulsion.y);
-    this.repulsion.set(0, 0);
+        // repulsion
+        this.body.velocity.add(this.repulsion.x, this.repulsion.y);
+        this.repulsion.set(0, 0);
+    }
     
     // mazání mimo kameru
-    if(!this.inCamera && !this.alive){
+    if(!this.inCamera && !this.alive && this.fleeing){
         console.log("destroyed!")
         this.destroy();
     }
