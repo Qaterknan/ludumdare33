@@ -9,7 +9,7 @@ var Prisoner = function (game) {
 
     this.inputEnabled = true;
     this.input.useHandCursor = true;
-    this.events.onInputDown.add(this.die, this);
+    this.events.onInputDown.add(this.onClick, this);
 
     this.alive = true;
 }
@@ -64,21 +64,21 @@ Prisoner.prototype.update = function() {
     // this.body.acceleration.subtract(drag.x*dragMult, drag.y*dragMult);
 };
 
+Prisoner.prototype.onClick = function(t, pointer) {
+    this.die("kill");
+};
+
 Prisoner.prototype.die = function(how) {
     if(this.alive){
+        console.log(arguments)
 		if(how == "kill"){
+            game.jukebox.playEffect("gunshot");
 			this.blood.start(true, 0, 0, 100);
             this.loadTexture("corpse");
 		}
 		else if(how == "freeze"){
 			this.loadTexture("frozen");
 		}
-        else if(Math.random() > 0.5){
-            this.blood.start(true, 0, 0, 100);
-            this.loadTexture("corpse");
-        }
-        else
-            this.loadTexture("frozen");
         this.rotation = utils.random(0, Math.PI*2);
         this.animations.add("fall", null, 14, false);
         this.play("fall");

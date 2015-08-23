@@ -14,6 +14,19 @@ PhaserGame.prototype = {
         game.load.spritesheet('prisoner2', 'images/pow2.png', 8, 8);
         game.load.spritesheet('corpse', 'images/corpse.png', 16, 16);
         game.load.spritesheet('frozen', 'images/frozen.png', 16, 16);
+
+        game.load.audio('cough', 'sounds/cough.ogg');
+        game.load.audio('gunshot', 'sounds/gunshot.ogg');
+        game.load.audio('gunshot2', 'sounds/gunshot2.ogg');
+        game.load.audio('howling', 'sounds/howling.ogg');
+        game.load.audio('panting', 'sounds/panting.ogg');
+        game.load.audio('twig', 'sounds/twig.ogg');
+        game.load.audio('walkFast', 'sounds/walkFast.ogg');
+        game.load.audio('walk1', 'sounds/walk1.ogg');
+        game.load.audio('walk2', 'sounds/walk2.ogg');
+        game.load.audio('wind1', 'sounds/wind1.ogg');
+        game.load.audio('wind2', 'sounds/wind2.ogg');
+        game.load.audio('wind3', 'sounds/wind3.ogg');
     },
     create: function () {
         // centrování canvasu
@@ -23,6 +36,21 @@ PhaserGame.prototype = {
         game.world.setBounds(0, 0, 8000, 480);
         game.stage.backgroundColor = '#dddddd';
         game.physics.startSystem(Phaser.Physics.ARCADE);
+
+        game.jukebox = new Jukebox(game);
+        game.jukebox.addEffect("cough", "sfx", 0.1).startLoop(10, 30);
+        game.jukebox.addEffect("howling", "sfx", 0.4).startLoop(10, 20);
+        game.jukebox.addEffect("twig", "sfx", 0.04).startLoop(2, 5);
+
+        game.jukebox.addEffect("wind1", "wind1", 0.3).startLoop(1, 10);
+        game.jukebox.addEffect("wind2", "wind2", 0.1).startLoop(1, 10);
+        game.jukebox.addEffect("wind3", "wind3", 0.3).startLoop(0, 0);
+        
+        game.jukebox.addEffect("walk1", "walk1", 0.2).startLoop(0, 0);
+        game.jukebox.addEffect("walk2", "walk2", 0.2).startLoop(0, 0);
+        game.jukebox.addEffect("walkFast", "walkFast", 0.2).startLoop(0, 0);
+        
+        game.jukebox.addEffect("gunshot2", "gunshot", 1);
 
         this.gui = game.add.group(game.world, "gui");
         this.gui.fixedToCamera = true;
