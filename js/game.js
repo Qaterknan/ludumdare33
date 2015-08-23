@@ -135,8 +135,8 @@ PhaserGame.prototype = {
         snow.maxParticleSpeed.set(10, 100);
         snow.setAlpha(1, 0.6, 1000);
         snow.makeParticles("snow", 0, 1000);
-        snow.area.width = 800;
-        snow.area.height = 580;
+        snow.width = 850;
+        snow.height = 600;
 
         snow.angle = Math.PI;
         snow.angleDelta = 0.1;
@@ -146,7 +146,8 @@ PhaserGame.prototype = {
         snow.update = function() {
             var t = game.time.totalElapsedSeconds() * 0.1;
             this.angleDelta = 20/this.speed;
-            this.speed = 200 + 100*noise.simplex2(t, 0);
+            // this.speed = 200 + 100*noise.simplex2(t, 0);
+            this.speed = 300;
             this.angle = 0 + Math.PI*noise.simplex2(0, t);
             // this.lifespan = utils.randomInt(300, 500);
             var minAngle = this.angle - this.angleDelta;
@@ -157,7 +158,6 @@ PhaserGame.prototype = {
             this.emitX = game.camera.x + game.camera.view.width/2;
             this.__proto__.update.call(this);
         }
-        console.log(snow);
         
         // stopování hry
         game.input.keyboard.addCallbacks(
