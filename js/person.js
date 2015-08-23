@@ -37,7 +37,7 @@ var Person = function (game, key) {
 
     // select circle
     this.circle = new Phaser.Graphics(game, 0, 0);
-    this.circle.lineStyle(1, 0x00ff00, 1);
+    this.circle.lineStyle(1, 0xDD3232, 1);
     this.circle.drawCircle(this.x, this.y, 10);
     this.circle.visible = false;
     this.addChild(this.circle);

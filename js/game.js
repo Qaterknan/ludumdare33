@@ -105,13 +105,13 @@ PhaserGame.prototype = {
         game.distanceCounter = game.make.text(400, 50, "");
         this.gui.add(game.distanceCounter);
 
-        // var paper = game.make.sprite(game.width/2, 0, "paper");
-        // paper.anchor.set(0.5, 0);
-        // var stats = game.make.bitmapText(paper.width/2, 0, "typewriter", "libovky", 12);
-        // stats.scale.set(2, 2);
-        // stats.smoothed = false;
-        // paper.addChild(stats);
-        // this.gui.add(paper);
+        var paper = game.make.sprite(game.width/2, 0, "paper");
+        paper.anchor.set(0.5, 0);
+        var stats = game.make.bitmapText(paper.width/2, 0, "typewriter", "libovky", 12);
+        stats.scale.set(2, 2);
+        stats.smoothed = false;
+        paper.addChild(stats);
+        this.gui.add(paper);
 
         // Particles group
         game.emitters = game.add.group(game.world, "emitters");

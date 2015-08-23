@@ -10,6 +10,7 @@ var Prisoner = function (game) {
     this.inputEnabled = true;
     this.input.useHandCursor = true;
     this.events.onInputDown.add(this.onClick, this);
+    this.events.onInputOver.add(this.onHover, this);
 
     this.repulsion = new Phaser.Point();
 	this.fleeing = false;
@@ -20,6 +21,14 @@ var Prisoner = function (game) {
 Prisoner.prototype = Object.create(Person.prototype);
 Prisoner.prototype.constructor = Prisoner;
 Prisoner.prototype.super = Person.prototype;
+
+Prisoner.prototype.onHover = function() {
+    this.circle.scale.set(1.5, 1.5);
+    var tween = game.add.tween(this.circle.scale);
+    tween.to({x : 1, y : 1}, 100);
+    tween.easing(Phaser.Easing.Circular.Out);
+    tween.start();
+};
 
 Prisoner.prototype.update = function() {
     // nevim, jestli se to takhle dělá, ale je to každopádně lepší, než Person.prototype.update.call()
