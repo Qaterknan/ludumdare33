@@ -29,19 +29,21 @@ Prisoner.prototype.update = function() {
     }
     // náhodný pohyb
     this.body.velocity.add(
-        utils.random(-1, 1), 
-        utils.random(-1, 1)
+        // utils.random(0, 0), 
+        0,
+        utils.random(-1.5, 1.5)
         );
 
     // tendence se shlukovat u bodu 0;0 celé parent groupy
     // this.body.acceleration.set(0, 0);
     var force = this.position.clone();
-    force.x = 0;
+    force.x = -force.x;
     force.y = -0.1 * force.y;
 
+    if(this.position.x > 0)
+        this.body.velocity.x += force.x;
     if(Math.abs(this.position.y) > this.parent.marchHeight)
-        this.body.velocity.add(force.x, force.y);
-
+        this.body.velocity.y += force.y;
     // tendence si udržovat odstup
     var repulsion = new Phaser.Point();
     // OPTIMALIZOVAT :(((

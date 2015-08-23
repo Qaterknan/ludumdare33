@@ -3,7 +3,7 @@ var March = function (game) {
 
     this.psychology = new Psychology(this);
 
-    this.marchHeight = 25;
+    this.marchHeight = 20;
     for (var i = 0; i < 30; i++)
     {
         var person = new Prisoner(game);

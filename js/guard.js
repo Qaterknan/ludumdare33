@@ -1,15 +1,17 @@
 var Guard = function (game) {
     Phaser.Group.call(this, game, game.world, 'Guard', false, true, Phaser.Physics.ARCADE);
 
-    for (var i = 0; i < 7; i++)
-    {
-        var person = new Soldier(game);
-        if(Math.random() > 0.5)
-            person.position.set(utils.random(-300, 0), utils.sgn(Math.random()-0.5)*60 + utils.random(-10, 10));
-        else
-            person.position.set(utils.random(20, 30), utils.random(-70, 70));
-        this.add(person);
-    }
+    var soldier;
+    soldier = new Soldier(game);
+    soldier.position.set(40, 0);
+    this.add(soldier);
+
+    soldier = new Soldier(game);
+    soldier.position.set(-100, game.march.marchHeight+30);
+    this.add(soldier);
+    soldier = new Soldier(game);
+    soldier.position.set(-100, -(game.march.marchHeight+30));
+    this.add(soldier);
 
     this.speed = 0.3;
 

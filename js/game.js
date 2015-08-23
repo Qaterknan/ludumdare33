@@ -1,5 +1,5 @@
 var PhaserGame = function () {
-    this.march = null;
+    game.march = null;
 };
 
 PhaserGame.prototype = {
@@ -77,9 +77,9 @@ PhaserGame.prototype = {
         game.graveyard = new Graveyard(0,0,0);
         game.world.add(game.graveyard);
         // Pochod
-        this.march = new March(this.game);
-        game.world.add(this.march);
-        this.march.position.set(400, 240);
+        game.march = new March(this.game);
+        game.world.add(game.march);
+        game.march.position.set(400, 240);
 
         game.guard = new Guard(this.game);
         game.world.add(game.guard);
@@ -113,44 +113,44 @@ PhaserGame.prototype = {
         ];
         
         for(var i=0; i<watch.length; i++){
-            new Progressbar(this, 650, 30 + i*20, this.march.psychology, watch[i]);
+            new Progressbar(this, 650, 30 + i*20, game.march.psychology, watch[i]);
         }
 
         var fleeButton = game.make.button(650, 180, "buttons", function(){
-            this.march.fleeOne();
+            game.march.fleeOne();
         }, this, 1, 1);
         fleeButton.scale.set(2);
         fleeButton.smoothed = false;
         this.gui.add(fleeButton);
 
         var killButton = game.make.button(690, 180, "buttons", function(){
-            this.march.killOne();
-            this.march.psychology.walkKill();
+            game.march.killOne();
+            game.march.psychology.walkKill();
         }, this, 2, 2);
         killButton.scale.set(2);
         killButton.smoothed = false;
         this.gui.add(killButton);
         
         var pauseButton = game.make.button(650, 220, "buttons", function(){
-            this.march.psychology.timeForABreak();
+            game.march.psychology.timeForABreak();
         }, this, 0, 0);
         pauseButton.scale.set(2);
         pauseButton.smoothed = false;
         this.gui.add(pauseButton);
 
         this.datgui = new dat.GUI();
-        this.datgui.add(this.march.psychology, "speed");
+        this.datgui.add(game.march.psychology, "speed");
 
-        this.datgui.add(this.march.psychology, "temperatureToRunning");
-        this.datgui.add(this.march.psychology, "fatigueToRunning");
-        this.datgui.add(this.march.psychology, "fatigueToSpeed");
-        this.datgui.add(this.march.psychology, "speedToEffort");
-        this.datgui.add(this.march.psychology, "speedToTemperature");
-        this.datgui.add(this.march.psychology, "freezingToTemperature");
-        this.datgui.add(this.march.psychology, "breakToTemperature");
-        this.datgui.add(this.march.psychology, "breakToFatigue");
-        this.datgui.add(this.march.psychology, "runKillToRun");
-        this.datgui.add(this.march.psychology, "walkKillToSpeed");
+        this.datgui.add(game.march.psychology, "temperatureToRunning");
+        this.datgui.add(game.march.psychology, "fatigueToRunning");
+        this.datgui.add(game.march.psychology, "fatigueToSpeed");
+        this.datgui.add(game.march.psychology, "speedToEffort");
+        this.datgui.add(game.march.psychology, "speedToTemperature");
+        this.datgui.add(game.march.psychology, "freezingToTemperature");
+        this.datgui.add(game.march.psychology, "breakToTemperature");
+        this.datgui.add(game.march.psychology, "breakToFatigue");
+        this.datgui.add(game.march.psychology, "runKillToRun");
+        this.datgui.add(game.march.psychology, "walkKillToSpeed");
 
         game.camera.follow(game.guard);
 
