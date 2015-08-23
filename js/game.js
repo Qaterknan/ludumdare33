@@ -15,6 +15,10 @@ PhaserGame.prototype = {
         game.load.spritesheet('corpse', 'images/corpse.png', 16, 16);
         game.load.spritesheet('frozen', 'images/frozen.png', 16, 16);
 
+        game.load.image('freeze', 'images/freeze_word.png');
+        game.load.image('kill', 'images/kill_word.png');
+        game.load.image('exhausted', 'images/exhausted_word.png');
+
         game.load.audio('cough', 'sounds/cough.ogg');
         game.load.audio('gunshot', 'sounds/gunshot.ogg');
         game.load.audio('gunshot2', 'sounds/gunshot2.ogg');

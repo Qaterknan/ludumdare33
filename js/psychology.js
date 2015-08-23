@@ -11,12 +11,14 @@ function Psychology(parent){
 		this.temperature*this.temperatureToRunning,
 		this.fatigue*this.fatigueToRunning
 	);
+	this.fear = 0;
+	
 	this.fatigueToSpeed = 0.8;
 	this.baseSpeed = 1.0;
 	this.speedBonus = 0;
 	this.speed = this.baseSpeed;
 	
-	this.speedToEffort = 0.1;
+	this.speedToEffort = 0.05;
 	this.speedToTemperature = 0.2;
 	
 	this.baseFreezing = 0.15;
@@ -30,9 +32,7 @@ function Psychology(parent){
 	this.breakToTemperature=0.9;
 	this.breakToFatigue = 0.3;
 	
-	this.runKillToRun = 0.1;
-	this.lastKill = 0;
-	this.halfTimeOfFear = 10000;
+	this.runKillToRun = 0.3;
 	this.walkKillToSpeed = 0.9;
 }
 Psychology.prototype.update = function (dt){
@@ -45,6 +45,8 @@ Psychology.prototype.update = function (dt){
 		this.temperature*this.temperatureToRunning,
 		this.fatigue*this.fatigueToRunning
 	);
+	this.runningProb = sub(this.runningProb, this.fear);
+	this.fear = sub(this.fear, 0.001)
 	
 	this.speed = sub(this.baseSpeed, this.fatigueToSpeed*this.fatigue);
 	this.speed = sum(this.speed, this.speedBonus);
@@ -59,10 +61,8 @@ Psychology.prototype.timeForABreak = function(){
 	this.fatigue *= this.breakToFatigue;
 }
 Psychology.prototype.runKill = function(){
-	this.lastKill = new Date().getTime();
+	this.fear = this.runKillToRun;
 }
 Psychology.prototype.walkKill = function(){
-	console.log(this.speed);
 	this.speedBonus = this.walkKillToSpeed;
-	console.log(this.speed);
 }
