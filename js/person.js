@@ -21,16 +21,19 @@ var Person = function (game, key) {
     this.addChild(this.blood);
 
     // TODO: footsteps particle effect
-    // this.footsteps = game.make.emitter(utils.random(200, 400), utils.random(200, 400), 10);
-    // this.footsteps.makeParticles("footstep", 0, 100);
-    // this.footsteps.setRotation(0, 0);
-    // this.footsteps.gravity = 0;
-    // this.footsteps.minParticleSpeed.set(0, 0);
-    // this.footsteps.maxParticleSpeed.set(0, 5);
-    // this.footsteps.minParticleScale = 2;
-    // this.footsteps.maxParticleScale = 2;
-    //game.emitters.add(this.footsteps);
-    //this.footsteps.start(false, 2000, 500, 100);
+    this.footsteps = game.make.emitter(utils.random(200, 400), utils.random(200, 400), 10);
+    this.footsteps.makeParticles("footstep", 0, 10);
+    this.footsteps.setRotation(0, 0);
+    this.footsteps.gravity = 0;
+    this.footsteps.height = 4;
+    var lifespan = 6000;
+    this.footsteps.setAlpha(0.6, 0.2, lifespan);
+    this.footsteps.minParticleSpeed.set(0, 0);
+    this.footsteps.maxParticleSpeed.set(0, 0);
+    this.footsteps.minParticleScale = 2;
+    this.footsteps.maxParticleScale = 2;
+    game.emitters.add(this.footsteps);
+    this.footsteps.start(false, lifespan, 1000, 0);
 
     // select circle
     this.circle = new Phaser.Graphics(game, 0, 0);
@@ -45,7 +48,8 @@ Person.prototype.update = function() {
     // jdi za nosem
     // this.rotation = Math.atan2(this.body.velocity.y, this.body.velocity.x);
 
-    // var pos = this.worldPosition.clone();
-    // pos.add(game.camera.view.x, game.camera.view.y);
-    // this.footsteps.position.set(pos.x, pos.y);
+    var pos = this.worldPosition.clone();
+    pos.add(game.camera.view.x, game.camera.view.y);
+    this.footsteps.emitX = pos.x;
+    this.footsteps.emitY = pos.y;
 };

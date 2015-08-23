@@ -92,7 +92,7 @@ PhaserGame.prototype = {
         
         // Particles group
         game.emitters = game.add.group(game.world, "emitters");
-        game.emitters.z = 30000;
+        game.emitters.z = -30000;
         // stromy pro kontext
         for(var i=0; i<100; i++){
             var tree;
