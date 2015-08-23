@@ -77,6 +77,8 @@ Prisoner.prototype.onClick = function(t, pointer) {
 
 Prisoner.prototype.onShot = function(soldier) {
     this.die("kill");
+    var angle = Phaser.Point.angle(this.worldPosition, soldier.worldPosition);
+    this.rotation = angle;
     if(this.fleeing){
         game.march.psychology.runKill();
         this.fleeing = false;

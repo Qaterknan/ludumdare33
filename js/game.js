@@ -74,34 +74,36 @@ PhaserGame.prototype = {
         // gui
         var pauseButton = game.make.button(400-60, 400, "buttons", function(){
             game.guard.setSpeed(0);
-        }, this, 0, 0);
+        }, this, 12, 0, 8);
         pauseButton.scale.set(2);
         pauseButton.smoothed = false;
         this.gui.add(pauseButton);
 
         var speed1Button = game.make.button(400-20, 400, "buttons", function(){
             game.guard.setSpeed(1);
-        }, this, 1, 1);
+        }, this, 13, 1, 9);
         speed1Button.scale.set(2);
         speed1Button.smoothed = false;
         this.gui.add(speed1Button);
 
         var speed2Button = game.make.button(400+20, 400, "buttons", function(){
             game.guard.setSpeed(2);
-        }, this, 2, 2);
+        }, this, 14, 2, 10);
         speed2Button.scale.set(2);
         speed2Button.smoothed = false;
         this.gui.add(speed2Button);
 
         var speed3Button = game.make.button(400+60, 400, "buttons", function(){
             game.guard.setSpeed(3);
-        }, this, 3, 3);
+        }, this, 15, 3, 11);
         speed3Button.scale.set(2);
         speed3Button.smoothed = false;
         this.gui.add(speed3Button);
+
+        this.speedButtons = [pauseButton, speed1Button, speed2Button, speed3Button];
         
-		game.distanceCounter = game.make.text(400, 50, "");
-		this.gui.add(game.distanceCounter);
+        game.distanceCounter = game.make.text(400, 50, "");
+        this.gui.add(game.distanceCounter);
 
         // var paper = game.make.sprite(game.width/2, 0, "paper");
         // paper.anchor.set(0.5, 0);
@@ -153,7 +155,7 @@ PhaserGame.prototype = {
         game.guard.position.set(400, 240);
 
         // sníh!
-        var snow = game.add.emitter(0, 240, 1000);
+        var snow = game.add.emitter(0, 240, 1500);
         snow.setRotation(0, 0);
         snow.gravity = 0;
         snow.minParticleScale = 1;
@@ -161,7 +163,7 @@ PhaserGame.prototype = {
         snow.minParticleSpeed.set(-10, 50);
         snow.maxParticleSpeed.set(10, 100);
         snow.setAlpha(1, 0.6, 1000);
-        snow.makeParticles("snow", 0, 1000);
+        snow.makeParticles("snow", 0, 1500);
         snow.width = 850;
         snow.height = 600;
 

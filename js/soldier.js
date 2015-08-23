@@ -7,9 +7,9 @@ var Soldier = function (game, key, shootKey) {
     this.animations.add("walk", [0, 1, 2, 3], 4, true);
     this.play("walk");
 
-    this.inputEnabled = true;
-    this.input.useHandCursor = true;
-    this.events.onInputDown.add(this.shoot, this);
+    // this.inputEnabled = true;
+    // this.input.useHandCursor = true;
+    // this.events.onInputDown.add(this.shoot, this);
 
     this.events.onFire = new Phaser.Signal();
     this.lookAt = null;
@@ -24,12 +24,15 @@ Soldier.prototype.shoot = function(prisoner) {
     shoot.enableUpdate = true;
     var _this = this;
     shoot.onUpdate.add(function(){
-        delayMult = 4;
-        if(this.frame == 2)
+        delayMult = 5;
+        if(this.frame == 2){
             this.delay *= delayMult;
+        }
         else if(this.frame == 3){
-            _this.events.onFire.dispatch(_this);
             this.delay /= delayMult;
+        }
+        else if(this.frame == 4){
+            _this.events.onFire.dispatch(_this);
         }
     }, shoot);
     this.play("shoot");
