@@ -7,6 +7,7 @@ PhaserGame.prototype = {
         game.load.image('tree','images/smrk2.png');
         game.load.image('tree2','images/smrk3.png');
         game.load.image('blood','images/blood.png');
+        game.load.image('snow','images/snow.png');
         game.load.image('footstep','images/footstep.png');
         game.load.spritesheet('buttons','images/buttons.png', 16, 16);
         game.load.spritesheet('soldier', 'images/nazi.png', 8, 8);
@@ -59,7 +60,7 @@ PhaserGame.prototype = {
 
         this.gui = game.add.group(game.world, "gui");
         this.gui.fixedToCamera = true;
-        this.gui.z = 100;
+        this.gui.z = 1000;
         // gui
         var pauseButton = game.make.button(400-60, 400, "buttons", function(){
             game.guard.setSpeed(0);
@@ -117,6 +118,40 @@ PhaserGame.prototype = {
         game.guard = new Guard(this.game);
         game.world.add(game.guard);
         game.guard.position.set(400, 240);
+
+        // sníh!
+        var snow = game.add.emitter(0, 240, 1000);
+        snow.setRotation(0, 0);
+        snow.gravity = 0;
+        snow.minParticleScale = 1;
+        snow.minParticleScale = 2;
+        snow.minParticleSpeed.set(-10, 50);
+        snow.maxParticleSpeed.set(10, 100);
+        snow.setAlpha(1, 0.6, 1000);
+        snow.makeParticles("snow", 0, 1000);
+        snow.area.width = 850;
+        snow.area.height = 480;
+
+        snow.angle = Math.PI;
+        snow.angleDelta = 0.1;
+        snow.speed = 100;
+
+        snow.flow(1000, 1, 20);
+        snow.update = function() {
+            var t = game.time.totalElapsedSeconds() * 0.1;
+            this.angleDelta = 20/this.speed;
+            this.speed = 200 + 100*noise.simplex2(t, 0);
+            this.angle = 0 + Math.PI*noise.simplex2(0, t);
+            // this.lifespan = utils.randomInt(300, 500);
+            var minAngle = this.angle - this.angleDelta;
+            var maxAngle = this.angle + this.angleDelta;
+            this.minParticleSpeed.set(Math.cos(minAngle)*this.speed, Math.sin(minAngle)*this.speed);
+            this.maxParticleSpeed.set(Math.cos(maxAngle)*this.speed, Math.sin(maxAngle)*this.speed);
+
+            this.emitX = game.camera.x + game.camera.view.width/2;
+            this.__proto__.update.call(this);
+        }
+        console.log(snow);
         
         // stopování hry
         game.input.keyboard.addCallbacks(
