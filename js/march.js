@@ -38,7 +38,7 @@ March.prototype.update = function() {
 	this.speed = this.psychology.maxSpeed;
 
     // vězni nemůžou předběhnout guardy
-    if(this.position.x < game.guard.position.x){
+    if(this.position.x-5 < game.guard.position.x){
         this.x += this.speed;
 		this.psychology.speed = this.speed;
 		if(this.psychology.isBreak){
@@ -47,6 +47,7 @@ March.prototype.update = function() {
 	}
 	else {
 		this.psychology.speed = game.guard.speed;
+		this.x += game.guard.speed;
 		if(game.guard.speed == 0 && !this.psychology.isBreak){
 			this.psychology.toggleBreak();
 		}
