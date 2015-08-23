@@ -43,21 +43,21 @@ PhaserGame.prototype = {
         this.gui.add(pauseButton);
 
         var speed1Button = game.make.button(400-20, 400, "buttons", function(){
-            game.guard.setSpeed(1);
+            game.guard.setSpeed(1.2);
         }, this, 9, 1, 13);
         speed1Button.scale.set(2);
         speed1Button.smoothed = false;
         this.gui.add(speed1Button);
 
         var speed2Button = game.make.button(400+20, 400, "buttons", function(){
-            game.guard.setSpeed(2);
+            game.guard.setSpeed(1.6);
         }, this, 10, 2, 14);
         speed2Button.scale.set(2);
         speed2Button.smoothed = false;
         this.gui.add(speed2Button);
 
         var speed3Button = game.make.button(400+60, 400, "buttons", function(){
-            game.guard.setSpeed(3);
+            game.guard.setSpeed(2);
         }, this, 11, 3, 15);
         speed3Button.scale.set(2);
         speed3Button.smoothed = false;
@@ -260,7 +260,7 @@ PhaserGame.prototype = {
         pauseButton.smoothed = false;
         debugGui.add(pauseButton);
 
-        debugGui.visible = false;
+        debugGui.visible = true;
 		
         this.datgui = new dat.GUI();
         this.datgui.add(game.march.psychology, "speed");
