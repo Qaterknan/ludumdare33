@@ -8,6 +8,8 @@ PhaserGame.prototype = {
         game.load.image('tree2','images/smrk4.png');
         game.load.image('yard','images/dvorek.PNG');
         game.load.image('gate','images/gate.png');
+        
+        game.load.image('snowBackground','images/snow1.png');
 
         game.load.image('blood','images/blood.png');
         game.load.image('snow','images/snow.png');
@@ -151,7 +153,12 @@ PhaserGame.prototype = {
         nextPage.addChild(next);
         paper.addChild(nextPage)
 
-        this.gui.add(paper);
+        // this.gui.add(paper);
+
+        this.snowBackground = game.add.tileSprite(0, 0, 400, 240, "snowBackground");
+        this.snowBackground.fixedToCamera = true;
+        this.snowBackground.scale.set(2, 2);
+        this.snowBackground.smoothed = false;
 
         // Particles group
         game.emitters = game.add.group(game.world, "emitters");
@@ -161,23 +168,23 @@ PhaserGame.prototype = {
 
         var enviroment = game.add.group(game.world, "enviroment");
         // stromy pro kontext
-        // for(var i=0; i<70; i++){
-        //     var tree;
-        //     if(i%2==0)
-        //         tree = game.make.sprite(utils.random(0,800), utils.random(0,100), "tree"+(Math.random() < 0.5 ? "" : "2"));
-        //     else
-        //         tree = game.make.sprite(utils.random(0,800), utils.random(380,480), "tree"+(Math.random() < 0.5 ? "" : "2"));
-        //     tree.scale.set(2);
-        //     tree.smoothed = false;
-        //     tree.rotation = utils.randomInt(0, 4)/2 * Math.PI;
-        //     tree.update = function (){
-        //         if(game.camera.position.x - this.position.x > game.camera.view.width/2){
-        //             this.position.x += game.camera.view.width;
-        //         }
-        //     };
+        for(var i=0; i<70; i++){
+            var tree;
+            if(i%2==0)
+                tree = game.make.sprite(utils.random(0,800), utils.random(0,100), "tree"+(Math.random() < 0.5 ? "" : "2"));
+            else
+                tree = game.make.sprite(utils.random(0,800), utils.random(380,480), "tree"+(Math.random() < 0.5 ? "" : "2"));
+            tree.scale.set(2);
+            tree.smoothed = false;
+            tree.rotation = utils.randomInt(0, 4)/2 * Math.PI;
+            tree.update = function (){
+                if(game.camera.position.x - this.position.x > game.camera.view.width/2){
+                    this.position.x += game.camera.view.width;
+                }
+            };
 
-        //     enviroment.addChild(tree);
-        // }
+            enviroment.addChild(tree);
+        }
         
         var yard = game.add.sprite(0, 0, "yard");
         yard.scale.set(2, 2);
@@ -334,7 +341,7 @@ PhaserGame.prototype = {
         // game.camera.view.y += (game.guard.position.y - game.camera.view.y - game.camera.view.height/2) * t;
         // game.camera.view.x = Math.ceil(game.camera.view.x);
         // game.camera.view.y = Math.ceil(game.camera.view.y);
-
+        this.snowBackground.tilePosition.set(-game.camera.x/2, -game.camera.y/2);
         game.fpsCounter.text = game.time.fps+" "+game.time.fpsMin+" "+game.time.fpsMax;
 		game.distanceCounter.text = Math.round((game.march.position.x - 400)/16) + " m";
     },
