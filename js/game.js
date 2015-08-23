@@ -5,7 +5,10 @@ var PhaserGame = function () {
 PhaserGame.prototype = {
     preload: function () {
         game.load.image('tree','images/smrk2.png');
-        game.load.image('tree2','images/smrk3.png');
+        game.load.image('tree2','images/smrk4.png');
+        game.load.image('yard','images/dvorek.PNG');
+        game.load.image('gate','images/gate.png');
+
         game.load.image('blood','images/blood.png');
         game.load.image('snow','images/snow.png');
         game.load.image('arrow','images/arrow.png');
@@ -105,11 +108,11 @@ PhaserGame.prototype = {
         game.distanceCounter = game.make.text(400, 50, "");
         this.gui.add(game.distanceCounter);
 
-        var paper = game.make.sprite(game.width/2, 0, "paper");
-        paper.anchor.set(0, 0);
-        var stats = game.make.bitmapText(0, 0, "typewriter", "Executions: 30", 32);
-        paper.addChild(stats);
-        this.gui.add(paper);
+        // var paper = game.make.sprite(game.width/2, 0, "paper");
+        // paper.anchor.set(0, 0);
+        // var stats = game.make.bitmapText(0, 0, "typewriter", "Executions: 30", 32);
+        // paper.addChild(stats);
+        // this.gui.add(paper);
 
         // Particles group
         game.emitters = game.add.group(game.world, "emitters");
@@ -138,7 +141,12 @@ PhaserGame.prototype = {
             enviroment.addChild(tree);
         }
         
-
+        var yard = game.add.sprite(0, 0, "yard");
+        yard.scale.set(2, 2);
+        yard.smoothed = false;
+        var gate = game.add.sprite(400, -100, "gate");
+        gate.scale.set(2, 2);
+        gate.smoothed = false;
         // groupy
         // Hřbitov
         game.graveyard = new Graveyard(0,0);
