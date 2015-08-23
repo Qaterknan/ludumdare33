@@ -139,6 +139,9 @@ PhaserGame.prototype = {
             color: 0xFF0000
         })
         this.gui.add(game.fpsCounter);
+		
+		game.distanceCounter = game.make.text(400, 50, "");
+		this.gui.add(game.distanceCounter);
 
         var background = game.make.graphics(650, 30);
         background.beginFill(0x000000, 0.7);
@@ -182,7 +185,9 @@ PhaserGame.prototype = {
         pauseButton.scale.set(2);
         pauseButton.smoothed = false;
         this.gui.add(pauseButton);
-
+		
+		this.gui.renderable = false;
+		
         this.datgui = new dat.GUI();
         this.datgui.add(game.march.psychology, "speed");
 
@@ -216,6 +221,7 @@ PhaserGame.prototype = {
         // game.camera.view.y = Math.ceil(game.camera.view.y);
 
         game.fpsCounter.text = game.time.fps+" "+game.time.fpsMin+" "+game.time.fpsMax;
+		game.distanceCounter.text = Math.round((game.march.position.x - 400)/16) + " m";
     },
 
     render: function () {

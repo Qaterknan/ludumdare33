@@ -31,7 +31,7 @@ function Psychology(parent){
 	this.effortToFatigue = 0.5;
 	
 	this.isBreak = false;
-	this.baseToBreakEffort = 1;
+	this.baseToBreakEffort = 0.25;
 	
 	this.runKillToRun = 0.99;
 	this.walkKillToSpeed = 0.9;

@@ -12,9 +12,9 @@ var March = function (game) {
     }
 
     this.speed = this.psychology.maxSpeed/3;
-	this.fatigueTreshold = 50;
-	this.temperatureTreshold = 10;
-	this.moraleTreshold = 20;
+	this.fatigueTreshold = 200;
+	this.temperatureTreshold = 50;
+	this.moraleTreshold = 40;
 	this.totalFatigue = 0;
 	this.totalTemperature = this.temperatureTreshold;
 	this.totalMorale = this.moraleTreshold;
