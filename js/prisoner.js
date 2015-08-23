@@ -107,9 +107,6 @@ Prisoner.prototype.die = function(how) {
 			this.loadTexture("frozen");
 		}
         this.rotation = utils.random(0, Math.PI*2);
-		if(this.causeOfDeath !== undefined){
-			this.causeOfDeath.rotation = -this.rotation;
-		}
         this.animations.add("fall", null, 14, false);
         this.play("fall");
 
@@ -141,13 +138,18 @@ Prisoner.prototype.flee = function() {
         this.body.velocity.y = 100;
     }
 	this.fleeing = true;
+	var arr = new Phaser.Image(game, -2, -10, "arrow");
+	arr.scale.set(0.15);
+	this.addChild(arr);
 };
 
 Prisoner.prototype.startText = function (which){
-	this.causeOfDeath = new Phaser.Image(game, 0, 0, which);
-	this.causeOfDeath.scale.set(0.4);
+	var pos = this.worldPosition.clone();
+	pos.add(game.camera.view.x, game.camera.view.y);
+	this.causeOfDeath = new Phaser.Image(game, pos.x, pos.y, which);
+	this.causeOfDeath.scale.set(1);
 	var tween = game.add.tween(this.causeOfDeath);
 	tween.to({y : 20, alpha : 0}, 1500);
 	tween.start();
-	this.addChild(this.causeOfDeath);
+	game.world.add(this.causeOfDeath);
 };

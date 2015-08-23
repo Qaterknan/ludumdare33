@@ -7,6 +7,7 @@ PhaserGame.prototype = {
         game.load.image('tree','images/smrk2.png');
         game.load.image('tree2','images/smrk3.png');
         game.load.image('blood','images/blood.png');
+        game.load.image('arrow','images/arrow.png');
         game.load.image('footstep','images/footstep.png');
         game.load.spritesheet('buttons','images/buttons.png', 16, 16);
         game.load.spritesheet('soldier', 'images/nazi.png', 8, 8);

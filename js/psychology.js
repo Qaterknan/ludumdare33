@@ -11,7 +11,7 @@ function Psychology(parent){
 		this.temperature*this.temperatureToRunning,
 		this.fatigue*this.fatigueToRunning
 	);
-	this.fear = 0.8;
+	this.fear = 0.2;
 	
 	this.fatigueToSpeed = 0.8;
 	this.baseSpeed = 1.0;
