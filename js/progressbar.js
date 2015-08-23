@@ -1,4 +1,4 @@
-var Progressbar = function (game, x, y, watchObj, key) {
+var Progressbar = function (game, x, y, watchObj, key, group) {
     Phaser.Graphics.call(this, game, x, y);
 
     this.beginFill(0x9300FF);
@@ -9,8 +9,8 @@ var Progressbar = function (game, x, y, watchObj, key) {
         font: "normal 11pt Arial",
         fill: "#ffffff",
     });
-    game.gui.add(this);
-    game.gui.add(label);
+    group.add(this);
+    group.add(label);
 
     this.watchObj = watchObj;
     this.key = key;
