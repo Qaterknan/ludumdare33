@@ -139,10 +139,12 @@ Prisoner.prototype.startText = function (which){
 	var pos = this.worldPosition.clone();
 	pos.add(game.camera.view.x, game.camera.view.y);
 	this.causeOfDeath = new Phaser.Image(game, Math.round(pos.x), Math.round(pos.y), which);
+    this.causeOfDeath.scale.set(2, 2);
+    this.causeOfDeath.smoothed = false;
 	this.causeOfDeath.anchor.set(0.5, 0.5);
 
 	var tween = game.add.tween(this.causeOfDeath);
-	tween.to({y : pos.y-50, alpha : 0}, 2500);
+	tween.to({y : pos.y-50, alpha : 0}, 3000);
 	tween.start();
     tween.easing(Phaser.Easing.Linear.None);
     var _this = this;

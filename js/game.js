@@ -26,7 +26,7 @@ PhaserGame.prototype = {
         game.load.audio('cough', 'sounds/cough.ogg');
         game.load.audio('gunshot', 'sounds/gunshot.ogg');
         game.load.audio('gunshot2', 'sounds/gunshot2.ogg');
-        game.load.audio('howling', 'sounds/howling.ogg');
+        // game.load.audio('howling', 'sounds/howling.ogg');
         game.load.audio('panting', 'sounds/panting.ogg');
         game.load.audio('twig', 'sounds/twig.ogg');
         game.load.audio('walkFast', 'sounds/walkFast.ogg');
@@ -50,7 +50,7 @@ PhaserGame.prototype = {
 
         game.jukebox = new Jukebox(game);
         game.jukebox.addEffect("cough", "sfx1", 0.1).startLoop(10, 30);
-        game.jukebox.addEffect("howling", "sfx2", 0.4).startLoop(30, 20);
+        // game.jukebox.addEffect("howling", "sfx2", 0.4).startLoop(30, 20);
         game.jukebox.addEffect("twig", "sfx3", 0.04).startLoop(2, 5);
 
         game.jukebox.addEffect("wind1", "wind1", 0.3).startLoop(1, 10);
