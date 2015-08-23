@@ -191,8 +191,6 @@ PhaserGame.prototype = {
         this.datgui.add(game.march.psychology, "speedToEffort");
         this.datgui.add(game.march.psychology, "speedToTemperature");
         this.datgui.add(game.march.psychology, "freezingToTemperature");
-        this.datgui.add(game.march.psychology, "breakToTemperature");
-        this.datgui.add(game.march.psychology, "breakToFatigue");
         this.datgui.add(game.march.psychology, "runKillToRun");
         this.datgui.add(game.march.psychology, "walkKillToSpeed");
 

@@ -11,14 +11,13 @@ var March = function (game) {
         this.add(person);
     }
 
-    this.speed = this.psychology.speed/3;
-	this.totalFatigue = 0;
-	this.totalTemperature = 5;
-	this.totalMorale = 20;
-	
+    this.speed = this.psychology.maxSpeed/3;
 	this.fatigueTreshold = 50;
-	this.temperatureTreshold = 5;
+	this.temperatureTreshold = 10;
 	this.moraleTreshold = 20;
+	this.totalFatigue = 0;
+	this.totalTemperature = this.temperatureTreshold;
+	this.totalMorale = this.moraleTreshold;
 
     // debug axes
     // var debugAxes = new Phaser.Graphics(game, 0, 0);
@@ -36,11 +35,21 @@ March.prototype.constructor = March;
 March.prototype.update = function() {
     // :(((
     this.__proto__.__proto__.update.call(this);
-	this.speed = this.psychology.speed;
+	this.speed = this.psychology.maxSpeed;
 
     // vězni nemůžou předběhnout guardy
-    if(this.position.x < game.guard.position.x)
+    if(this.position.x < game.guard.position.x){
         this.x += this.speed;
+		if(this.psychology.isBreak){
+			this.psychology.toggleBreak();
+		}
+	}
+	else {
+		this.psychology.speed = game.guard.speed;
+		if(game.guard.speed == 0 && !this.psychology.isBreak){
+			this.psychology.toggleBreak();
+		}
+	}
     
     this.psychology.update(game.time.physicsElapsed);
 	
