@@ -67,8 +67,12 @@ Prisoner.prototype.update = function() {
     }
     
     // mazání mimo kameru
-    if(!this.inCamera && !this.alive && this.fleeing){
+    if(!this.inCamera && (!this.alive || this.fleeing)){
         console.log("destroyed!")
+		if(this.fleeing){
+			console.log("escaped");
+			game.march.psychology.escape();
+		}
         this.destroy();
     }
 };
@@ -77,6 +81,7 @@ Prisoner.prototype.onClick = function(t, pointer) {
     this.die("kill");
 	if(this.fleeing){
 		game.march.psychology.runKill();
+		this.fleeing = false;
 	}
 	else {
 		game.march.psychology.walkKill();
