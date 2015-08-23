@@ -40,6 +40,7 @@ March.prototype.update = function() {
     // vězni nemůžou předběhnout guardy
     if(this.position.x < game.guard.position.x){
         this.x += this.speed;
+		this.psychology.speed = this.speed;
 		if(this.psychology.isBreak){
 			this.psychology.toggleBreak();
 		}
