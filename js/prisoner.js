@@ -11,6 +11,8 @@ var Prisoner = function (game) {
     this.input.useHandCursor = true;
     this.events.onInputDown.add(this.onClick, this);
 
+	this.fleeing = false;
+	
     this.alive = true;
 	this.timeOfDeath = 0;
 	this.imageLifespan = 1500;
@@ -35,11 +37,7 @@ Prisoner.prototype.update = function() {
 	
 	if(this.causeOfDeath !== undefined){
 		var deltaT = new Date().getTime() - this.timeOfDeath;
-		if(deltaT < this.imageLifespan){
-			this.causeOfDeath.alpha = 1-(deltaT)/this.imageLifespan;
-			this.causeOfDeath.y = this.imagedy*deltaT;
-		}
-		else {
+		if(deltaT > this.imageLifespan){
 			this.causeOfDeath.destroy();
 			delete this.causeOfDeath;
 		}
@@ -83,11 +81,16 @@ Prisoner.prototype.update = function() {
 
 Prisoner.prototype.onClick = function(t, pointer) {
     this.die("kill");
+	if(this.fleeing){
+		game.march.psychology.runKill();
+	}
+	else {
+		game.march.psychology.walkKill();
+	}
 };
 
 Prisoner.prototype.die = function(how) {
     if(this.alive){
-        console.log(arguments)
 		if(how == "kill"){
             game.jukebox.playEffect("gunshot");
 			this.blood.start(true, 0, 0, 100);
@@ -139,10 +142,14 @@ Prisoner.prototype.flee = function() {
     else {
         this.body.velocity.y = 100;
     }
+	this.fleeing = true;
 };
 
 Prisoner.prototype.startText = function (which){
 	this.causeOfDeath = new Phaser.Image(game, 0, 0, which);
 	this.causeOfDeath.scale.set(0.4);
+	var tween = game.add.tween(this.causeOfDeath);
+	tween.to({y : 20, alpha : 0}, 1500);
+	tween.start();
 	this.addChild(this.causeOfDeath);
 };

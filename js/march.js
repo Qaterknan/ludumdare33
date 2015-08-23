@@ -14,6 +14,7 @@ var March = function (game) {
     this.speed = this.psychology.speed/3;
 	this.totalFatigue = 0;
 	this.totalTemperature = 10;
+	this.totalMorale = 10;
 
     // debug axes
     // var debugAxes = new Phaser.Graphics(game, 0, 0);
@@ -41,6 +42,7 @@ March.prototype.update = function() {
 	
 	this.totalFatigue += this.psychology.fatigue*0.1;
 	this.totalTemperature -= (1-this.psychology.temperature)*0.1;
+	this.totalMorale -= this.psychology.runningProb*0.1;
 	if(this.totalFatigue > 10){
 		this.killOne("exhausted");
 		this.totalFatigue = 0;
@@ -48,6 +50,10 @@ March.prototype.update = function() {
 	if(this.totalTemperature < 0){
 		this.killOne("freeze");
 		this.totalTemperature = 10;
+	}
+	if(this.totalMorale < 0){
+		this.fleeOne();
+		this.totalMorale = 10;
 	}
 };
 
