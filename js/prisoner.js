@@ -35,11 +35,13 @@ Prisoner.prototype.update = function() {
 
     // tendence se shlukovat u bodu 0;0 celé parent groupy
     // this.body.acceleration.set(0, 0);
-    // var force = this.position.clone();
-    // force.x = utils.sgn(force.x);
-    // force.y = utils.sgn(force.y);
-    // force.multiply(-20, -20);
-    // this.body.acceleration.add(force.x, force.y);
+    var force = this.position.clone();
+    force.x = 0;
+    force.y = -0.1 * force.y;
+
+    if(Math.abs(this.position.y) > this.parent.marchHeight)
+        this.body.velocity.add(force.x, force.y);
+
     // tendence si udržovat odstup
     var repulsion = new Phaser.Point();
     // OPTIMALIZOVAT :(((

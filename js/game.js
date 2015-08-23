@@ -29,28 +29,28 @@ PhaserGame.prototype = {
         this.gui.z = 100;
         // gui
         var pauseButton = game.make.button(400-60, 400, "buttons", function(){
-            this.guard.setSpeed(0);
+            game.guard.setSpeed(0);
         }, this, 0, 0);
         pauseButton.scale.set(2);
         pauseButton.smoothed = false;
         this.gui.add(pauseButton);
 
         var speed1Button = game.make.button(400-20, 400, "buttons", function(){
-            this.guard.setSpeed(1);
+            game.guard.setSpeed(1);
         }, this, 1, 1);
         speed1Button.scale.set(2);
         speed1Button.smoothed = false;
         this.gui.add(speed1Button);
 
         var speed2Button = game.make.button(400+20, 400, "buttons", function(){
-            this.guard.setSpeed(2);
+            game.guard.setSpeed(2);
         }, this, 2, 2);
         speed2Button.scale.set(2);
         speed2Button.smoothed = false;
         this.gui.add(speed2Button);
 
         var speed3Button = game.make.button(400+60, 400, "buttons", function(){
-            this.guard.setSpeed(3);
+            game.guard.setSpeed(3);
         }, this, 3, 3);
         speed3Button.scale.set(2);
         speed3Button.smoothed = false;
@@ -81,9 +81,9 @@ PhaserGame.prototype = {
         game.world.add(this.march);
         this.march.position.set(400, 240);
 
-        this.guard = new Guard(this.game);
-        game.world.add(this.guard);
-        this.guard.position.set(400, 240);
+        game.guard = new Guard(this.game);
+        game.world.add(game.guard);
+        game.guard.position.set(400, 240);
         
         // stopování hry
         game.input.keyboard.addCallbacks(
@@ -152,19 +152,19 @@ PhaserGame.prototype = {
         this.datgui.add(this.march.psychology, "runKillToRun");
         this.datgui.add(this.march.psychology, "walkKillToSpeed");
 
-        game.camera.follow(this.guard);
+        game.camera.follow(game.guard);
 
         game.world.sort();
     },
 
     update: function () {
         // var t = 0.0000000001; // rychlost s jakou se řítí kamera za grupou
-        // var delta = game.camera.view.clone().subtract(this.guard.position.x-game.camera.width/2, this.guard.position.y-game.camera.height/2).multiply(t, t);
+        // var delta = game.camera.view.clone().subtract(game.guard.position.x-game.camera.width/2, game.guard.position.y-game.camera.height/2).multiply(t, t);
         // game.camera.x += delta.x;
         // game.camera.y += delta.y;
         // game.camera.view.x += 0.5;
-        // game.camera.view.x += (this.guard.position.x - game.camera.view.x - game.camera.view.width/2) * t;
-        // game.camera.view.y += (this.guard.position.y - game.camera.view.y - game.camera.view.height/2) * t;
+        // game.camera.view.x += (game.guard.position.x - game.camera.view.x - game.camera.view.width/2) * t;
+        // game.camera.view.y += (game.guard.position.y - game.camera.view.y - game.camera.view.height/2) * t;
         // game.camera.view.x = Math.ceil(game.camera.view.x);
         // game.camera.view.y = Math.ceil(game.camera.view.y);
     },

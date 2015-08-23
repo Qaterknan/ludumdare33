@@ -3,10 +3,11 @@ var March = function (game) {
 
     this.psychology = new Psychology(this);
 
+    this.marchHeight = 25;
     for (var i = 0; i < 30; i++)
     {
         var person = new Prisoner(game);
-        person.position.set(utils.random(-300, 0), utils.random(-20, 20));
+        person.position.set(utils.random(-300, 0), utils.random(-this.marchHeight, this.marchHeight));
         this.add(person);
     }
 
@@ -31,7 +32,11 @@ March.prototype.update = function() {
     // :(((
     this.__proto__.__proto__.update.call(this);
 	this.speed = this.psychology.speed;
-    this.x += this.speed;
+
+    // vězni nemůžou předběhnout guardy
+    if(this.position.x < game.guard.position.x)
+        this.x += this.speed;
+    
     this.psychology.update(game.time.physicsElapsed);
 	
 	this.totalFatigue += this.psychology.fatigue*0.1;
