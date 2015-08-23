@@ -12,6 +12,10 @@ var Prisoner = function (game) {
     this.events.onInputDown.add(this.die, this);
 
     this.alive = true;
+	this.timeOfDeath = 0;
+	this.imageLifespan = 1500;
+	this.imagedy = 20/this.imageLifespan;
+	this.causeOfDeath = undefined;
 }
 Prisoner.prototype = Object.create(Person.prototype);
 Prisoner.prototype.constructor = Prisoner;
@@ -27,6 +31,19 @@ Prisoner.prototype.update = function() {
     else {
         this.circle.visible = false;
     }
+	// cause of death
+	
+	if(this.causeOfDeath !== undefined){
+		var deltaT = new Date().getTime() - this.timeOfDeath;
+		if(deltaT < this.imageLifespan){
+			this.causeOfDeath.alpha = 1-(deltaT)/this.imageLifespan;
+			this.causeOfDeath.y = this.imagedy*deltaT;
+		}
+		else {
+			this.causeOfDeath.destroy();
+			delete this.causeOfDeath;
+		}
+	}
     // náhodný pohyb
     this.body.velocity.add(
         utils.random(-1, 1), 
@@ -65,17 +82,23 @@ Prisoner.prototype.die = function(how) {
 		if(how == "kill"){
 			this.blood.start(true, 0, 0, 100);
             this.loadTexture("corpse");
+			this.startText("kill");
 		}
 		else if(how == "freeze"){
 			this.loadTexture("frozen");
+			this.startText("freeze");
 		}
-        else if(Math.random() > 0.5){
-            this.blood.start(true, 0, 0, 100);
-            this.loadTexture("corpse");
-        }
-        else
-            this.loadTexture("frozen");
+        else if(how == "exhausted"){
+			this.loadTexture("frozen");
+			this.startText("exhausted");
+		}
+		else{
+			this.loadTexture("frozen");
+		}
         this.rotation = utils.random(0, Math.PI*2);
+		if(this.causeOfDeath !== undefined){
+			this.causeOfDeath.rotation = -this.rotation;
+		}
         this.animations.add("fall", null, 14, false);
         this.play("fall");
 
@@ -89,6 +112,8 @@ Prisoner.prototype.die = function(how) {
         this.body.enable = false;
         this.input.useHandCursor = false;
         game.canvas.style.cursor="default";
+		
+		this.timeOfDeath = new Date().getTime();
     }
 };
 
@@ -104,4 +129,10 @@ Prisoner.prototype.flee = function() {
     else {
         this.body.velocity.y = 100;
     }
+};
+
+Prisoner.prototype.startText = function (which){
+	this.causeOfDeath = new Phaser.Image(game, 0, 0, which);
+	this.causeOfDeath.scale.set(0.4);
+	this.addChild(this.causeOfDeath);
 };

@@ -37,7 +37,7 @@ March.prototype.update = function() {
 	this.totalFatigue += this.psychology.fatigue*0.1;
 	this.totalTemperature -= (1-this.psychology.temperature)*0.1;
 	if(this.totalFatigue > 10){
-		this.killOne("freeze");
+		this.killOne("exhausted");
 		this.totalFatigue = 0;
 	}
 	if(this.totalTemperature < 0){
@@ -50,7 +50,7 @@ March.prototype.setSpeed = function(speed) {
     this.speed = speed/3;
 };
 
-March.prototype.killOne = function(how) { // kill, freeze
+March.prototype.killOne = function(how) { // kill, freeze, exhausted
     this.getRandom().die(how);
 };
 
