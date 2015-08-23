@@ -47,7 +47,8 @@ March.prototype.update = function() {
 	}
 	else {
 		this.psychology.speed = game.guard.speed;
-		this.x += game.guard.speed;
+        this.speed = game.guard.speed;
+		this.x += this.speed;
 		if(game.guard.speed == 0 && !this.psychology.isBreak){
 			this.psychology.toggleBreak();
 		}

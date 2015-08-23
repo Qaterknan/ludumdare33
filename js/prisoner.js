@@ -65,6 +65,9 @@ Prisoner.prototype.update = function() {
         this.body.velocity.add(this.repulsion.x, this.repulsion.y);
         this.repulsion.set(0, 0);
     }
+    else {
+        this.rotation = Math.atan2(this.body.velocity.y, this.body.velocity.x);
+    }
     
     // mazání mimo kameru
     if(!this.inCamera && (!this.alive || this.fleeing)){

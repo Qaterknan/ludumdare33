@@ -45,11 +45,21 @@ var Person = function (game, key) {
 Person.prototype = Object.create(Phaser.Sprite.prototype);
 Person.prototype.constructor = Person;
 Person.prototype.update = function() {
-    // jdi za nosem
-    // this.rotation = Math.atan2(this.body.velocity.y, this.body.velocity.x);
+    if(this.parent.speed === 0){
+        this.play("stand");
+    }
+    else if(this.parent.speed > 0) {
+        this.play("walk");
+    }
 
     var pos = this.worldPosition.clone();
     pos.add(game.camera.view.x, game.camera.view.y);
     this.footsteps.emitX = pos.x;
     this.footsteps.emitY = pos.y;
+    // this.footsteps.frequency = 1000/this.parent.speed;
+
+    var animationSpeed = 12*this.parent.speed;
+    animationSpeed += utils.random(0, 0.1)*animationSpeed; // 10% pro desync animací
+    if(this.animations.currentAnim.name == "walk")
+        this.animations.currentAnim.speed = animationSpeed;
 };
