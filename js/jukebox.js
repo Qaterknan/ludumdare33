@@ -60,3 +60,8 @@ Effects.prototype.startLoop = function(wait, randomWait) {
 
 	this.wait();
 };
+Effects.prototype.mute = function(mute) {
+	for(var i=0; i<this.effects.length; i++){
+		this.effects[i].mute = mute;
+	}
+};

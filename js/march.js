@@ -53,6 +53,17 @@ March.prototype.update = function() {
 			this.psychology.toggleBreak();
 		}
 	}
+
+    if(this.speed > 0){
+        game.jukebox.getEffect("walk1").mute(false);
+        game.jukebox.getEffect("walk2").mute(false);
+        game.jukebox.getEffect("walkFast").mute(false);
+    }
+    else {
+        game.jukebox.getEffect("walk1").mute(true);
+        game.jukebox.getEffect("walk2").mute(true);
+        game.jukebox.getEffect("walkFast").mute(true);
+    }
     
     this.psychology.update(game.time.physicsElapsed);
 	
