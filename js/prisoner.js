@@ -68,9 +68,7 @@ Prisoner.prototype.update = function() {
     
     // mazání mimo kameru
     if(!this.inCamera && (!this.alive || this.fleeing)){
-        console.log("destroyed!")
 		if(this.fleeing){
-			console.log("escaped");
 			game.march.psychology.escape();
 		}
         this.destroy();

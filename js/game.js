@@ -103,6 +103,11 @@ PhaserGame.prototype = {
             tree.smoothed = false;
             // tree.rotation = utils.random(0, Math.PI);
             tree.rotation = utils.randomInt(0, 4)/2 * Math.PI;
+			tree.update = function (){
+				if(game.camera.position.x - this.position.x > game.camera.view.width/2+100){
+					this.position.x += 1600;
+				}
+			};
         }
 
         // groupy

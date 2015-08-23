@@ -13,8 +13,12 @@ var March = function (game) {
 
     this.speed = this.psychology.speed/3;
 	this.totalFatigue = 0;
-	this.totalTemperature = 10;
-	this.totalMorale = 10;
+	this.totalTemperature = 5;
+	this.totalMorale = 20;
+	
+	this.fatigueTreshold = 50;
+	this.temperatureTreshold = 5;
+	this.moraleTreshold = 20;
 
     // debug axes
     // var debugAxes = new Phaser.Graphics(game, 0, 0);
@@ -43,15 +47,18 @@ March.prototype.update = function() {
 	this.totalFatigue += this.psychology.fatigue*0.1;
 	this.totalTemperature -= (1-this.psychology.temperature)*0.1;
 	this.totalMorale -= this.psychology.runningProb*0.1;
-	if(this.totalFatigue > 10){
+	if(this.totalFatigue > this.fatigueTreshold){
 		this.killOne("exhausted");
 		this.totalFatigue = 0;
 	}
 	if(this.totalTemperature < 0){
 		this.killOne("freeze");
-		this.totalTemperature = 10;
+		this.totalTemperature = this.temperatureTreshold;
 	}
-
+	if(this.totalMorale < 0){
+			this.fleeOne();
+			this.totalMorale = this.moraleTreshold;
+		}
     // tendence si udržovat odstup
     for(var i=0; i<this.length; i++){
         var child1 = this.children[i];
@@ -69,11 +76,6 @@ March.prototype.update = function() {
             }
         }
     }
-
-	if(this.totalMorale < 0){
-		this.fleeOne();
-		this.totalMorale = 10;
-	}
 };
 
 March.prototype.setSpeed = function(speed) {
