@@ -10,16 +10,18 @@ PhaserGame.prototype = {
         game.load.image('snow','images/snow.png');
         game.load.image('arrow','images/arrow.png');
         game.load.image('footstep','images/footstep.png');
+        game.load.image('paper','images/paper.jpg');
         game.load.spritesheet('buttons','images/buttons.png', 16, 16);
-        game.load.spritesheet('soldier', 'images/nazi.png', 8, 8);
+        game.load.spritesheet('soldier', 'images/u.png', 10, 10);
+        game.load.spritesheet('shoot', 'images/shoot.png', 30, 10);
         game.load.spritesheet('prisoner1', 'images/pow1.png', 8, 8);
         game.load.spritesheet('prisoner2', 'images/pow2.png', 8, 8);
         game.load.spritesheet('corpse', 'images/corpse.png', 16, 16);
         game.load.spritesheet('frozen', 'images/frozen.png', 16, 16);
 
-        game.load.image('freeze', 'images/freeze_word.png');
-        game.load.image('kill', 'images/kill_word.png');
-        game.load.image('exhausted', 'images/exhausted_word.png');
+        game.load.image('kill', 'images/text1.png');
+        game.load.image('freeze', 'images/text2.png');
+        game.load.image('exhausted', 'images/text3.png');
 
         game.load.audio('cough', 'sounds/cough.ogg');
         game.load.audio('gunshot', 'sounds/gunshot.ogg');
@@ -33,6 +35,8 @@ PhaserGame.prototype = {
         game.load.audio('wind1', 'sounds/wind1.ogg');
         game.load.audio('wind2', 'sounds/wind2.ogg');
         game.load.audio('wind3', 'sounds/wind3.ogg');
+
+        game.load.bitmapFont('typewriter', 'fonts/font.png', 'fonts/font.fnt');
     },
     create: function () {
         // centrování canvasu
@@ -45,9 +49,9 @@ PhaserGame.prototype = {
         game.time.advancedTiming = true;
 
         game.jukebox = new Jukebox(game);
-        game.jukebox.addEffect("cough", "sfx", 0.1).startLoop(10, 30);
-        game.jukebox.addEffect("howling", "sfx", 0.4).startLoop(10, 20);
-        game.jukebox.addEffect("twig", "sfx", 0.04).startLoop(2, 5);
+        game.jukebox.addEffect("cough", "sfx1", 0.1).startLoop(10, 30);
+        game.jukebox.addEffect("howling", "sfx2", 0.4).startLoop(30, 20);
+        game.jukebox.addEffect("twig", "sfx3", 0.04).startLoop(2, 5);
 
         game.jukebox.addEffect("wind1", "wind1", 0.3).startLoop(1, 10);
         game.jukebox.addEffect("wind2", "wind2", 0.1).startLoop(1, 10);
@@ -61,7 +65,7 @@ PhaserGame.prototype = {
 
         this.gui = game.add.group(game.world, "gui");
         this.gui.fixedToCamera = true;
-        this.gui.z = 1000;
+        
         // gui
         var pauseButton = game.make.button(400-60, 400, "buttons", function(){
             game.guard.setSpeed(0);
@@ -91,30 +95,48 @@ PhaserGame.prototype = {
         speed3Button.smoothed = false;
         this.gui.add(speed3Button);
         
+		game.distanceCounter = game.make.text(400, 50, "");
+		this.gui.add(game.distanceCounter);
+
+        // var paper = game.make.sprite(game.width/2, 0, "paper");
+        // paper.anchor.set(0.5, 0);
+        // var stats = game.make.bitmapText(paper.width/2, 0, "typewriter", "libovky", 12);
+        // stats.scale.set(2, 2);
+        // stats.smoothed = false;
+        // paper.addChild(stats);
+        // this.gui.add(paper);
+
         // Particles group
         game.emitters = game.add.group(game.world, "emitters");
-        game.emitters.z = -30000;
+
+        // pro utíkající lidi
+        game.fleeing = game.add.group(game.world, "fleeing");
+
+        var enviroment = game.add.group(game.world, "enviroment");
         // stromy pro kontext
         for(var i=0; i<100; i++){
             var tree;
             if(Math.random() < 0.5)
-                tree = game.add.sprite(utils.random(0,1600), utils.random(0,100), "tree"+(Math.random() < 0.5 ? "" : "2"));
+                tree = game.make.sprite(utils.random(0,1600), utils.random(0,100), "tree"+(Math.random() < 0.5 ? "" : "2"));
             else
-                tree = game.add.sprite(utils.random(0,1600), utils.random(380,480), "tree"+(Math.random() < 0.5 ? "" : "2"));
+                tree = game.make.sprite(utils.random(0,1600), utils.random(380,480), "tree"+(Math.random() < 0.5 ? "" : "2"));
             tree.scale.set(2);
             tree.smoothed = false;
             // tree.rotation = utils.random(0, Math.PI);
             tree.rotation = utils.randomInt(0, 4)/2 * Math.PI;
-			tree.update = function (){
-				if(game.camera.position.x - this.position.x > game.camera.view.width/2+100){
-					this.position.x += 1600;
-				}
-			};
+            tree.update = function (){
+                if(game.camera.position.x - this.position.x > game.camera.view.width/2+100){
+                    this.position.x += 1600;
+                }
+            };
+
+            enviroment.addChild(tree);
         }
+        
 
         // groupy
         // Hřbitov
-        game.graveyard = new Graveyard(0,0,0);
+        game.graveyard = new Graveyard(0,0);
         game.world.add(game.graveyard);
         // Pochod
         game.march = new March(this.game);
@@ -173,9 +195,7 @@ PhaserGame.prototype = {
             color: 0xFF0000
         })
         this.gui.add(game.fpsCounter);
-		
-		game.distanceCounter = game.make.text(400, 50, "");
-		this.gui.add(game.distanceCounter);
+        
 
         var background = game.make.graphics(650, 30);
         background.beginFill(0x000000, 0.7);
@@ -240,6 +260,16 @@ PhaserGame.prototype = {
 
         game.camera.follow(game.guard);
 
+
+        // vrstvy !! -----------------
+        this.gui.z = 8;
+        game.march.z = 3;
+        game.guard.z = 4;
+        game.graveyard.z = 2;
+        game.emitters.z = 1; // prázdná
+        game.fleeing.z = 0; // utíkající
+        enviroment.z = 5;
+        snow = 6;
         game.world.sort();
     },
 

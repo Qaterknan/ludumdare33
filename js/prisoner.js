@@ -15,8 +15,6 @@ var Prisoner = function (game) {
 	this.fleeing = false;
     this.alive = true;
 	this.timeOfDeath = 0;
-	this.imageLifespan = 1500;
-	this.imagedy = 20/this.imageLifespan;
 	this.causeOfDeath = undefined;
 }
 Prisoner.prototype = Object.create(Person.prototype);
@@ -33,16 +31,7 @@ Prisoner.prototype.update = function() {
     else {
         this.circle.visible = false;
     }
-	// cause of death
-	
-	if(this.causeOfDeath !== undefined){
-		var deltaT = new Date().getTime() - this.timeOfDeath;
-		if(deltaT > this.imageLifespan){
-			this.causeOfDeath.destroy();
-			delete this.causeOfDeath;
-		}
-	}
-    
+
     if(!this.fleeing){
         // náhodný pohyb
         this.body.velocity.add(
@@ -132,7 +121,7 @@ Prisoner.prototype.flee = function() {
     var pos = this.worldPosition.clone();
     pos.add(game.camera.view.x, game.camera.view.y);
     this.parent.removeChild(this);
-    game.world.add(this);
+    game.fleeing.add(this);
     this.position = pos;
     if(this.position.y < game.world.height/2){
         this.body.velocity.y = -100;
@@ -149,10 +138,17 @@ Prisoner.prototype.flee = function() {
 Prisoner.prototype.startText = function (which){
 	var pos = this.worldPosition.clone();
 	pos.add(game.camera.view.x, game.camera.view.y);
-	this.causeOfDeath = new Phaser.Image(game, pos.x, pos.y, which);
-	this.causeOfDeath.scale.set(1);
+	this.causeOfDeath = new Phaser.Image(game, Math.round(pos.x), Math.round(pos.y), which);
+	this.causeOfDeath.anchor.set(0.5, 0.5);
+
 	var tween = game.add.tween(this.causeOfDeath);
-	tween.to({y : 20, alpha : 0}, 1500);
+	tween.to({y : pos.y-50, alpha : 0}, 2500);
 	tween.start();
+    tween.easing(Phaser.Easing.Linear.None);
+    var _this = this;
+    tween.onComplete.add(function(){
+        _this.causeOfDeath.destroy();
+    })
+
 	game.world.add(this.causeOfDeath);
 };
