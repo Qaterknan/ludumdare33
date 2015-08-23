@@ -8,6 +8,7 @@ PhaserGame.prototype = {
         game.load.image('tree2','images/smrk3.png');
         game.load.image('blood','images/blood.png');
         game.load.image('snow','images/snow.png');
+        game.load.image('arrow','images/arrow.png');
         game.load.image('footstep','images/footstep.png');
         game.load.spritesheet('buttons','images/buttons.png', 16, 16);
         game.load.spritesheet('soldier', 'images/nazi.png', 8, 8);
@@ -104,6 +105,11 @@ PhaserGame.prototype = {
             tree.smoothed = false;
             // tree.rotation = utils.random(0, Math.PI);
             tree.rotation = utils.randomInt(0, 4)/2 * Math.PI;
+			tree.update = function (){
+				if(game.camera.position.x - this.position.x > game.camera.view.width/2+100){
+					this.position.x += 1600;
+				}
+			};
         }
 
         // groupy
@@ -129,8 +135,8 @@ PhaserGame.prototype = {
         snow.maxParticleSpeed.set(10, 100);
         snow.setAlpha(1, 0.6, 1000);
         snow.makeParticles("snow", 0, 1000);
-        snow.area.width = 850;
-        snow.area.height = 480;
+        snow.area.width = 800;
+        snow.area.height = 580;
 
         snow.angle = Math.PI;
         snow.angleDelta = 0.1;
@@ -220,8 +226,6 @@ PhaserGame.prototype = {
         this.datgui.add(game.march.psychology, "speedToEffort");
         this.datgui.add(game.march.psychology, "speedToTemperature");
         this.datgui.add(game.march.psychology, "freezingToTemperature");
-        this.datgui.add(game.march.psychology, "breakToTemperature");
-        this.datgui.add(game.march.psychology, "breakToFatigue");
         this.datgui.add(game.march.psychology, "runKillToRun");
         this.datgui.add(game.march.psychology, "walkKillToSpeed");
 

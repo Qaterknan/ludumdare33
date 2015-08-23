@@ -11,10 +11,13 @@ var March = function (game) {
         this.add(person);
     }
 
-    this.speed = this.psychology.speed/3;
+    this.speed = this.psychology.maxSpeed/3;
+	this.fatigueTreshold = 50;
+	this.temperatureTreshold = 10;
+	this.moraleTreshold = 20;
 	this.totalFatigue = 0;
-	this.totalTemperature = 10;
-	this.totalMorale = 10;
+	this.totalTemperature = this.temperatureTreshold;
+	this.totalMorale = this.moraleTreshold;
 
     // debug axes
     // var debugAxes = new Phaser.Graphics(game, 0, 0);
@@ -32,26 +35,39 @@ March.prototype.constructor = March;
 March.prototype.update = function() {
     // :(((
     this.__proto__.__proto__.update.call(this);
-	this.speed = this.psychology.speed;
+	this.speed = this.psychology.maxSpeed;
 
     // vězni nemůžou předběhnout guardy
-    if(this.position.x < game.guard.position.x)
+    if(this.position.x < game.guard.position.x){
         this.x += this.speed;
+		if(this.psychology.isBreak){
+			this.psychology.toggleBreak();
+		}
+	}
+	else {
+		this.psychology.speed = game.guard.speed;
+		if(game.guard.speed == 0 && !this.psychology.isBreak){
+			this.psychology.toggleBreak();
+		}
+	}
     
     this.psychology.update(game.time.physicsElapsed);
 	
 	this.totalFatigue += this.psychology.fatigue*0.1;
 	this.totalTemperature -= (1-this.psychology.temperature)*0.1;
 	this.totalMorale -= this.psychology.runningProb*0.1;
-	if(this.totalFatigue > 10){
+	if(this.totalFatigue > this.fatigueTreshold){
 		this.killOne("exhausted");
 		this.totalFatigue = 0;
 	}
 	if(this.totalTemperature < 0){
 		this.killOne("freeze");
-		this.totalTemperature = 10;
+		this.totalTemperature = this.temperatureTreshold;
 	}
-
+	if(this.totalMorale < 0){
+			this.fleeOne();
+			this.totalMorale = this.moraleTreshold;
+		}
     // tendence si udržovat odstup
     for(var i=0; i<this.length; i++){
         var child1 = this.children[i];
@@ -69,11 +85,6 @@ March.prototype.update = function() {
             }
         }
     }
-
-	if(this.totalMorale < 0){
-		this.fleeOne();
-		this.totalMorale = 10;
-	}
 };
 
 March.prototype.setSpeed = function(speed) {
