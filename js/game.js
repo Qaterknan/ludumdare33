@@ -57,8 +57,8 @@ PhaserGame.prototype = {
         this.gui.add(speed3Button);
         
         // Particles group
-        game.emittors = game.add.group(game.world, "emittors");
-        game.emittors.z = 30000;
+        game.emitters = game.add.group(game.world, "emitters");
+        game.emitters.z = 30000;
         // stromy pro kontext
         for(var i=0; i<100; i++){
             var tree;

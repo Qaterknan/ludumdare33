@@ -31,7 +31,7 @@ var Person = function (game, key) {
     this.footsteps.maxParticleSpeed.set(0, 5);
     this.footsteps.minParticleScale = 2;
     this.footsteps.maxParticleScale = 2;
-    game.emittors.add(this.footsteps);
+    game.emitters.add(this.footsteps);
     this.footsteps.start(false, 2000, 500, 100);
 
     // select circle
