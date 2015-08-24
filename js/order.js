@@ -7,8 +7,10 @@ var Order = function (game, parent, x, y) {
 		this.changeState("hidden", function(){
 			game.order.getText("text").text = "Do eliminate any"+
 				" unnecessary casualties due to hypothermia (too slow) or exhaustion (too fast). "+
-				"The Reich can still make use of the prisoners. \n\n"+
+				"The Reich can still make use of the prisoners. "+
+				"Punish attemts to escape, as success only encourages more such acts.\n\n"+
 				"Sturmbannführer Karl Wilhelm Florstedt";
+			game.order.nextPageText.text = "start";
 			game.order.changeState("out");
 			game.order.nextPageButton.onInputUp.removeAll();
 			game.order.nextPageButton.onInputUp.add(function(){game.order.changeState("hidden");game.startGame();}, game);

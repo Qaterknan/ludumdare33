@@ -132,14 +132,16 @@ var Diary = function (game, parent, x, y) {
             "I am going to Valhalla!",
             "I also wonder whether there is something meaningful before death, at least.",
             "Others will know soon, but mine is probably very far away.",
-            "Hard to tell. Purgatory is just temporary, they say."
+            "Hard to tell. Purgatory is just temporary, they say.",
+			{"A" : "N", "B" : "O", "C" : "Z", "D" : "D"}
             ),
         new Text(
             "They look like skeletons, they are walking corpses! I cannot tell men from women, that is how skinny they are. What will happen now? Am I going to be judged?",
             "Let's kill them right here, right now, the furnaces are still working. I did a good job!",
             "What have I done? What have we done... to you? I am guilty, we all are. God, I am so sorry!",
             "We will lock them in a barn. Let the Russians or the cold take them. I’m gonna be somewhere far away by then!",
-            "I’m not sure, I was just forced to carry out my orders. What else is there to do? My superiors are guilty!"
+            "I’m not sure, I was just forced to carry out my orders. What else is there to do? My superiors are guilty!",
+			{"A" : "N", "B" : "O", "C" : "Z", "D" : "D"}
             )
     ];
     this.story = 0;
