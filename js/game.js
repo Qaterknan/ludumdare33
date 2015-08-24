@@ -227,6 +227,13 @@ PhaserGame.prototype = {
             }
         );
 
+        game.black = game.add.graphics(0, 0);
+        game.black.fixedToCamera = true;
+        game.black.beginFill(0xFFFFFF);
+        game.black.drawRect(0, 0, game.width, game.height);
+        game.black.endFill();
+        game.black.visible = false;
+
         // debug gui
         var debugGui = game.add.group(this.gui, "debugGui");
         debugGui.x = -600;
@@ -304,7 +311,8 @@ PhaserGame.prototype = {
         game.finalGate.z = 7;
         snow.z = 8;
         this.gui.z = 9;
-		this.startGroup.z = 10;
+        this.startGroup.z = 10;
+		game.black.z = 11;
         game.world.sort();
     },
 
@@ -372,7 +380,13 @@ $(document).ready(function(){
             }
             else {
                 // potemění obrazovky
+                game.black.alpha = 0;
+                game.black.visible = true;
 
+                game.add.tween(game.black)
+                    .to({alpha: 1}, 3000)
+                    .easing(Phaser.Easing.Linear.None)
+                    .start();
             }
         },
 
