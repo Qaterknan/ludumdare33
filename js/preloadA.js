@@ -40,6 +40,7 @@ preloadA.prototype = {
     game.load.image('kill', 'images/text1.png');
     game.load.image('freeze', 'images/text2.png');
     game.load.image('exhausted', 'images/text3.png');
+    game.load.image('missed', 'images/text4.png');
 
     game.load.audio('cough', 'sounds/cough.ogg');
     game.load.audio('gunshot', 'sounds/gunshot.ogg');
