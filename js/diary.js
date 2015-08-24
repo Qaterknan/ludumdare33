@@ -13,14 +13,12 @@ var Diary = function (game, parent, x, y) {
     var text = this.addText("text");
 
     var onOver = function(){
-        console.log("ahoj")
         var tween = game.add.tween(this);
         tween.to({alpha : 1}, 300);
         tween.easing(Phaser.Easing.Cubic.Out);
         tween.start();
     }
     var onOut = function(){
-        console.log("ahoj")
         var tween = game.add.tween(this);
         tween.to({alpha : 0.4}, 300);
         tween.easing(Phaser.Easing.Cubic.Out);
@@ -37,31 +35,6 @@ var Diary = function (game, parent, x, y) {
         answer.events.onInputOut.add(onOut, answer);
         answer.events.onInputOut.add(this.onOut, this);
     }
-
-    // var nextPage = game.make.button(this.width/2, this.height-50, "buttonBorder", function(){
-    //     console.log("asdf");
-    // });
-    // nextPage.anchor.set(0.5, 1);
-    // nextPage.tint = 0x000000;
-    // nextPage.alpha = 0.4;
-    // nextPage.onInputOver.add(function(){
-    //     var tween = game.add.tween(this);
-    //     tween.to({alpha : 1}, 300);
-    //     tween.easing(Phaser.Easing.Circular.In);
-    //     tween.start();
-    // }, nextPage);
-    // nextPage.onInputOut.add(function(){
-    //     var tween = game.add.tween(this);
-    //     tween.to({alpha : 0.4}, 300);
-    //     tween.easing(Phaser.Easing.Circular.Out);
-    //     tween.start();
-    // }, nextPage);
-    // var next = game.make.text(0, -nextPage.height+4, "next page", {
-    //     font: "normal 16px monacoregular"
-    // });
-    // next.anchor.set(0.5, 0);
-    // nextPage.addChild(next);
-    // paper.addChild(nextPage);
 
     this.textStrings = [
         new Text(
@@ -93,18 +66,18 @@ Diary.prototype.nextQuestion = function() {
     this.story++;
 };
 
-Diary.prototype.changeQuestion = function(text) {
-    this.texts["text"].text = text.monologue;
-    this.texts["textA"].y = this.texts["text"].bottom;
-    this.texts["textA"].text = "1. " + text.a;
-    this.texts["textB"].y = this.texts["textA"].bottom;
-    this.texts["textB"].text = "2. " + text.b;
-    this.texts["textC"].y = this.texts["textB"].bottom;
-    this.texts["textC"].text = "3. " + text.c;
-     // + "\n" +
-     //    "1." + text.a + "\n" +
-     //    "2." + text.b + "\n" +
-     //    "3." + text.c;
+Diary.prototype.changeQuestion = function(textobj) {
+    var text = this.getText("text");
+    var textA = this.getText("textA");
+    var textB = this.getText("textB");
+    var textC = this.getText("textC");
+    text.text = textobj.monologue;
+    textA.y = text.bottom;
+    textA.text = "1. " + textobj.a;
+    textB.y = textA.bottom;
+    textB.text = "2. " + textobj.b;
+    textC.y = textB.bottom;
+    textC.text = "3. " + textobj.c;
 };
 
 function Text(monologue, a, b, c) {

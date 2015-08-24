@@ -72,8 +72,9 @@ PhaserGame.prototype = {
         game.distanceCounter.anchor.set(0.5, 0.5);
         this.gui.add(game.distanceCounter);
 
-        game.stage.disableVisibilityChange = true;
+        // game.stage.disableVisibilityChange = true;
         game.diary = new Diary(game, this.gui, game.width, game.height/2 - 225);
+        game.report = new Report(game, this.gui, -332, game.height/2 - 225);
 		// Start menu
 		this.startGroup = game.add.group(game.world, "startGroup");
         this.startGroup.fixedToCamera = true;

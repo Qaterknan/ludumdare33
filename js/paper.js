@@ -34,6 +34,10 @@ Paper.prototype.addText = function(key) {
     return text;
 };
 
+Paper.prototype.getText = function(key) {
+    return this.texts[key];
+};
+
 Paper.prototype.changeState = function(state) {
     var tween = game.add.tween(this)
         .to({x: this.states[state]}, 700)
