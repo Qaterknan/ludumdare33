@@ -163,8 +163,12 @@ PhaserGame.prototype = {
 
         var gate = game.add.sprite(400, 240, "gate");
         gate.anchor.set(0.5, 0.5);
-        gate.scale.set(2, 2);
+        gate.scale.set(-2, 2);
         gate.smoothed = false;
+		game.finalGate = game.add.sprite(1400, 240, "gate");
+        game.finalGate.anchor.set(0.5, 0.5);
+        game.finalGate.scale.set(2, 2);
+        game.finalGate.smoothed = false;
         // groupy
         // Hřbitov
         game.graveyard = new Graveyard(0,0);
@@ -349,3 +353,11 @@ $(document).ready(function(){
         game.state.start("Loading");
     });
 })
+
+function endGame(){
+	this.progress.sendStats();
+	this.march.stopEffects();
+	this.camera.unfollow();
+	this.march.inDestination = true;
+	console.log("konec");
+}

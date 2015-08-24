@@ -48,6 +48,8 @@ Progress.prototype.init = function (howMany){console.log("init");
 	this.startTime = new Date().getTime();
 }
 Progress.prototype.updateDistance = function(xposition){
+	if(game.march.inDestination)
+		return;
 	this.timeFromStart = new Date().getTime();
 	this.daysElapsed = (this.timeFromStart - this.startTime)/60000;
 	this.distanceWalked = Math.round((xposition-400)*3);
@@ -59,7 +61,7 @@ Progress.prototype.checkLeft = function(l){
 		console.warn("Uniká nějaký druh smrti");
 	}
 }
-Progress.prototype.sendStats = function (){console.log(JSON.stringify(this));
+Progress.prototype.sendStats = function (){
 	$.ajax({
 		type : "POST",
 		url : "stats.php",
