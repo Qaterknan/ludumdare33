@@ -1,6 +1,6 @@
 var Order = function (game, parent, x, y) {
     Report.call(this, game, parent, x, y);
-
+    this.getText("text").wordWrapWidth = 280;
     this.nextPageButton.onInputUp.removeAll();
 	
 	this.changeToPageTwo = function (){
