@@ -37,7 +37,8 @@ Guard.prototype.update = function() {
 
     // Připojení se kamery
     if(this.position.x >= game.camera.position.x){
-        game.camera.follow(game.guard);
+		if(!this.inDestination)
+			game.camera.follow(game.guard);
     }
 	
 	if(this.position.x  >= game.finalGate.position.x){
