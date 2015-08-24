@@ -30,6 +30,7 @@ var Diary = function (game, parent, x, y) {
         var answer = this.addText(answers[i]);
         answer.alpha = 0.4;
         answer.inputEnabled = true;
+        answer.input.useHandCursor = true;
         answer.events.onInputOver.add(onOver, answer);
         answer.events.onInputOver.add(this.onOver, this);
         answer.events.onInputOut.add(onOut, answer);

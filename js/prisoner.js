@@ -27,7 +27,7 @@ Prisoner.prototype.onHover = function() {
     this.circle.scale.set(1.5, 1.5);
     var tween = game.add.tween(this.circle.scale);
     tween.to({x : 1, y : 1}, 100);
-    tween.easing(Phaser.Easing.Circular.Out);
+    tween.easing(Phaser.Easing.Cubic.Out);
     tween.start();
 };
 

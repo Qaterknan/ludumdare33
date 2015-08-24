@@ -15,6 +15,7 @@ var Paper = function (game, parent, x, y, key) {
 
     this.state = "hidden"; // "out", "visible"
 
+    this.paddingTop = 26;
     this.paddingLeft = 40;
 }
 
@@ -27,7 +28,7 @@ Paper.prototype.addText = function(key) {
         wordWrap: true,
         wordWrapWidth: 300
     };
-    var text = game.make.text(this.paddingLeft, 26, "text", textOptions);
+    var text = game.make.text(this.paddingLeft, this.paddingTop, "text", textOptions);
     this.addChild(text);
 
     this.texts[key] = text;

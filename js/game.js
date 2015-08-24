@@ -286,7 +286,7 @@ PhaserGame.prototype = {
         pauseButton.smoothed = false;
         debugGui.add(pauseButton);
 
-        debugGui.visible = true;
+        debugGui.visible = false;
 		
         this.datgui = new dat.GUI();
         this.datgui.add(game.march.psychology, "speed");
