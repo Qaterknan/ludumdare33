@@ -93,14 +93,14 @@ PhaserGame.prototype = {
         nextPage.onInputOver.add(function(){
             console.log(this)
             var tween = game.add.tween(this);
-            tween.to({alpha : 1}, 500);
+            tween.to({alpha : 1}, 300);
             tween.easing(Phaser.Easing.Circular.In);
             tween.start();
         }, nextPage);
         nextPage.onInputOut.add(function(){
             console.log(this)
             var tween = game.add.tween(this);
-            tween.to({alpha : 0.4}, 500);
+            tween.to({alpha : 0.4}, 300);
             tween.easing(Phaser.Easing.Circular.Out);
             tween.start();
         }, nextPage);
@@ -146,11 +146,12 @@ PhaserGame.prototype = {
 		this.gui.alpha = 0;
 		
         // this.gui.add(paper);
-
-        this.snowBackground = game.add.tileSprite(0, 0, 400, 240, "snowBackground");
+        game.background = game.add.group(game.world, "background");
+        this.snowBackground = game.make.tileSprite(0, 0, 400, 240, "snowBackground");
         this.snowBackground.fixedToCamera = true;
         this.snowBackground.scale.set(2, 2);
         this.snowBackground.smoothed = false;
+        game.background.addChild(this.snowBackground);
 
         // Particles group
         game.emitters = game.add.group(game.world, "emitters");
@@ -178,10 +179,13 @@ PhaserGame.prototype = {
             enviroment.addChild(tree);
         }
         
-        var yard = game.add.sprite(0, 0, "yard");
+        var yard = game.make.sprite(-300, -25, "yard");
         yard.scale.set(2, 2);
         yard.smoothed = false;
-        var gate = game.add.sprite(400, 50, "gate");
+        game.background.addChild(yard);
+
+        var gate = game.add.sprite(200, 240, "gate");
+        gate.anchor.set(0.5, 0.5)
         gate.scale.set(2, 2);
         gate.smoothed = false;
         // groupy
@@ -251,17 +255,18 @@ PhaserGame.prototype = {
         );
 
         // debug gui
+        var debugGui = game.add.group(this.gui, "debugGui");
         game.fpsCounter = game.make.text(50, 50, "fps: ", {
             color: 0xFF0000
         })
-        this.gui.add(game.fpsCounter);
+        debugGui.add(game.fpsCounter);
         
 
         var background = game.make.graphics(650, 30);
         background.beginFill(0x000000, 0.7);
         background.drawRect(0, 0, 100, 400);
         background.endFill();
-        this.gui.add(background);
+        debugGui.add(background);
 
         var watch = [
             "temperature",
@@ -275,7 +280,7 @@ PhaserGame.prototype = {
         ];
         
         for(var i=0; i<watch.length; i++){
-            new Progressbar(this, 650, 30 + i*20, game.march.psychology, watch[i]);
+            new Progressbar(this, 650, 30 + i*20, game.march.psychology, watch[i], debugGui);
         }
 
         var fleeButton = game.make.button(650, 200, "buttons", function(){
@@ -283,7 +288,7 @@ PhaserGame.prototype = {
         }, this, 1, 1);
         fleeButton.scale.set(2);
         fleeButton.smoothed = false;
-        this.gui.add(fleeButton);
+        debugGui.add(fleeButton);
 
         var killButton = game.make.button(690, 200, "buttons", function(){
             game.march.killOne();
@@ -291,16 +296,16 @@ PhaserGame.prototype = {
         }, this, 2, 2);
         killButton.scale.set(2);
         killButton.smoothed = false;
-        this.gui.add(killButton);
+        debugGui.add(killButton);
         
         var pauseButton = game.make.button(650, 240, "buttons", function(){
             game.march.psychology.timeForABreak();
         }, this, 0, 0);
         pauseButton.scale.set(2);
         pauseButton.smoothed = false;
-        this.gui.add(pauseButton);
-		
-		this.gui.renderable = false;
+        debugGui.add(pauseButton);
+
+        debugGui.visible = false;
 		
         this.datgui = new dat.GUI();
         this.datgui.add(game.march.psychology, "speed");
@@ -320,15 +325,18 @@ PhaserGame.prototype = {
 
 
         // vrstvy !! -----------------
-        this.gui.z = 8;
-		this.startGroup.z = 8;
-        game.march.z = 5;
-        game.guard.z = 4;
-        game.graveyard.z = 2;
-        game.emitters.z = 1; // prázdná
+
+        game.background.z = -1;
         game.fleeing.z = 0; // utíkající
+        game.emitters.z = 1; // prázdná
+        game.graveyard.z = 2;
+        game.march.z = 3;
+        game.guard.z = 4;
         enviroment.z = 5;
-        snow = 6;
+        gate.z = 6;
+        snow.z = 7;
+        this.gui.z = 8;
+		this.startGroup.z = 9;
         game.world.sort();
     },
 
