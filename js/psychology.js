@@ -20,11 +20,11 @@ function Psychology(parent){
 	this.maxSpeed = this.speed;
 	
 	this.speedToEffort = 0.05;
-	this.speedToTemperature = 0.4;
+	this.speedToTemperature = 0.5;
 	
-	this.baseFreezing = 0.15;
+	this.baseFreezing = 0.25;
 	this.freezing = this.baseFreezing;
-	this.freezingToTemperature = 0.1;
+	this.freezingToTemperature = 0.2;
 	
 	this.baseEffort = 0.05;
 	this.effort = this.baseEffort;
