@@ -93,12 +93,13 @@ PhaserGame.prototype = {
         // game.stage.disableVisibilityChange = true;
         game.diary = new Diary(game, this.gui, game.width, game.height/2 - 225);
         game.report = new Report(game, this.gui, -332, game.height/2 - 225);
+		// Tutorial
         game.order = new Order(game, this.gui, -332, game.height/2 - 225);
 		// Start menu
 		this.startGroup = game.add.group(game.world, "startGroup");
         this.startGroup.fixedToCamera = true;
 		// Tlačítko start
-		var startButton = game.make.button(game.width/2, 200, "buttonBorder", game.startGame, this);
+		var startButton = game.make.button(game.width/2, 200, "buttonBorder", game.startTutorial, this);
         startButton.tint = 0x000000;
 		startButton.anchor.set(0.5);
 		startButton.scale.set(2);
@@ -289,7 +290,8 @@ PhaserGame.prototype = {
         killButton.smoothed = false;
         debugGui.add(killButton);
 
-        debugGui.visible = true;
+        debugGui.visible = false;
+		game.debugGui = debugGui;
 		
         this.datgui = new dat.GUI();
         this.datgui.add(game.march.psychology, "baseSpeed");
@@ -361,23 +363,26 @@ $(document).ready(function(){
         game.state.add("PhaserGame", PhaserGame);
         game.state.start("Loading");
 
-        game.startGame = function () {
-            game.guard.setSpeed(2);
-			game.gameGui.changeActiveButton(2);
-            game.march.startEffects();
-            game.progress.init(game.march.children.length);
-            // crossfade gui
+		game.startTutorial = function () {
+			// crossfade gui
             var tw1 = game.add.tween(this.startGroup);
             tw1.to({ alpha : 0 }, 2000);
             var tw2 = game.add.tween(this.gui);
             tw2.to({ alpha : 1 }, 2000);
             tw1.start();
+			tw2.start();
             tw1.onComplete.add(function(){
                 this.startGroup.visible=false;
-                // game.order.showCommand();
-            }, this);
-            tw2.start();
-
+				game.order.showCommand();
+			}, this);
+			game.gameGui.changeActiveButton(2);
+		}
+		
+        game.startGame = function () {
+            game.guard.setSpeed(2);
+            game.march.startEffects();
+            game.progress.init(game.march.children.length);
+			game.order.changeState("hidden");
             // po x sekundách vyjede první deníkový zápis
             game.time.events.add(5000, function(){
                 game.diary.open();
