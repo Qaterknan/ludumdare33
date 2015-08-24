@@ -67,9 +67,80 @@ var Diary = function (game, parent, x, y) {
             "I wonder why they do not try and kill us.",
             "They would die with honour at least. Germans, for example, would never even become slaves.",
             "Maybe it is because we beat the last bits of will out of them long time ago.",
-            "If only they tried! At least we would have more time to disappear and noone could condemn it as a war crime."
+            "If only they tried! At least we would have more time to disappear and noone could condemn it as a war crime.",
+            "Killing them puts an end to their suffering after all. And I would do it for them, unlike most people.",
+            {"A" : "N", "B" : "O", "C" : "Z", "D" : "D"}
             ),
-		
+        new Text(
+            "It's damn cold...",
+            "But Germans are born to resist cold. We will arrive on time.",
+            "The poor guys must be freezing. Thank god I have a warm coat and a flask.",
+            "We are running out of time. I do not fancy Russian firing squads. Hurry up!",
+            "We need to get to the camp. What happens there is none of my bussiness. Not my fault.",
+            {"A" : "N", "B" : "O", "C" : "Z", "D" : "D"}
+            )
+        new Text(
+            "What would I do, if I was one of them?",
+            "First of all, I would carry out the order on time to show my superiority.",
+            "I would die as soon as possible. I do not understand how they can still take it.",
+            "Run away, survive. I would do better than anyone of them.",
+            "I always carry out my orders, so I would never become one of them in the first place. Ordnung musst sein.",
+            {"A" : "N", "B" : "O", "C" : "Z", "D" : "D"}
+            )
+		new Text(
+            "And when we get to the camp... what then? Is the war not lost?",
+            "We must prevail. This may be the end, but we will die standing.",
+            "Only death awaits us. Us as well as them.",
+            "If only I could get to Switzerland. My cousin could help.",
+            "The Allies have to understand my situation!",
+            {"A" : "N", "B" : "O", "C" : "Z", "D" : "D"}
+            )
+        new Text(
+            "Their clothes stink...",
+            "They are like animals, if not animals.",
+            "They no longer look like human beings.",
+            "I must not catch typhus. I must not touch them.",
+            "This is disgusting.",
+            {"A" : "N", "B" : "O", "C" : "Z", "D" : "D"}
+            )
+        new Text(
+            "One of them is talking to me? He still has jewellery and I can have it if I let him go.",
+            "Guards? Bring here the jewels and give him a whack!",
+            "OK, you can go. Get lost my friend and live.",
+            "Give it here, yes, of course. You can go... Guards!!",
+            "I must not let you go. But... give it here anyway.",
+            {"A" : "N", "B" : "O", "C" : "Z", "D" : "D"}
+            )
+        new Text(
+            "This face seems familiar.",
+            "Nonsense, it's an illusion. They all look the same. Let’s go on.",
+            "When she walked through the gate, she was holding a child.",
+            "I hope she will not remember me. And we will get rid of them soon enough.",
+            "But I cannot help everyone. Also I should not.",
+            {"A" : "N", "B" : "O", "C" : "Z", "D" : "D"}
+            )
+        new Text(
+            "We keep walking and walking…",
+            "The camp is surely nearby! Double our effort!",
+            "So long… So many dead… So much...",
+            "We are not fast enough! Faster, damn it!",
+            "Maybe if someone is shot, others will speed up and less people will freeze.",
+            {"A" : "N", "B" : "O", "C" : "Z", "D" : "D"}
+            )
+        new Text(
+            "I wonder whether there is anything after death.",
+            "I am going to Valhalla!",
+            "I also wonder whether there is something meaningful before death, at least.",
+            "Others will know soon, but mine is probably very far away.",
+            "Hard to tell. Purgatory is just temporary, they say."
+            )
+        new Text(
+            "They look like skeletons, they are walking corpses! I cannot tell men from women, that is how skinny they are. What will happen now? Am I going to be judged?",
+            "Let's kill them right here, right now, the furnaces are still working. I did a good job!",
+            "What have I done? What have we done... to you? I am guilty, we all are. God, I am so sorry!",
+            "We will lock them in a barn. Let the Russians or the cold take them. I’m gonna be somewhere far away by then!",
+            "I’m not sure, I was just forced to carry out my orders. What else is there to do? My superiors are guilty!",
+            )
     ];
     this.story = 0;
 }
