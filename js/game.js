@@ -44,8 +44,8 @@ PhaserGame.prototype = {
 		game.gameGui.activeButton = 0;
 		game.gameGui.changeActiveButton = function(id){
 			var id2 = game.gameGui.activeButton
-			game.gameGui.children[id].setFrames(8+id, 4+id, 12+id);
 			game.gameGui.children[id2].setFrames(8+id2,id2,12+id2);
+            game.gameGui.children[id].setFrames(8+id, 4+id, 12+id);
 			game.gameGui.activeButton = id;
 		}
 		
