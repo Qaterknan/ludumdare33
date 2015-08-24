@@ -9,7 +9,8 @@ PhaserGame.prototype = {
     create: function () {
         // centrování canvasu
         $(game.canvas).center();
-
+		// Zapnutí progressu
+		game.progress = new Progress();
         // nastavení světa
         game.world.setBounds(0, 0, 8000, 480);
         game.stage.backgroundColor = '#dddddd';
@@ -67,7 +68,7 @@ PhaserGame.prototype = {
         
         game.distanceCounter = game.make.text(400, 50, "");
         this.gui.add(game.distanceCounter);
-
+		
         var paper = game.make.sprite(game.width/2 - 150, 30, "paper");
         paper.anchor.set(0, 0);
         var stats = game.make.bitmapText(20, 50, "typewriter", 
@@ -119,6 +120,7 @@ PhaserGame.prototype = {
 		var startButton = game.make.button(0, 200, "buttonBorder", function(){
             game.guard.setSpeed(2);
 			game.march.startEffects();
+			game.progress.init(game.march.children.length);
 			var tw1 = game.add.tween(_startGroup);
 			tw1.to({ alpha : 0 }, 2000);
 			var tw2 = game.add.tween(_gui);
@@ -358,7 +360,7 @@ PhaserGame.prototype = {
         // game.camera.view.y = Math.ceil(game.camera.view.y);
         this.snowBackground.tilePosition.set(-game.camera.x/2, -game.camera.y/2);
         game.fpsCounter.text = game.time.fps+" "+game.time.fpsMin+" "+game.time.fpsMax;
-		game.distanceCounter.text = Math.round((game.march.position.x - 400)/16) + " m";
+		game.distanceCounter.text = Math.round(game.progress.distanceWalked/1000) + " km";
     },
 
     render: function () {

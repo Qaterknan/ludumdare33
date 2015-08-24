@@ -15,6 +15,7 @@ var Prisoner = function (game) {
     this.repulsion = new Phaser.Point();
 	this.fleeing = false;
     this.alive = true;
+	this.aimedAt = false;
 	this.timeOfDeath = 0;
 	this.causeOfDeath = undefined;
 }
@@ -69,8 +70,9 @@ Prisoner.prototype.update = function() {
     
     // mazání mimo kameru
     if(!this.inCamera && (!this.alive || this.fleeing)){
-		if(this.fleeing){
+		if(this.fleeing){// Podařilo se mu utéct
 			game.march.psychology.escape();
+			game.progress.updateEscape(this.aimedAt, this.children.length);
 		}
         this.destroy();
     }
@@ -80,6 +82,7 @@ Prisoner.prototype.onClick = function(t, pointer) {
     if(this.alive){
         var soldier = game.guard.getNearest(this.worldPosition);
         soldier.shoot(this);
+		this.aimedAt = true;
         soldier.events.onFire.addOnce(this.onShot, this);
     }
 };
@@ -90,10 +93,12 @@ Prisoner.prototype.onShot = function(soldier) {
     this.rotation = angle;
     if(this.fleeing){
         game.march.psychology.runKill();
+		game.progress.updateDeath("runKill", game.march.children.length);
         this.fleeing = false;
     }
     else {
         game.march.psychology.walkKill();
+		game.progress.updateDeath("walkKill", game.march.children.length);
     }
 };
 

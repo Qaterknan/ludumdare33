@@ -68,6 +68,8 @@ March.prototype.update = function() {
         game.jukebox.getEffect("walkFast").mute(true);
     }
 	
+	// Psychologie + zaznamenávání do progressu
+	
     if(!this.psychologyStopped)
 		this.psychology.update(game.time.physicsElapsed);
 	
@@ -77,10 +79,12 @@ March.prototype.update = function() {
 		this.totalMorale -= this.psychology.runningProb*0.1;
 		if(this.totalFatigue > this.fatigueTreshold){
 			this.killOne("exhausted");
+			game.progress.updateDeath("exhausted", this.children.length);
 			this.totalFatigue = 0;
 		}
 		if(this.totalTemperature < 0){
 			this.killOne("freeze");
+			game.progress.updateDeath("freeze", this.children.length);
 			this.totalTemperature = this.temperatureTreshold;
 		}
 		if(this.totalMorale < 0){
@@ -88,6 +92,9 @@ March.prototype.update = function() {
 				this.totalMorale = this.moraleTreshold;
 		}
 	}
+	
+	game.progress.updateDistance(this.position.x);
+	
     // tendence si udržovat odstup
     for(var i=0; i<this.length; i++){
         var child1 = this.children[i];
