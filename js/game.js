@@ -30,7 +30,7 @@ PhaserGame.prototype = {
         game.jukebox.addEffect("walkFast", "walkFast", 0.2).startLoop(0, 0);
         
         game.jukebox.addEffect("gunshot2", "gunshot", 1);
-
+		
         this.gui = game.add.group(game.world, "gui");
         this.gui.fixedToCamera = true;
         
@@ -113,7 +113,42 @@ PhaserGame.prototype = {
         next.anchor.set(0.5, 0);
         nextPage.addChild(next);
         paper.addChild(nextPage)
-
+		
+		// Start menu
+		this.startGroup = game.add.group(game.world, "startGroup");
+		this.startGroup.position.x = 700;
+		var _startGroup = this.startGroup;
+		var _gui = this.gui;
+		// Tlačítko start
+		var startButton = game.make.button(0, 200, "buttonBorder", function(){
+            game.guard.setSpeed(2);
+			game.march.startEffects();
+			var tw1 = game.add.tween(_startGroup);
+			tw1.to({ alpha : 0 }, 2000);
+			var tw2 = game.add.tween(_gui);
+			tw2.to({ alpha : 1 }, 2000);
+			tw1.start();
+			tw2.start();
+        }, this);
+		startButton.anchor.set(0.5);
+		startButton.scale.set(2);
+        startButton.smoothed = false;
+		startButton.name = "startButton";
+		this.startGroup.add(startButton);
+		// Nápis start
+		var startText = game.make.bitmapText(0,200, "typewriter", "Start", 24);
+		startText.anchor.set(0.5);
+		startText.scale.set(2);
+		this.startGroup.add(startText);
+		// Tlumící tlačítko
+		var soundButton = game.make.button(0, 300, "sound", function(){
+			soundButton.setFrames(1,1,0);
+			// Zde mute a toggle dle tlačítka (pokud mute, tak framy 110, jinak 001)
+		}, soundButton, 0, 0, 1);
+		this.startGroup.add(soundButton);
+		// Druhé gui v pozadí
+		this.gui.alpha = 0;
+		
         // this.gui.add(paper);
 
         game.background = game.add.group(game.world, "background");
@@ -154,8 +189,8 @@ PhaserGame.prototype = {
         yard.smoothed = false;
         game.background.addChild(yard);
 
-        var gate = game.add.sprite(200, 240, "gate");
-        gate.anchor.set(0.5, 0.5)
+        var gate = game.add.sprite(400, 240, "gate");
+        gate.anchor.set(0.5, 0.5);
         gate.scale.set(2, 2);
         gate.smoothed = false;
         // groupy
@@ -165,11 +200,21 @@ PhaserGame.prototype = {
         // Pochod
         game.march = new March(this.game);
         game.world.add(game.march);
-        game.march.position.set(400, 240);
+        game.march.position.set(320, 240);
 
         game.guard = new Guard(this.game);
         game.world.add(game.guard);
-        game.guard.position.set(400, 240);
+        game.guard.position.set(320, 240);
+		// Připojení se kamery
+		var interval = window.setInterval(function(){
+			if(game.guard.position.x >= game.camera.position.x){
+				game.camera.follow(game.guard);
+				window.clearInterval(interval);
+			}
+		}, 100);
+		game.guard.setSpeed(0);
+		game.camera.setPosition(300, 240);
+		game.march.stopEffects();
 
         // sníh!
         var snow = game.add.emitter(0, 240, 1500);
@@ -283,10 +328,9 @@ PhaserGame.prototype = {
         this.datgui.add(game.march.psychology, "walkKillToSpeed");
         this.datgui.add(game.march.psychology, "baseToBreakEffort");
 
-        game.camera.follow(game.guard);
-
 
         // vrstvy !! -----------------
+
         game.background.z = -1;
         game.fleeing.z = 0; // utíkající
         game.emitters.z = 1; // prázdná
@@ -297,6 +341,7 @@ PhaserGame.prototype = {
         gate.z = 6;
         snow.z = 7;
         this.gui.z = 8;
+		this.startGroup.z = 9;
         game.world.sort();
     },
 

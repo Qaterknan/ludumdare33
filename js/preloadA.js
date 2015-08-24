@@ -2,7 +2,7 @@ var preloadA = function (game){};
 
 preloadA.prototype = {
     preload : function() {
-    var loadingBar = this.game.add.sprite(100, 100, "loadingBar");
+    var loadingBar = this.add.sprite(100, 100, "loadingBar");
     loadingBar.anchor.set(0.5,0.5);
     this.load.setPreloadSprite(loadingBar, 0);
     game.loadingBar = loadingBar;
@@ -20,6 +20,9 @@ preloadA.prototype = {
     game.load.image('footstep','images/footstep.png');
     game.load.image('paper','images/paper.jpg');
     game.load.image('buttonBorder','images/button-border.png');
+    game.load.image('startback','images/startback.png');
+    game.load.spritesheet('sound','images/sound.png', 16, 16);
+    game.load.spritesheet('quality','images/quality.png', 16, 16);
     game.load.spritesheet('buttons','images/buttons.png', 16, 16);
     
     game.load.spritesheet('general', 'images/u.png', 10, 10);
