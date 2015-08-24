@@ -19,8 +19,10 @@ PhaserGame.prototype = {
         game.time.advancedTiming = true;
 
         game.jukebox = new Jukebox(game);
-        game.jukebox.addEffect("cough", "sfx1", 0.1).startLoop(10, 30);
-        // game.jukebox.addEffect("howling", "sfx2", 0.4).startLoop(30, 20);
+        game.jukebox.addEffect("cough", "sfx1", 0.1);
+        game.jukebox.addEffect("cough2", "sfx1", 0.06);
+        game.jukebox.addEffect("cough3", "sfx1", 0.1).startLoop(5, 20);
+        game.jukebox.addEffect("tremble", "sfx2", 0.5).startLoop(10, 5);
         game.jukebox.addEffect("twig", "sfx3", 0.04).startLoop(2, 5);
 
         game.jukebox.addEffect("wind1", "wind1", 0.3).startLoop(1, 10);
@@ -32,6 +34,7 @@ PhaserGame.prototype = {
         game.jukebox.addEffect("walkFast", "walkFast", 0.2).startLoop(0, 0);
         
         game.jukebox.addEffect("gunshot2", "gunshot", 1);
+        game.jukebox.addEffect("writing", "writing", 0.7);
 		
         this.gui = game.add.group(game.world, "gui");
         this.gui.fixedToCamera = true;
@@ -158,7 +161,7 @@ PhaserGame.prototype = {
         gate.anchor.set(0.5, 0.5);
         gate.scale.set(-2, 2);
         gate.smoothed = false;
-		game.finalGate = game.add.sprite(900, 240, "gate");
+		game.finalGate = game.add.sprite(15000, 240, "gate");
         game.finalGate.anchor.set(0.5, 0.5);
         game.finalGate.scale.set(2, 2);
         game.finalGate.smoothed = false;

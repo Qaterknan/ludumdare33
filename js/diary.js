@@ -76,6 +76,7 @@ Diary.prototype = Object.create(Paper.prototype);
 Diary.prototype.constructor = Diary;
 
 Diary.prototype.chosen = function(chosen) {
+    game.jukebox.playEffect("writing");
     var answers = ["textA", "textB", "textC"];
     for(var i=0;i<answers.length;i++){
         var answer = this.getText(answers[i]);
