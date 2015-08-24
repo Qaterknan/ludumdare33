@@ -10,7 +10,7 @@ var Soldier = function (game, key, shootKey) {
     // this.inputEnabled = true;
     // this.input.useHandCursor = true;
     // this.events.onInputDown.add(this.shoot, this);
-
+    this.missedPrisoner = false;
     this.events.onFire = new Phaser.Signal();
     this.lookAt = null;
 }
@@ -32,6 +32,9 @@ Soldier.prototype.shoot = function(prisoner) {
             this.delay /= delayMult;
         }
         else if(this.frame == 4){
+            if(_this.missedPrisoner){
+                _this.statusImage("missed");
+            }
             _this.events.onFire.dispatch(_this);
         }
     }, shoot);

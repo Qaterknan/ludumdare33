@@ -85,3 +85,23 @@ Person.prototype.update = function() {
             this.animations.currentAnim.speed = animationSpeed;
     }
 };
+
+Person.prototype.statusImage = function(which) {
+    var pos = this.worldPosition.clone();
+    pos.add(game.camera.view.x, game.camera.view.y);
+    this.statusImage = new Phaser.Image(game, Math.round(pos.x), Math.round(pos.y), which);
+    this.statusImage.scale.set(2, 2);
+    this.statusImage.smoothed = false;
+    this.statusImage.anchor.set(0.5, 0.5);
+
+    var tween = game.add.tween(this.statusImage);
+    tween.to({y : pos.y-50, alpha : 0}, 3000);
+    tween.start();
+    tween.easing(Phaser.Easing.Linear.None);
+    var _this = this;
+    tween.onComplete.add(function(){
+        _this.statusImage.destroy();
+    })
+
+    game.world.add(this.statusImage);
+};

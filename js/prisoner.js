@@ -75,7 +75,11 @@ Prisoner.prototype.update = function() {
 		if(this.fleeing){
 			// Podařilo se mu utéct
 			game.march.psychology.escape();
-			game.progress.updateEscape(this.aimedAt, game.march.children.length);
+            if(this.aimedAt !== false){
+                this.aimedAt.missedPrisoner = true;
+                console.log(this.aimedAt)
+            }
+			game.progress.updateEscape(this.aimedAt !== false, game.march.children.length);
 		}
         this.destroy();
     }
@@ -87,7 +91,7 @@ Prisoner.prototype.onClick = function(t, pointer) {
 			return;
         var soldier = game.guard.getNearest(this.worldPosition);
         soldier.shoot(this);
-		this.aimedAt = true;
+		this.aimedAt = soldier;
         soldier.events.onFire.addOnce(this.onShot, this);
     }
 };
@@ -167,22 +171,6 @@ Prisoner.prototype.flee = function() {
 	this.addChild(arr);
 };
 
-Prisoner.prototype.startText = function (which){
-	var pos = this.worldPosition.clone();
-	pos.add(game.camera.view.x, game.camera.view.y);
-	this.causeOfDeath = new Phaser.Image(game, Math.round(pos.x), Math.round(pos.y), which);
-    this.causeOfDeath.scale.set(2, 2);
-    this.causeOfDeath.smoothed = false;
-	this.causeOfDeath.anchor.set(0.5, 0.5);
-
-	var tween = game.add.tween(this.causeOfDeath);
-	tween.to({y : pos.y-50, alpha : 0}, 3000);
-	tween.start();
-    tween.easing(Phaser.Easing.Linear.None);
-    var _this = this;
-    tween.onComplete.add(function(){
-        _this.causeOfDeath.destroy();
-    })
-
-	game.world.add(this.causeOfDeath);
+Prisoner.prototype.startText = function (which) {
+    this.statusImage(which);
 };
