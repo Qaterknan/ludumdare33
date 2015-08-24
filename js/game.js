@@ -71,6 +71,7 @@ PhaserGame.prototype = {
         });
         game.distanceCounter.anchor.set(0.5, 0.5);
         this.gui.add(game.distanceCounter);
+		game.gui = this.gui;
 
         // game.stage.disableVisibilityChange = true;
         game.diary = new Diary(game, this.gui, game.width, game.height/2 - 225);
@@ -88,7 +89,7 @@ PhaserGame.prototype = {
 			var tw2 = game.add.tween(this.gui);
 			tw2.to({ alpha : 1 }, 2000);
 			tw1.start();
-			tw1.onComplete.add(function(){this.startGroup.destroy();}, this);
+			tw1.onComplete.add(function(){this.startGroup.visible=false;}, this);
 			tw2.start();
         }, this);
         startButton.tint = 0x000000;
@@ -352,7 +353,9 @@ function endGame(early){
 	this.progress.sendStats();
 	this.march.stopEffects();
 	this.march.inDestination = true;
-	console.log("konec");
+	this.report.report(this.progress);
+	this.report.changeState("out");
+	game.gui.visibil
 	if(early)
 		game.guard.speed = 0;
 }
