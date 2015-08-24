@@ -59,7 +59,7 @@ Person.prototype.update = function() {
         pos.add(game.camera.view.x, game.camera.view.y);
         this.footsteps.emitX = pos.x;
         this.footsteps.emitY = pos.y;
-        if(this.parent.speed > 0)
+        if(this.parent.speed > 0.5)
             this.footsteps.frequency = 300/this.parent.speed;
 
         if(this.fleeing){
