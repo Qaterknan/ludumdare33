@@ -276,8 +276,6 @@ PhaserGame.prototype = {
         debugGui.visible = true;
 		
         this.datgui = new dat.GUI();
-        this.datgui.add(game.march.psychology, "speed");
-
         this.datgui.add(game.march.psychology, "baseSpeed");
         this.datgui.add(game.march.psychology, "baseFreezing");
         this.datgui.add(game.march.psychology, "baseEffort");
