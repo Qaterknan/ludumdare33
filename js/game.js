@@ -44,8 +44,8 @@ PhaserGame.prototype = {
 		game.gameGui.activeButton = 0;
 		game.gameGui.changeActiveButton = function(id){
 			var id2 = game.gameGui.activeButton
-			game.gameGui.children[id].setFrames(8+id, 4+id, 12+id);
 			game.gameGui.children[id2].setFrames(8+id2,id2,12+id2);
+            game.gameGui.children[id].setFrames(8+id, 4+id, 12+id);
 			game.gameGui.activeButton = id;
 		}
 		var buttPrew = new Phaser.Image(game, 70,250, "buttonsPreview", 0);
@@ -154,9 +154,9 @@ PhaserGame.prototype = {
             var tree;
             var treeKey = utils.randomElement(["tree", "tree2", "tree3"]);
             if(i%2==0)
-                tree = game.make.sprite(utils.random(0,800), utils.random(0,100), treeKey);
+                tree = game.make.sprite(utils.random(430,1200), utils.random(0,100), treeKey);
             else
-                tree = game.make.sprite(utils.random(0,800), utils.random(380,480), treeKey);
+                tree = game.make.sprite(utils.random(430,1200), utils.random(380,480), treeKey);
             tree.scale.set(2);
             tree.smoothed = false;
             tree.rotation = utils.randomInt(0, 4)/2 * Math.PI;
@@ -388,7 +388,7 @@ $(document).ready(function(){
             game.progress.init(game.march.children.length);
 			game.order.changeState("hidden");
             // po x sekundách vyjede první deníkový zápis
-            game.time.events.add(5000, function(){
+            game.time.events.add(15000, function(){
                 game.diary.open();
             });
         };

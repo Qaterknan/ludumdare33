@@ -35,6 +35,7 @@ Soldier.prototype.shoot = function(prisoner) {
             game.jukebox.playEffect("gunshot");
             if(_this.missedPrisoner){
                 _this.statusImage("missed");
+                _this.missedPrisoner = false;
             }
             _this.events.onFire.dispatch(_this);
         }

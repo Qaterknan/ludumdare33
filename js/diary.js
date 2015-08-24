@@ -168,7 +168,7 @@ Diary.prototype.chosen = function(chosen) {
     }
     this.opened = false;
 
-    game.time.events.add(3000, this.open, this);
+    game.time.events.add(25000, this.open, this);
 };
 
 Diary.prototype.open = function() {

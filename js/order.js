@@ -1,6 +1,6 @@
 var Order = function (game, parent, x, y) {
     Report.call(this, game, parent, x, y);
-
+    this.getText("text").wordWrapWidth = 280;
     this.nextPageButton.onInputUp.removeAll();
 	
 	this.changeToPageTwo = function (){
@@ -9,7 +9,7 @@ var Order = function (game, parent, x, y) {
 				" unnecessary casualties due to hypothermia (too slow) or exhaustion (too fast). "+
 				"The Reich can still make use of the prisoners. "+
 				"Punish attemts to escape, as success only encourages more such acts.\n\n"+
-				"Sturmbannführer Karl Wilhelm Florstedt";
+				"Sturmbannfuhrer Karl Wilhelm Florstedt";
 			game.order.nextPageText.text = "start";
 			game.order.buttonsPreview.destroy();
 			game.order.changeState("out");
@@ -35,7 +35,7 @@ Order.prototype = Object.create(Report.prototype);
 Order.prototype.constructor = Order;
 
 Order.prototype.showCommand = function() {
-    this.getText("text").text = "Hauptscharführer Hans Heissemeyer!\n\n"+
+    this.getText("text").text = "Hauptscharfuhrer Hans Heissemeyer!\n\n"+
 		"The enemy is entering your territory. "+
 		"March the prisoners to another camp speedily."+
 		"You can change pace by these buttons: ";
