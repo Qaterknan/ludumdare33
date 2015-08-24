@@ -103,6 +103,7 @@ Diary.prototype.open = function() {
 };
 
 Diary.prototype.hide = function() {
+    this.showingFate = true;
     this.opened = false;
     this.changeState("hidden");
 };

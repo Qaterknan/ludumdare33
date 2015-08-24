@@ -36,34 +36,35 @@ PhaserGame.prototype = {
         this.gui = game.add.group(game.world, "gui");
         this.gui.fixedToCamera = true;
         
+        game.gameGui = game.add.group(this.gui, "gameGui");
         // gui
         var pauseButton = game.make.button(400-60-16, 400, "buttons", function(){
             game.guard.setSpeed(0);
         }, this, 8, 0, 12);
         pauseButton.scale.set(2);
         pauseButton.smoothed = false;
-        this.gui.add(pauseButton);
+        game.gameGui.add(pauseButton);
 
         var speed1Button = game.make.button(400-20-16, 400, "buttons", function(){
             game.guard.setSpeed(1);
         }, this, 9, 1, 13);
         speed1Button.scale.set(2);
         speed1Button.smoothed = false;
-        this.gui.add(speed1Button);
+        game.gameGui.add(speed1Button);
 
         var speed2Button = game.make.button(400+20-16, 400, "buttons", function(){
             game.guard.setSpeed(2);
         }, this, 10, 2, 14);
         speed2Button.scale.set(2);
         speed2Button.smoothed = false;
-        this.gui.add(speed2Button);
+        game.gameGui.add(speed2Button);
 
         var speed3Button = game.make.button(400+60-16, 400, "buttons", function(){
             game.guard.setSpeed(3);
         }, this, 11, 3, 15);
         speed3Button.scale.set(2);
         speed3Button.smoothed = false;
-        this.gui.add(speed3Button);
+        game.gameGui.add(speed3Button);
 
         this.speedButtons = [pauseButton, speed1Button, speed2Button, speed3Button];
         
@@ -71,7 +72,7 @@ PhaserGame.prototype = {
             font: "normal 32px monacoregular"
         });
         game.distanceCounter.anchor.set(0.5, 0.5);
-        this.gui.add(game.distanceCounter);
+        game.gameGui.add(game.distanceCounter);
 		game.gui = this.gui;
 
         // game.stage.disableVisibilityChange = true;
@@ -383,11 +384,17 @@ $(document).ready(function(){
             this.diary.hide();
         	this.report.report(this.progress);
         	this.report.changeState("out");
-        	game.gui.visibil
+            game.add.tween(game.gameGui)
+                .to({alpha: 0}, 700)
+                .easing(Phaser.Easing.Cubic.Out)
+                .start()
+                .onComplete.add(function(){
+                    this.visible = false;
+                }, game.gameGui);
+
         	if(early)
         		game.guard.speed = 0;
         }
-
     });
 });
 
