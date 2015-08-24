@@ -157,7 +157,7 @@ PhaserGame.prototype = {
         gate.anchor.set(0.5, 0.5);
         gate.scale.set(-2, 2);
         gate.smoothed = false;
-		game.finalGate = game.add.sprite(1400, 240, "gate");
+		game.finalGate = game.add.sprite(7000, 240, "gate");
         game.finalGate.anchor.set(0.5, 0.5);
         game.finalGate.scale.set(2, 2);
         game.finalGate.smoothed = false;
@@ -173,13 +173,7 @@ PhaserGame.prototype = {
         game.guard = new Guard(this.game);
         game.world.add(game.guard);
         game.guard.position.set(320, 240);
-		// Připojení se kamery
-		var interval = window.setInterval(function(){
-			if(game.guard.position.x >= game.camera.position.x){
-				game.camera.follow(game.guard);
-				window.clearInterval(interval);
-			}
-		}, 100);
+		
 		game.guard.setSpeed(0);
 		game.camera.setPosition(300, 240);
 		game.march.stopEffects();
@@ -229,7 +223,7 @@ PhaserGame.prototype = {
 
         game.black = game.add.graphics(0, 0);
         game.black.fixedToCamera = true;
-        game.black.beginFill(0xFFFFFF);
+        game.black.beginFill(0xFFFFFF); // black je doopravdy bílá because fuck you
         game.black.drawRect(0, 0, game.width, game.height);
         game.black.endFill();
         game.black.visible = false;
@@ -279,23 +273,30 @@ PhaserGame.prototype = {
         killButton.smoothed = false;
         debugGui.add(killButton);
 
-        debugGui.visible = false;
+        debugGui.visible = true;
 		
         this.datgui = new dat.GUI();
         this.datgui.add(game.march.psychology, "speed");
 
+        this.datgui.add(game.march.psychology, "baseSpeed");
+        this.datgui.add(game.march.psychology, "baseFreezing");
+        this.datgui.add(game.march.psychology, "baseEffort");
+        this.datgui.add(game.march.psychology, "baseToBreakEffort");
+        
+        this.datgui.add(game.march.psychology, "freezingToTemperature");
         this.datgui.add(game.march.psychology, "temperatureToRunning");
+        
+        this.datgui.add(game.march.psychology, "effortToFatigue");
         this.datgui.add(game.march.psychology, "fatigueToRunning");
         this.datgui.add(game.march.psychology, "fatigueToSpeed");
-        this.datgui.add(game.march.psychology, "baseSpeed");
+        
         this.datgui.add(game.march.psychology, "speedToEffort");
         this.datgui.add(game.march.psychology, "speedToTemperature");
-        this.datgui.add(game.march.psychology, "freezingToTemperature");
-        this.datgui.add(game.march.psychology, "baseEffort");
-        this.datgui.add(game.march.psychology, "effortToFatigue");
+        
         this.datgui.add(game.march.psychology, "runKillToRun");
         this.datgui.add(game.march.psychology, "walkKillToSpeed");
-        this.datgui.add(game.march.psychology, "baseToBreakEffort");
+        this.datgui.add(game.march.psychology, "walkKillToFear");
+        this.datgui.add(game.march.psychology, "runAwayToFear");
 
 
         // vrstvy !! -----------------
