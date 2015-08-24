@@ -314,11 +314,6 @@ PhaserGame.prototype = {
         this.gui.z = 8;
 		this.startGroup.z = 9;
         game.world.sort();
-
-        game.time.events.add(1000, function(){
-            game.report.report(game.progress);
-        game.report.changeState("out");
-        })
     },
 
     update: function () {
