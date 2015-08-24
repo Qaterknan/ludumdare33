@@ -53,7 +53,10 @@ Guard.prototype.setSpeed = function(speedIndex) {
         0.6,
         0.8
     ];
-    this.speed = speeds[speedIndex];
+    var tween = game.add.tween(this)
+        .to({speed : speeds[speedIndex]}, 1000)
+        .easing(Phaser.Easing.Cubic.Out)
+        .start();
 };
 
 Guard.prototype.getNearest = function(position) {
