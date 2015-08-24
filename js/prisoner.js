@@ -110,6 +110,10 @@ Prisoner.prototype.die = function(how) {
 				game.march.psychology.runKill();
 				game.progress.updateDeath("runKill", game.march.children.length);
 				this.fleeing = false;
+				for(var i =0; i < this.children.length;i++){
+					if(this.children[i].key == "arrow")
+						this.children[i].destroy();
+				};
 			}
 			else {
 				game.march.psychology.walkKill();
