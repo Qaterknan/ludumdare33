@@ -5,10 +5,10 @@ var Order = function (game, parent, x, y) {
 	
 	this.changeToPageTwo = function (){
 		this.changeState("hidden", function(){
-			game.order.getText("text").text = "Faster pace "+
-				"will keep the prisoners warm, however, they might get exhausted. "+
-				"In that case, I suggest you take a break, even though your soliders will get cold. "+
-				"If you want your prisoners to go faster without break, just choose one prisoner and click on him. ";
+			game.order.getText("text").text = "Do eliminate any"+
+				" unnecessary casualties due to hypothermia (too slow) or exhaustion (too fast). "+
+				"The Reich can still make use of the prisoners. \n\n"+
+				"Sturmbannführer Karl Wilhelm Florstedt";
 			game.order.changeState("out");
 			game.order.nextPageButton.onInputUp.removeAll();
 			game.order.nextPageButton.onInputUp.add(game.order.changeToPageThree, game.order);
@@ -32,12 +32,15 @@ Order.prototype = Object.create(Report.prototype);
 Order.prototype.constructor = Order;
 
 Order.prototype.showCommand = function() {
-    this.getText("text").text = 
-        "TRANSPORT ORDER \n"+
-        "Dear colonel, \n"+
-		"you have been chosen for this important task. Take these prisoners to "+
-		"another camp deeper within our territory. The path is long, so be advised. "+
-		"You can change the pace of walk by clicking on these buttons: \n\n\n";
+    this.getText("text").text = "Hauptscharführer Hans Heissemeyer!\n\n"+
+		"The enemy is entering your territory. "+
+		"March the prisoners to another camp speedily."+
+		"You can change pace by these buttons: ";
+        // "TRANSPORT ORDER \n"+
+        // "Dear colonel, \n"+
+		// "you have been chosen for this important task. Take these prisoners to "+
+		// "another camp deeper within our territory. The path is long, so be advised. "+
+		// "You can change the pace of walk by clicking on these buttons: \n\n\n";
 		
     this.changeState("out");
 };
