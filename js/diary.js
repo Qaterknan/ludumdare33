@@ -67,7 +67,9 @@ var Diary = function (game, parent, x, y) {
             "I wonder why they do not try and kill us.",
             "They would die with honour at least. Germans, for example, would never even become slaves.",
             "Maybe it is because we beat the last bits of will out of them long time ago.",
-            "If only they tried! At least we would have more time to disappear and noone could condemn it as a war crime."
+            "If only they tried! At least we would have more time to disappear and noone could condemn it as a war crime.",
+			"What happens in the camp is not my responsibility so I will actually keep my hands clean.",
+			{"A" : "N", "B" : "O", "C" : "Z", "D" : "D"}
             ),
 		
     ];
