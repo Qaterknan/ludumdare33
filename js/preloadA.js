@@ -49,8 +49,6 @@ preloadA.prototype = {
     game.load.audio('wind1', 'sounds/wind1.ogg');
     game.load.audio('wind2', 'sounds/wind2.ogg');
     game.load.audio('wind3', 'sounds/wind3.ogg');
-
-    game.load.bitmapFont('typewriter', 'fonts/font.png', 'fonts/font.fnt');
     },
     
     create : function() {

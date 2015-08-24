@@ -35,28 +35,28 @@ PhaserGame.prototype = {
         this.gui.fixedToCamera = true;
         
         // gui
-        var pauseButton = game.make.button(400-60, 400, "buttons", function(){
+        var pauseButton = game.make.button(400-60-16, 400, "buttons", function(){
             game.guard.setSpeed(0);
         }, this, 8, 0, 12);
         pauseButton.scale.set(2);
         pauseButton.smoothed = false;
         this.gui.add(pauseButton);
 
-        var speed1Button = game.make.button(400-20, 400, "buttons", function(){
+        var speed1Button = game.make.button(400-20-16, 400, "buttons", function(){
             game.guard.setSpeed(1.2);
         }, this, 9, 1, 13);
         speed1Button.scale.set(2);
         speed1Button.smoothed = false;
         this.gui.add(speed1Button);
 
-        var speed2Button = game.make.button(400+20, 400, "buttons", function(){
+        var speed2Button = game.make.button(400+20-16, 400, "buttons", function(){
             game.guard.setSpeed(1.6);
         }, this, 10, 2, 14);
         speed2Button.scale.set(2);
         speed2Button.smoothed = false;
         this.gui.add(speed2Button);
 
-        var speed3Button = game.make.button(400+60, 400, "buttons", function(){
+        var speed3Button = game.make.button(400+60-16, 400, "buttons", function(){
             game.guard.setSpeed(2);
         }, this, 11, 3, 15);
         speed3Button.scale.set(2);
@@ -65,12 +65,15 @@ PhaserGame.prototype = {
 
         this.speedButtons = [pauseButton, speed1Button, speed2Button, speed3Button];
         
-        game.distanceCounter = game.make.text(400, 50, "");
+        game.distanceCounter = game.make.text(game.width/2, 80, "", {
+            font: "normal 32px monacoregular"
+        });
+        game.distanceCounter.anchor.set(0.5, 0.5);
         this.gui.add(game.distanceCounter);
 
         var paper = game.make.sprite(game.width/2 - 150, 30, "paper");
         paper.anchor.set(0, 0);
-        var stats = game.make.bitmapText(20, 50, "typewriter", 
+        var stats = game.make.text(20, 50,
             "transport summary\n\n"+
             "prisoners transported: 10\n"+
             "escapes: 2\n"+
@@ -79,9 +82,11 @@ PhaserGame.prototype = {
             " - exhaustion: 11\n"+
             " - executions: 7\n\n"+
             "distance walked: 18km\n"+
-            "days elapsed: 2 days\n"+
-            "next page"
-            , 32);
+            "days elapsed: 2 days\n"
+            , {
+            font: "normal 16px/5px monacoregular"
+        });
+        stats.lineSpacing = -6;
         stats.tint = 0x000000;
         paper.addChild(stats);
         var nextPage = game.make.button(paper.width/2, paper.height-50, "buttonBorder", function(){
@@ -91,26 +96,26 @@ PhaserGame.prototype = {
         nextPage.tint = 0x000000;
         nextPage.alpha = 0.4;
         nextPage.onInputOver.add(function(){
-            console.log(this)
             var tween = game.add.tween(this);
             tween.to({alpha : 1}, 300);
             tween.easing(Phaser.Easing.Circular.In);
             tween.start();
         }, nextPage);
         nextPage.onInputOut.add(function(){
-            console.log(this)
             var tween = game.add.tween(this);
             tween.to({alpha : 0.4}, 300);
             tween.easing(Phaser.Easing.Circular.Out);
             tween.start();
         }, nextPage);
-        var next = game.make.bitmapText(0, -nextPage.height+4, "typewriter", "next page", 32);
+        var next = game.make.text(0, -nextPage.height+4, "next page", {
+            font: "normal 16px monacoregular"
+        });
         next.anchor.set(0.5, 0);
-        next.tint = 0x000000;
         nextPage.addChild(next);
         paper.addChild(nextPage)
 
         // this.gui.add(paper);
+
         game.background = game.add.group(game.world, "background");
         this.snowBackground = game.make.tileSprite(0, 0, 400, 240, "snowBackground");
         this.snowBackground.fixedToCamera = true;
@@ -211,11 +216,11 @@ PhaserGame.prototype = {
 
         // debug gui
         var debugGui = game.add.group(this.gui, "debugGui");
-        game.fpsCounter = game.make.text(50, 50, "fps: ", {
-            color: 0xFF0000
-        })
+
+        game.fpsCounter = game.make.text(0, 0, "fps: ", {
+            font: "normal 32px monacoregular"
+        });
         debugGui.add(game.fpsCounter);
-        
 
         var background = game.make.graphics(650, 30);
         background.beginFill(0x000000, 0.7);
@@ -316,9 +321,13 @@ PhaserGame.prototype = {
         // game.debug.spriteCoords(player, 32, 500);
     }
 };
-
-var game = new Phaser.Game(800, 480, Phaser.AUTO, document.body);
-game.state.add("Loading", loading);
-game.state.add("Preload", preloadA);
-game.state.add("PhaserGame", PhaserGame);
-game.state.start("Loading");
+var game;
+$(document).ready(function(){
+    waitForWebfonts(["monacoregular"], function(){
+        game = new Phaser.Game(800, 480, Phaser.AUTO, document.body);
+        game.state.add("Loading", loading);
+        game.state.add("Preload", preloadA);
+        game.state.add("PhaserGame", PhaserGame);
+        game.state.start("Loading");
+    });
+})
