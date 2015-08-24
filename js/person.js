@@ -89,19 +89,19 @@ Person.prototype.update = function() {
 Person.prototype.statusImage = function(which) {
     var pos = this.worldPosition.clone();
     pos.add(game.camera.view.x, game.camera.view.y);
-    this.statusImage = new Phaser.Image(game, Math.round(pos.x), Math.round(pos.y)-10, which);
-    this.statusImage.scale.set(2, 2);
-    this.statusImage.smoothed = false;
-    this.statusImage.anchor.set(0.5, 0.5);
+    this.statusImg = new Phaser.Image(game, Math.round(pos.x), Math.round(pos.y)-10, which);
+    this.statusImg.scale.set(2, 2);
+    this.statusImg.smoothed = false;
+    this.statusImg.anchor.set(0.5, 0.5);
 
-    var tween = game.add.tween(this.statusImage);
+    var tween = game.add.tween(this.statusImg);
     tween.to({y : pos.y-60, alpha : 0}, 3000);
     tween.start();
     tween.easing(Phaser.Easing.Linear.None);
     var _this = this;
     tween.onComplete.add(function(){
-        _this.statusImage.destroy();
+        _this.statusImg.destroy();
     })
 
-    game.world.add(this.statusImage);
+    game.world.add(this.statusImg);
 };
