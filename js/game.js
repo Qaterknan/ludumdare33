@@ -149,6 +149,8 @@ PhaserGame.prototype = {
 			soundButton.setFrames(1,1,0);
 			// Zde mute a toggle dle tlačítka (pokud mute, tak framy 110, jinak 001)
 		}, soundButton, 0, 0, 1);
+        soundButton.scale.set(2, 2);
+        soundButton.smoothed = false;
 		this.startGroup.add(soundButton);
 		// Druhé gui v pozadí
 		this.gui.alpha = 0;
