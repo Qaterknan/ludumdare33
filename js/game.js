@@ -38,8 +38,17 @@ PhaserGame.prototype = {
         
         game.gameGui = game.add.group(this.gui, "gameGui");
         // gui
+		game.gameGui.activeButton = 0;
+		game.gameGui.changeActiveButton = function(id){
+			var id2 = game.gameGui.activeButton
+			game.gameGui.children[id].setFrames(8+id, 4+id, 12+id);
+			game.gameGui.children[id2].setFrames(8+id2,id2,12+id2);
+			game.gameGui.activeButton = id;
+		}
+		
         var pauseButton = game.make.button(400-60-16, 400, "buttons", function(){
             game.guard.setSpeed(0);
+			game.gameGui.changeActiveButton(0);
         }, this, 8, 0, 12);
         pauseButton.scale.set(2);
         pauseButton.smoothed = false;
@@ -47,6 +56,7 @@ PhaserGame.prototype = {
 
         var speed1Button = game.make.button(400-20-16, 400, "buttons", function(){
             game.guard.setSpeed(1);
+			game.gameGui.changeActiveButton(1);
         }, this, 9, 1, 13);
         speed1Button.scale.set(2);
         speed1Button.smoothed = false;
@@ -54,6 +64,7 @@ PhaserGame.prototype = {
 
         var speed2Button = game.make.button(400+20-16, 400, "buttons", function(){
             game.guard.setSpeed(2);
+			game.gameGui.changeActiveButton(2);
         }, this, 10, 2, 14);
         speed2Button.scale.set(2);
         speed2Button.smoothed = false;
@@ -61,6 +72,7 @@ PhaserGame.prototype = {
 
         var speed3Button = game.make.button(400+60-16, 400, "buttons", function(){
             game.guard.setSpeed(3);
+			game.gameGui.changeActiveButton(3);
         }, this, 11, 3, 15);
         speed3Button.scale.set(2);
         speed3Button.smoothed = false;
@@ -348,6 +360,7 @@ $(document).ready(function(){
 
         game.startGame = function () {
             game.guard.setSpeed(2);
+			game.gameGui.changeActiveButton(2);
             game.march.startEffects();
             game.progress.init(game.march.children.length);
             // crossfade gui
