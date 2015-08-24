@@ -9,6 +9,7 @@ preloadA.prototype = {
 
     game.load.image('tree','images/smrk2.png');
     game.load.image('tree2','images/smrk4.png');
+    game.load.image('tree3','images/smrk5.png');
     game.load.image('yard','images/dvorek.PNG');
     game.load.image('gate','images/gate.png');
     

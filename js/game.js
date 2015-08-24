@@ -139,10 +139,11 @@ PhaserGame.prototype = {
         // stromy pro kontext
         for(var i=0; i<70; i++){
             var tree;
+            var treeKey = utils.randomElement(["tree", "tree2", "tree3"]);
             if(i%2==0)
-                tree = game.make.sprite(utils.random(0,800), utils.random(0,100), "tree"+(Math.random() < 0.5 ? "" : "2"));
+                tree = game.make.sprite(utils.random(0,800), utils.random(0,100), treeKey);
             else
-                tree = game.make.sprite(utils.random(0,800), utils.random(380,480), "tree"+(Math.random() < 0.5 ? "" : "2"));
+                tree = game.make.sprite(utils.random(0,800), utils.random(380,480), treeKey);
             tree.scale.set(2);
             tree.smoothed = false;
             tree.rotation = utils.randomInt(0, 4)/2 * Math.PI;
