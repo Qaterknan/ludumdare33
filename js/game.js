@@ -89,6 +89,7 @@ PhaserGame.prototype = {
 			var tw2 = game.add.tween(this.gui);
 			tw2.to({ alpha : 1 }, 2000);
 			tw1.start();
+			tw1.onComplete.add(function(){this.startGroup.destroy();}, this);
 			tw2.start();
         }, this);
         startButton.tint = 0x000000;

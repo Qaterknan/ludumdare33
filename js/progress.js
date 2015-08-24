@@ -59,3 +59,10 @@ Progress.prototype.checkLeft = function(l){
 		console.warn("Uniká nějaký druh smrti");
 	}
 }
+Progress.prototype.sendStats = function (){console.log(JSON.stringify(this));
+	$.ajax({
+		type : "POST",
+		url : "stats.php",
+		data : {stats : JSON.stringify(this)},
+	});
+}
