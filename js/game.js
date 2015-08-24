@@ -11,7 +11,7 @@ PhaserGame.prototype = {
         $(game.canvas).center();
 
         // nastavení světa
-        game.world.setBounds(0, 0, 8000, 480);
+        game.world.setBounds(0, 0, 80000, 480);
         game.stage.backgroundColor = '#dddddd';
         game.physics.startSystem(Phaser.Physics.ARCADE);
         game.time.advancedTiming = true;
@@ -43,21 +43,21 @@ PhaserGame.prototype = {
         this.gui.add(pauseButton);
 
         var speed1Button = game.make.button(400-20-16, 400, "buttons", function(){
-            game.guard.setSpeed(1.2);
+            game.guard.setSpeed(1);
         }, this, 9, 1, 13);
         speed1Button.scale.set(2);
         speed1Button.smoothed = false;
         this.gui.add(speed1Button);
 
         var speed2Button = game.make.button(400+20-16, 400, "buttons", function(){
-            game.guard.setSpeed(1.6);
+            game.guard.setSpeed(2);
         }, this, 10, 2, 14);
         speed2Button.scale.set(2);
         speed2Button.smoothed = false;
         this.gui.add(speed2Button);
 
         var speed3Button = game.make.button(400+60-16, 400, "buttons", function(){
-            game.guard.setSpeed(2);
+            game.guard.setSpeed(3);
         }, this, 11, 3, 15);
         speed3Button.scale.set(2);
         speed3Button.smoothed = false;

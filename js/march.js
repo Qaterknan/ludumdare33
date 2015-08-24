@@ -14,7 +14,7 @@ var March = function (game) {
 	this.effectsStopped = false;
 	this.psychologyStopped = false;
 	
-    this.speed = this.psychology.maxSpeed/3;
+    this.speed = 0;
 	this.fatigueTreshold = 200;
 	this.temperatureTreshold = 50;
 	this.moraleTreshold = 40;
@@ -105,10 +105,6 @@ March.prototype.update = function() {
             }
         }
     }
-};
-
-March.prototype.setSpeed = function(speed) {
-    this.speed = speed/3;
 };
 
 March.prototype.killOne = function(how) { // kill, freeze, exhausted

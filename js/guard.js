@@ -34,8 +34,14 @@ Guard.prototype.update = function() {
     this.x += this.speed;
 };
 
-Guard.prototype.setSpeed = function(speed) {
-    this.speed = speed/3;
+Guard.prototype.setSpeed = function(speedIndex) {
+    var speeds = [
+        0,
+        0.4,
+        0.6,
+        0.8
+    ];
+    this.speed = speeds[speedIndex];
 };
 
 Guard.prototype.getNearest = function(position) {
