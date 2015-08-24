@@ -2,6 +2,7 @@ function Jukebox(game){
 	this.game = game;
 	this.timer = game.time.create(false);
 	this.timer.start();
+	this.globalMute = false;
 
 	this.effects = [];
 }
@@ -14,7 +15,7 @@ Jukebox.prototype.addEffect = function(audioName, effectName, volume) {
 	
 	var effect = this.getEffect(effectName);
 	effect.add(audioName, volume);
-
+	
 	return effect;
 };
 Jukebox.prototype.playEffect = function(effectName) {
@@ -23,11 +24,12 @@ Jukebox.prototype.playEffect = function(effectName) {
 Jukebox.prototype.loopEffect = function(effectName, wait, addRandomWait) {
 	this.getEffect(effectName).startLoop(wait, addRandomWait);
 };
-/*Jukebox.prototype.mute = function(m){
-	for(var i = 0; i < this.effects.length; i++){
+Jukebox.prototype.mute = function(m){
+	this.globalMute = m;
+	for(var i in this.effects){
 		this.effects[i].mute(m);
 	};
-};*/
+};
 
 function Effects(jukebox) {
 	this.jukebox = jukebox;
@@ -66,7 +68,8 @@ Effects.prototype.startLoop = function(wait, randomWait) {
 	this.wait();
 };
 Effects.prototype.mute = function(mute) {
+	var newMute = this.jukebox.globalMute ? true : mute;
 	for(var i=0; i<this.effects.length; i++){
-		this.effects[i].mute = mute;
+		this.effects[i].mute = newMute;
 	}
 };
