@@ -12,6 +12,8 @@ var Diary = function (game, parent, x, y) {
 
     this.opened = false;
 
+    this.nextPageButton.visible = false;
+
     var text = this.addText("text");
 
     var onOver = function(){
@@ -94,10 +96,15 @@ Diary.prototype.chosen = function(chosen) {
 };
 
 Diary.prototype.open = function() {
-    if(this.nextQuestion()){
+    if(this.nextQuestion() && !this.showingFate){
         this.opened = true;
         this.changeState("visible");
     }
+};
+
+Diary.prototype.hide = function() {
+    this.opened = false;
+    this.changeState("hidden");
 };
 
 Diary.prototype.onOver = function() {
@@ -140,6 +147,23 @@ Diary.prototype.changeQuestion = function(textobj) {
     textB.text = "2. " + textobj.b;
     textC.y = textB.bottom;
     textC.text = "3. " + textobj.c;
+};
+
+Diary.prototype.showFate = function(fate) {
+    this.showingFate = true;
+    this.background.events.onInputOver.removeAll();
+    this.background.events.onInputOut.removeAll();
+
+    this.getText("text").text = fate.text;
+    this.getText("textA").visible = false;
+    this.getText("textB").visible = false;
+    this.getText("textC").visible = false;
+    this.changeState("out");
+
+    this.nextPageButton.visible = true;
+
+    if(fate.next === undefined)
+        this.nextPageText.text = "end game";
 };
 
 function Text(monologue, a, b, c) {

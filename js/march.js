@@ -117,13 +117,13 @@ March.prototype.update = function() {
 	
 	if(this.position.x >= game.finalGate.position.x){
 		if(!this.inDestination){
-			endGame.call(game, false);
+			game.endGame(false);
 		}
 	}
 	
 	if(this.children.length <= 0){
 		if(!this.inDestination){
-			endGame.call(game, true);
+			game.endGame(true);
 		}
 	}
 };

@@ -10,7 +10,8 @@ PhaserGame.prototype = {
         // centrování canvasu
         $(game.canvas).center();
 		// Zapnutí progressu
-		game.progress = new Progress();
+        game.progress = new Progress();
+		game.fates = new Fates();
         // nastavení světa
         game.world.setBounds(0, 0, 80000, 480);
         game.stage.backgroundColor = '#dddddd';
@@ -80,7 +81,7 @@ PhaserGame.prototype = {
 		this.startGroup = game.add.group(game.world, "startGroup");
         this.startGroup.fixedToCamera = true;
 		// Tlačítko start
-		var startButton = game.make.button(game.width/2, 200, "buttonBorder", this.startGame, this);
+		var startButton = game.make.button(game.width/2, 200, "buttonBorder", game.startGame, this);
         startButton.tint = 0x000000;
 		startButton.anchor.set(0.5);
 		startButton.scale.set(2);
@@ -325,27 +326,6 @@ PhaserGame.prototype = {
         // game.debug.cameraInfo(game.camera, 32, 32);
         // game.debug.spriteCoords(player, 32, 500);
     },
-
-    startGame: function () {
-        game.guard.setSpeed(2);
-        game.march.startEffects();
-        game.progress.init(game.march.children.length);
-        // crossfade gui
-        var tw1 = game.add.tween(this.startGroup);
-        tw1.to({ alpha : 0 }, 2000);
-        var tw2 = game.add.tween(this.gui);
-        tw2.to({ alpha : 1 }, 2000);
-        tw1.start();
-        tw1.onComplete.add(function(){
-            this.startGroup.visible=false;
-        }, this);
-        tw2.start();
-
-        // po x sekundách vyjede první deníkový zápis
-        game.time.events.add(5000, function(){
-            game.diary.open();
-        })
-    }
 };
 var game;
 $(document).ready(function(){
@@ -355,17 +335,58 @@ $(document).ready(function(){
         game.state.add("Preload", preloadA);
         game.state.add("PhaserGame", PhaserGame);
         game.state.start("Loading");
-    });
-})
 
-function endGame(early){
-	this.progress.finished = !early;
-	this.progress.sendStats();
-	this.march.stopEffects();
-	this.march.inDestination = true;
-	this.report.report(this.progress);
-	this.report.changeState("out");
-	game.gui.visibil
-	if(early)
-		game.guard.speed = 0;
-}
+        game.startGame = function () {
+            game.guard.setSpeed(2);
+            game.march.startEffects();
+            game.progress.init(game.march.children.length);
+            // crossfade gui
+            var tw1 = game.add.tween(this.startGroup);
+            tw1.to({ alpha : 0 }, 2000);
+            var tw2 = game.add.tween(this.gui);
+            tw2.to({ alpha : 1 }, 2000);
+            tw1.start();
+            tw1.onComplete.add(function(){
+                this.startGroup.visible=false;
+            }, this);
+            tw2.start();
+
+            // po x sekundách vyjede první deníkový zápis
+            game.time.events.add(5000, function(){
+                game.diary.open();
+            });
+        };
+
+        game.showFate = function () {
+            var fate = game.fates.getFate(game.progress);
+            if(fate !== false){
+                if(fate.paper == "diary"){
+                    game.diary.showFate(fate);
+                }
+                else if(fate.paper == "report"){
+                    game.report.showFate(fate);
+                }
+                game.fates.next();
+            }
+            else {
+                // potemění obrazovky
+
+            }
+        },
+
+        game.endGame = function(early){
+        	this.progress.finished = !early;
+        	this.progress.sendStats();
+        	this.march.stopEffects();
+        	this.march.inDestination = true;
+            this.diary.hide();
+        	this.report.report(this.progress);
+        	this.report.changeState("out");
+        	game.gui.visibil
+        	if(early)
+        		game.guard.speed = 0;
+        }
+
+    });
+});
+

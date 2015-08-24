@@ -7,40 +7,13 @@ var Report = function (game, parent, x, y) {
         "out": this.hiddenX + this.width + 2
     };
 
-    this.background.events.onInputOver.add(this.onOver, this);
-    this.background.events.onInputOut.add(this.onOut, this);
+    // this.background.events.onInputOver.add(this.onOver, this);
+    // this.background.events.onInputOut.add(this.onOut, this);
 
     this.paddingTop = 46;
     this.paddingLeft = 35;
 
     var text = this.addText("text");
-
-    var nextPage = game.make.button(this.width/2, this.height-25, "buttonBorder", function(){
-        console.log("next page");
-    });
-    nextPage.anchor.set(0.5, 1);
-    nextPage.tint = 0x000000;
-    nextPage.alpha = 0.6;
-    nextPage.onInputOver.add(function(){
-        var tween = game.add.tween(this);
-        tween.to({alpha : 1}, 300);
-        tween.easing(Phaser.Easing.Cubic.Out);
-        tween.start();
-    }, nextPage);
-    nextPage.events.onInputOver.add(this.onOver, this);
-    nextPage.onInputOut.add(function(){
-        var tween = game.add.tween(this);
-        tween.to({alpha : 0.6}, 300);
-        tween.easing(Phaser.Easing.Cubic.Out);
-        tween.start();
-    }, nextPage);
-    nextPage.events.onInputOut.add(this.onOut, this);
-    var next = game.make.text(0, -nextPage.height+4, "next page", {
-        font: "normal 16px monacoregular"
-    });
-    next.anchor.set(0.5, 0);
-    nextPage.addChild(next);
-    this.addChild(nextPage);
 
     this.changeState("hidden");
 }
@@ -73,4 +46,12 @@ Report.prototype.report = function(progress) {
 		"  -  missed shots: "+progress.missedPrisoners+" \n";
 
     this.getText("text").text = text;
+};
+
+Report.prototype.showFate = function(fate) {
+    this.getText("text").text = fate.text;
+    this.changeState("out");
+
+    if(fate.next === undefined)
+        this.nextPageText.text = "end game";
 };
