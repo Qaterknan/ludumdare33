@@ -80,18 +80,7 @@ PhaserGame.prototype = {
 		this.startGroup = game.add.group(game.world, "startGroup");
         this.startGroup.fixedToCamera = true;
 		// Tlačítko start
-		var startButton = game.make.button(game.width/2, 200, "buttonBorder", function(){
-            game.guard.setSpeed(2);
-			game.march.startEffects();
-			game.progress.init(game.march.children.length);
-			var tw1 = game.add.tween(this.startGroup);
-			tw1.to({ alpha : 0 }, 2000);
-			var tw2 = game.add.tween(this.gui);
-			tw2.to({ alpha : 1 }, 2000);
-			tw1.start();
-			tw1.onComplete.add(function(){this.startGroup.visible=false;}, this);
-			tw2.start();
-        }, this);
+		var startButton = game.make.button(game.width/2, 200, "buttonBorder", this.startGame, this);
         startButton.tint = 0x000000;
 		startButton.anchor.set(0.5);
 		startButton.scale.set(2);
@@ -335,6 +324,27 @@ PhaserGame.prototype = {
         // game.debug.spriteBounds(game.diary.textA);
         // game.debug.cameraInfo(game.camera, 32, 32);
         // game.debug.spriteCoords(player, 32, 500);
+    },
+
+    startGame: function () {
+        game.guard.setSpeed(2);
+        game.march.startEffects();
+        game.progress.init(game.march.children.length);
+        // crossfade gui
+        var tw1 = game.add.tween(this.startGroup);
+        tw1.to({ alpha : 0 }, 2000);
+        var tw2 = game.add.tween(this.gui);
+        tw2.to({ alpha : 1 }, 2000);
+        tw1.start();
+        tw1.onComplete.add(function(){
+            this.startGroup.visible=false;
+        }, this);
+        tw2.start();
+
+        // po x sekundách vyjede první deníkový zápis
+        game.time.events.add(5000, function(){
+            game.diary.open();
+        })
     }
 };
 var game;

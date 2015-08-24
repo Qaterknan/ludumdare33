@@ -10,22 +10,31 @@ var Diary = function (game, parent, x, y) {
     this.background.events.onInputOver.add(this.onOver, this);
     this.background.events.onInputOut.add(this.onOut, this);
 
+    this.opened = false;
+
     var text = this.addText("text");
 
     var onOver = function(){
-        var tween = game.add.tween(this);
-        tween.to({alpha : 1}, 300);
-        tween.easing(Phaser.Easing.Cubic.Out);
-        tween.start();
+        if(!this.disabled){
+            var tween = game.add.tween(this);
+            tween.to({alpha : 1}, 300);
+            tween.easing(Phaser.Easing.Cubic.Out);
+            tween.start();
+        }
     }
     var onOut = function(){
-        var tween = game.add.tween(this);
-        tween.to({alpha : 0.4}, 300);
-        tween.easing(Phaser.Easing.Cubic.Out);
-        tween.start();
+        if(!this.chosen && !this.disabled){
+            var tween = game.add.tween(this);
+            tween.to({alpha : 0.4}, 300);
+            tween.easing(Phaser.Easing.Cubic.Out);
+            tween.start();
+        }
     }
 	var onDown = function(){
 		game.progress.storyline[game.diary.story] = this.name;
+        game.diary.chosen(this);
+        this.chosen = true;
+        this.alpha = 1;
 	}
 
     var answers = ["textA", "textB", "textC"];
@@ -39,7 +48,7 @@ var Diary = function (game, parent, x, y) {
         answer.events.onInputOut.add(onOut, answer);
         answer.events.onInputOut.add(this.onOut, this);
 		
-		answer.events.onInputDown.add(onDown, answer);
+        answer.events.onInputDown.add(onDown, answer);
 		answer.name = answers[i][answers[i].length-1];
     }
 
@@ -50,28 +59,65 @@ var Diary = function (game, parent, x, y) {
             "Russians must not get them. Not after they have seen.",
             "It will be easier and faster to put an end to this in the camp. Plus it's more economical."
             ),
+        new Text(
+            "I wonder why they do not try and kill us.",
+            "They would die with honour at least. Germans, for example, would never even become slaves.",
+            "Maybe it is because we beat the last bits of will out of them long time ago.",
+            "If only they tried! At least we would have more time to disappear and noone could condemn it as a war crime."
+            ),
 		
     ];
     this.story = 0;
-
-    this.changeState("visible");
-    this.nextQuestion();
 }
 
 Diary.prototype = Object.create(Paper.prototype);
 Diary.prototype.constructor = Diary;
+
+Diary.prototype.chosen = function(chosen) {
+    var answers = ["textA", "textB", "textC"];
+    for(var i=0;i<answers.length;i++){
+        var answer = this.getText(answers[i]);
+        if(answer != chosen){
+            answer.disabled = true;
+            var tween = game.add.tween(answer);
+                tween.to({alpha : 0}, 700);
+                tween.easing(Phaser.Easing.Cubic.Out);
+                tween.start();
+                tween.onComplete.add(function(){
+                    this.visible = false;
+                }, answer);
+        }
+    }
+    this.opened = false;
+
+    game.time.events.add(3000, this.open, this);
+};
+
+Diary.prototype.open = function() {
+    if(this.nextQuestion()){
+        this.opened = true;
+        this.changeState("visible");
+    }
+};
 
 Diary.prototype.onOver = function() {
     this.changeState("out");
 };
 
 Diary.prototype.onOut = function() {
-    this.changeState("visible");
+    if(this.opened)
+        this.changeState("visible");
+    else
+        this.changeState("hidden");
 };
 
 Diary.prototype.nextQuestion = function() {
-    this.changeQuestion(this.textStrings[this.story]);
-    this.story++;
+    if(this.story < this.textStrings.length){
+        this.changeQuestion(this.textStrings[this.story]);
+        this.story++;
+        return true;
+    }
+    return false;
 };
 
 Diary.prototype.changeQuestion = function(textobj) {
@@ -79,6 +125,14 @@ Diary.prototype.changeQuestion = function(textobj) {
     var textA = this.getText("textA");
     var textB = this.getText("textB");
     var textC = this.getText("textC");
+    textA.disabled = textA.chosen = false;
+    textB.disabled = textB.chosen = false;
+    textC.disabled = textC.chosen = false;
+    textA.visible = true;
+    textB.visible = true;
+    textC.visible = true;
+    textA.alpha = textB.alpha = textC.alpha = 0.4;
+
     text.text = textobj.monologue;
     textA.y = text.bottom;
     textA.text = "1. " + textobj.a;
