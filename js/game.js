@@ -73,9 +73,7 @@ PhaserGame.prototype = {
         this.gui.add(game.distanceCounter);
 
         game.stage.disableVisibilityChange = true;
-        game.diary = new Diary(game, game.width, game.height/2 - 225);
-        this.gui.addChild(game.diary);
-		
+        game.diary = new Diary(game, this.gui, game.width, game.height/2 - 225);
 		// Start menu
 		this.startGroup = game.add.group(game.world, "startGroup");
         this.startGroup.fixedToCamera = true;
@@ -333,7 +331,7 @@ PhaserGame.prototype = {
     },
 
     render: function () {
-
+        // game.debug.spriteBounds(game.diary.textA);
         // game.debug.cameraInfo(game.camera, 32, 32);
         // game.debug.spriteCoords(player, 32, 500);
     }

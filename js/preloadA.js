@@ -19,6 +19,7 @@ preloadA.prototype = {
     game.load.image('arrow','images/arrow.png');
     game.load.image('footstep','images/footstep.png');
     game.load.image('paper','images/paper.png');
+    game.load.image('paper2','images/paper2.png');
     game.load.image('buttonBorder','images/button-border.png');
     game.load.spritesheet('sound','images/sound.png', 16, 16);
     game.load.spritesheet('quality','images/quality.png', 16, 16);
