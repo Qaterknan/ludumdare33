@@ -21,6 +21,8 @@ var March = function (game) {
 	this.totalFatigue = 0;
 	this.totalTemperature = this.temperatureTreshold;
 	this.totalMorale = this.moraleTreshold;
+	
+	this.inDestination = false;
 
     // debug axes
     // var debugAxes = new Phaser.Graphics(game, 0, 0);
@@ -112,6 +114,15 @@ March.prototype.update = function() {
             }
         }
     }
+	
+	if(this.position.x >= game.finalGate.position.x){
+		if(!this.inDestination){
+			endGame.call(game);
+		}
+		if(game.guard.position.x >= game.finalGate.position.x + 350){
+			game.guard.speed = 0;
+		}
+	}
 };
 
 March.prototype.killOne = function(how) { // kill, freeze, exhausted
