@@ -118,34 +118,33 @@ PhaserGame.prototype = {
 		
 		// Start menu
 		this.startGroup = game.add.group(game.world, "startGroup");
-		this.startGroup.position.x = 700;
-		var _startGroup = this.startGroup;
-		var _gui = this.gui;
+        this.startGroup.fixedToCamera = true;
 		// Tlačítko start
-		var startButton = game.make.button(0, 200, "buttonBorder", function(){
+		var startButton = game.make.button(game.width/2, 200, "buttonBorder", function(){
             game.guard.setSpeed(2);
 			game.march.startEffects();
-			var tw1 = game.add.tween(_startGroup);
+			var tw1 = game.add.tween(this.startGroup);
 			tw1.to({ alpha : 0 }, 2000);
-			var tw2 = game.add.tween(_gui);
+			var tw2 = game.add.tween(this.gui);
 			tw2.to({ alpha : 1 }, 2000);
 			tw1.start();
 			tw2.start();
         }, this);
+        startButton.tint = 0x000000;
 		startButton.anchor.set(0.5);
 		startButton.scale.set(2);
         startButton.smoothed = false;
 		startButton.name = "startButton";
 		this.startGroup.add(startButton);
 		// Nápis start
-		var startText = game.make.text(0,200, "Start", {
-            font: "normal 16px monacoregular"
+		var startText = game.make.text(game.width/2,204, "Start", {
+            font: "normal 32px monacoregular"
         });
-		startText.anchor.set(0.5);
+		startText.anchor.set(0.5, 0.5);
 		// startText.scale.set(2);
 		this.startGroup.add(startText);
 		// Tlumící tlačítko
-		var soundButton = game.make.button(0, 300, "sound", function(){
+		var soundButton = game.make.button(game.width/2, 300, "sound", function(){
 			if(!game.jukebox.globalMute){
 				soundButton.setFrames(1,1,0);
 				game.jukebox.mute(true);
@@ -155,6 +154,7 @@ PhaserGame.prototype = {
 				game.jukebox.mute(false);
 			}
 		}, soundButton, 0, 0, 1);
+        soundButton.anchor.set(0.5, 0.5);
         soundButton.scale.set(2, 2);
         soundButton.smoothed = false;
 		this.startGroup.add(soundButton);
