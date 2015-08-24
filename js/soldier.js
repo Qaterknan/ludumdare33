@@ -24,7 +24,7 @@ Soldier.prototype.shoot = function(prisoner) {
     shoot.enableUpdate = true;
     var _this = this;
     shoot.onUpdate.add(function(){
-        delayMult = 5;
+        delayMult = 6;
         if(this.frame == 2){
             this.delay *= delayMult;
         }

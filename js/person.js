@@ -46,7 +46,7 @@ Person.prototype = Object.create(Phaser.Sprite.prototype);
 Person.prototype.constructor = Person;
 Person.prototype.update = function() {
     if(this.parent !== undefined){
-        if(this.animations.currentAnim.name == "walk"){
+        if(this.animations.currentAnim.name == "walk" || this.animations.currentAnim.name == "stand"){
             if(this.parent.speed === 0){
                 this.play("stand");
             }
@@ -59,9 +59,25 @@ Person.prototype.update = function() {
         pos.add(game.camera.view.x, game.camera.view.y);
         this.footsteps.emitX = pos.x;
         this.footsteps.emitY = pos.y;
-
         if(this.parent.speed > 0)
             this.footsteps.frequency = 300/this.parent.speed;
+
+        if(this.fleeing){
+            this.footsteps.width = 4;
+            this.footsteps.height = 1;
+            this.footsteps.frequency = 10000/this.body.velocity.getMagnitude();
+            if(this.body.velocity.y > 0){
+                this.footsteps.forEach(function(particle){
+                    particle.rotation = Math.PI/2;
+                });
+            }
+            else {
+                this.footsteps.forEach(function(particle){
+                    particle.rotation = -Math.PI/2;
+                });
+            }
+
+        }
 
         var animationSpeed = 12*this.parent.speed;
         animationSpeed += utils.random(0, 0.1)*animationSpeed; // 10% pro desync animací

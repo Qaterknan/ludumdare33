@@ -36,29 +36,29 @@ PhaserGame.prototype = {
         this.gui.fixedToCamera = true;
         
         // gui
-        var pauseButton = game.make.button(400-60, 400, "buttons", function(){
+        var pauseButton = game.make.button(400-60-16, 400, "buttons", function(){
             game.guard.setSpeed(0);
         }, this, 8, 0, 12);
         pauseButton.scale.set(2);
         pauseButton.smoothed = false;
         this.gui.add(pauseButton);
 
-        var speed1Button = game.make.button(400-20, 400, "buttons", function(){
-            game.guard.setSpeed(1);
+        var speed1Button = game.make.button(400-20-16, 400, "buttons", function(){
+            game.guard.setSpeed(1.2);
         }, this, 9, 1, 13);
         speed1Button.scale.set(2);
         speed1Button.smoothed = false;
         this.gui.add(speed1Button);
 
-        var speed2Button = game.make.button(400+20, 400, "buttons", function(){
-            game.guard.setSpeed(2);
+        var speed2Button = game.make.button(400+20-16, 400, "buttons", function(){
+            game.guard.setSpeed(1.6);
         }, this, 10, 2, 14);
         speed2Button.scale.set(2);
         speed2Button.smoothed = false;
         this.gui.add(speed2Button);
 
-        var speed3Button = game.make.button(400+60, 400, "buttons", function(){
-            game.guard.setSpeed(3);
+        var speed3Button = game.make.button(400+60-16, 400, "buttons", function(){
+            game.guard.setSpeed(2);
         }, this, 11, 3, 15);
         speed3Button.scale.set(2);
         speed3Button.smoothed = false;
@@ -66,12 +66,15 @@ PhaserGame.prototype = {
 
         this.speedButtons = [pauseButton, speed1Button, speed2Button, speed3Button];
         
-        game.distanceCounter = game.make.text(400, 50, "");
+        game.distanceCounter = game.make.text(game.width/2, 80, "", {
+            font: "normal 32px monacoregular"
+        });
+        game.distanceCounter.anchor.set(0.5, 0.5);
         this.gui.add(game.distanceCounter);
 		
         var paper = game.make.sprite(game.width/2 - 150, 30, "paper");
         paper.anchor.set(0, 0);
-        var stats = game.make.bitmapText(20, 50, "typewriter", 
+        var stats = game.make.text(40, 26,
             "transport summary\n\n"+
             "prisoners transported: 10\n"+
             "escapes: 2\n"+
@@ -80,9 +83,11 @@ PhaserGame.prototype = {
             " - exhaustion: 11\n"+
             " - executions: 7\n\n"+
             "distance walked: 18km\n"+
-            "days elapsed: 2 days\n"+
-            "next page"
-            , 32);
+            "days elapsed: 2 days\n"
+            , {
+            font: "normal 16px/5px monacoregular"
+        });
+        stats.lineSpacing = 0;
         stats.tint = 0x000000;
         paper.addChild(stats);
         var nextPage = game.make.button(paper.width/2, paper.height-50, "buttonBorder", function(){
@@ -92,54 +97,56 @@ PhaserGame.prototype = {
         nextPage.tint = 0x000000;
         nextPage.alpha = 0.4;
         nextPage.onInputOver.add(function(){
-            console.log(this)
             var tween = game.add.tween(this);
             tween.to({alpha : 1}, 300);
             tween.easing(Phaser.Easing.Circular.In);
             tween.start();
         }, nextPage);
         nextPage.onInputOut.add(function(){
-            console.log(this)
             var tween = game.add.tween(this);
             tween.to({alpha : 0.4}, 300);
             tween.easing(Phaser.Easing.Circular.Out);
             tween.start();
         }, nextPage);
-        var next = game.make.bitmapText(0, -nextPage.height+4, "typewriter", "next page", 32);
+        var next = game.make.text(0, -nextPage.height+4, "next page", {
+            font: "normal 16px monacoregular"
+        });
         next.anchor.set(0.5, 0);
-        next.tint = 0x000000;
         nextPage.addChild(next);
-        paper.addChild(nextPage)
+        paper.addChild(nextPage);
+
+        // this.gui.addChild(paper);
 		
 		// Start menu
 		this.startGroup = game.add.group(game.world, "startGroup");
-		this.startGroup.position.x = 700;
-		var _startGroup = this.startGroup;
-		var _gui = this.gui;
+        this.startGroup.fixedToCamera = true;
 		// Tlačítko start
-		var startButton = game.make.button(0, 200, "buttonBorder", function(){
+		var startButton = game.make.button(game.width/2, 200, "buttonBorder", function(){
             game.guard.setSpeed(2);
 			game.march.startEffects();
 			game.progress.init(game.march.children.length);
-			var tw1 = game.add.tween(_startGroup);
+			var tw1 = game.add.tween(this.startGroup);
 			tw1.to({ alpha : 0 }, 2000);
-			var tw2 = game.add.tween(_gui);
+			var tw2 = game.add.tween(this.gui);
 			tw2.to({ alpha : 1 }, 2000);
 			tw1.start();
 			tw2.start();
         }, this);
+        startButton.tint = 0x000000;
 		startButton.anchor.set(0.5);
 		startButton.scale.set(2);
         startButton.smoothed = false;
 		startButton.name = "startButton";
 		this.startGroup.add(startButton);
 		// Nápis start
-		var startText = game.make.bitmapText(0,200, "typewriter", "Start", 24);
-		startText.anchor.set(0.5);
-		startText.scale.set(2);
+		var startText = game.make.text(game.width/2,204, "Start", {
+            font: "normal 32px monacoregular"
+        });
+		startText.anchor.set(0.5, 0.5);
+		// startText.scale.set(2);
 		this.startGroup.add(startText);
 		// Tlumící tlačítko
-		var soundButton = game.make.button(0, 300, "sound", function(){
+		var soundButton = game.make.button(game.width/2, 300, "sound", function(){
 			if(!game.jukebox.globalMute){
 				soundButton.setFrames(1,1,0);
 				game.jukebox.mute(true);
@@ -149,11 +156,15 @@ PhaserGame.prototype = {
 				game.jukebox.mute(false);
 			}
 		}, soundButton, 0, 0, 1);
+        soundButton.anchor.set(0.5, 0.5);
+        soundButton.scale.set(2, 2);
+        soundButton.smoothed = false;
 		this.startGroup.add(soundButton);
 		// Druhé gui v pozadí
 		this.gui.alpha = 0;
 		
         // this.gui.add(paper);
+
         game.background = game.add.group(game.world, "background");
         this.snowBackground = game.make.tileSprite(0, 0, 400, 240, "snowBackground");
         this.snowBackground.fixedToCamera = true;
@@ -179,8 +190,8 @@ PhaserGame.prototype = {
             tree.smoothed = false;
             tree.rotation = utils.randomInt(0, 4)/2 * Math.PI;
             tree.update = function (){
-                if(game.camera.position.x - this.position.x > game.camera.view.width/2){
-                    this.position.x += game.camera.view.width;
+                if(game.camera.position.x - game.camera.width/2 > this.position.x + this.width){
+                    this.position.x += game.camera.view.width+this.width*2;
                 }
             };
 
@@ -264,11 +275,11 @@ PhaserGame.prototype = {
 
         // debug gui
         var debugGui = game.add.group(this.gui, "debugGui");
-        game.fpsCounter = game.make.text(50, 50, "fps: ", {
-            color: 0xFF0000
-        })
+
+        game.fpsCounter = game.make.text(0, 0, "fps: ", {
+            font: "normal 32px monacoregular"
+        });
         debugGui.add(game.fpsCounter);
-        
 
         var background = game.make.graphics(650, 30);
         background.beginFill(0x000000, 0.7);
@@ -313,7 +324,7 @@ PhaserGame.prototype = {
         pauseButton.smoothed = false;
         debugGui.add(pauseButton);
 
-        debugGui.visible = false;
+        debugGui.visible = true;
 		
         this.datgui = new dat.GUI();
         this.datgui.add(game.march.psychology, "speed");
@@ -369,9 +380,13 @@ PhaserGame.prototype = {
         // game.debug.spriteCoords(player, 32, 500);
     }
 };
-
-var game = new Phaser.Game(800, 480, Phaser.AUTO, document.body);
-game.state.add("Loading", loading);
-game.state.add("Preload", preloadA);
-game.state.add("PhaserGame", PhaserGame);
-game.state.start("Loading");
+var game;
+$(document).ready(function(){
+    waitForWebfonts(["monacoregular"], function(){
+        game = new Phaser.Game(800, 480, Phaser.AUTO, document.body);
+        game.state.add("Loading", loading);
+        game.state.add("Preload", preloadA);
+        game.state.add("PhaserGame", PhaserGame);
+        game.state.start("Loading");
+    });
+})

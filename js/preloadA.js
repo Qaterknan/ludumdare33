@@ -18,6 +18,7 @@ preloadA.prototype = {
     game.load.image('snow','images/snow.png');
     game.load.image('arrow','images/arrow.png');
     game.load.image('footstep','images/footstep.png');
+    game.load.image('paper','images/paper.png');
     game.load.image('buttonBorder','images/button-border.png');
     game.load.spritesheet('sound','images/sound.png', 16, 16);
     game.load.spritesheet('quality','images/quality.png', 16, 16);
@@ -50,8 +51,6 @@ preloadA.prototype = {
     game.load.audio('wind1', 'sounds/wind1.ogg');
     game.load.audio('wind2', 'sounds/wind2.ogg');
     game.load.audio('wind3', 'sounds/wind3.ogg');
-
-    game.load.bitmapFont('typewriter', 'fonts/font.png', 'fonts/font.fnt');
     },
     
     create : function() {
