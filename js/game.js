@@ -146,8 +146,14 @@ PhaserGame.prototype = {
 		this.startGroup.add(startText);
 		// Tlumící tlačítko
 		var soundButton = game.make.button(0, 300, "sound", function(){
-			soundButton.setFrames(1,1,0);
-			// Zde mute a toggle dle tlačítka (pokud mute, tak framy 110, jinak 001)
+			if(!game.jukebox.globalMute){
+				soundButton.setFrames(1,1,0);
+				game.jukebox.mute(true);
+			}
+			else{
+				soundButton.setFrames(0,0,1);
+				game.jukebox.mute(false);
+			}
 		}, soundButton, 0, 0, 1);
         soundButton.scale.set(2, 2);
         soundButton.smoothed = false;
