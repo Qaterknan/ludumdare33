@@ -10,17 +10,17 @@ var Report = function (game, parent, x, y) {
     this.background.events.onInputOver.add(this.onOver, this);
     this.background.events.onInputOut.add(this.onOut, this);
 
-    this.paddingTop = 50;
+    this.paddingTop = 46;
     this.paddingLeft = 35;
 
     var text = this.addText("text");
 
-    var nextPage = game.make.button(this.width/2, this.height-30, "buttonBorder", function(){
+    var nextPage = game.make.button(this.width/2, this.height-25, "buttonBorder", function(){
         console.log("next page");
     });
     nextPage.anchor.set(0.5, 1);
     nextPage.tint = 0x000000;
-    nextPage.alpha = 0.4;
+    nextPage.alpha = 0.6;
     nextPage.onInputOver.add(function(){
         var tween = game.add.tween(this);
         tween.to({alpha : 1}, 300);
@@ -30,7 +30,7 @@ var Report = function (game, parent, x, y) {
     nextPage.events.onInputOver.add(this.onOver, this);
     nextPage.onInputOut.add(function(){
         var tween = game.add.tween(this);
-        tween.to({alpha : 0.4}, 300);
+        tween.to({alpha : 0.6}, 300);
         tween.easing(Phaser.Easing.Cubic.Out);
         tween.start();
     }, nextPage);
@@ -59,7 +59,7 @@ Report.prototype.onOut = function() {
 
 Report.prototype.report = function(progress) {
     var text =
-        "prisoners transportation report\n" +
+        "PRISONERS TRANSPORTATION\n" +
         "distance walked: " + progress.distanceWalked + "m \n" +
 		"days elapsed: " + Math.round(progress.daysElapsed*10)/10+" days\n"+
 		"prisoners transported: "+ progress.prisonersTransported+ " \n"+
