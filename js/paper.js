@@ -53,7 +53,7 @@ Paper.prototype.addText = function(key) {
     var textOptions = {
         font: "normal 16px/5px monacoregular",
         wordWrap: true,
-        wordWrapWidth: 300
+        wordWrapWidth: 295
     };
     var text = game.make.text(this.paddingLeft, this.paddingTop, "text", textOptions);
     this.addChild(text);
