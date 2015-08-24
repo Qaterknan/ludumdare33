@@ -23,6 +23,11 @@ Jukebox.prototype.playEffect = function(effectName) {
 Jukebox.prototype.loopEffect = function(effectName, wait, addRandomWait) {
 	this.getEffect(effectName).startLoop(wait, addRandomWait);
 };
+/*Jukebox.prototype.mute = function(m){
+	for(var i = 0; i < this.effects.length; i++){
+		this.effects[i].mute(m);
+	};
+};*/
 
 function Effects(jukebox) {
 	this.jukebox = jukebox;

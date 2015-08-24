@@ -11,6 +11,9 @@ var March = function (game) {
         this.add(person);
     }
 
+	this.effectsStopped = false;
+	this.psychologyStopped = false;
+	
     this.speed = this.psychology.maxSpeed/3;
 	this.fatigueTreshold = 200;
 	this.temperatureTreshold = 50;
@@ -64,24 +67,27 @@ March.prototype.update = function() {
         game.jukebox.getEffect("walk2").mute(true);
         game.jukebox.getEffect("walkFast").mute(true);
     }
-    
-    this.psychology.update(game.time.physicsElapsed);
 	
-	this.totalFatigue += this.psychology.fatigue*0.1;
-	this.totalTemperature -= (1-this.psychology.temperature)*0.1;
-	this.totalMorale -= this.psychology.runningProb*0.1;
-	if(this.totalFatigue > this.fatigueTreshold){
-		this.killOne("exhausted");
-		this.totalFatigue = 0;
-	}
-	if(this.totalTemperature < 0){
-		this.killOne("freeze");
-		this.totalTemperature = this.temperatureTreshold;
-	}
-	if(this.totalMorale < 0){
-			this.fleeOne();
-			this.totalMorale = this.moraleTreshold;
+    if(!this.psychologyStopped)
+		this.psychology.update(game.time.physicsElapsed);
+	
+	if(!this.effectsStopped){
+		this.totalFatigue += this.psychology.fatigue*0.1;
+		this.totalTemperature -= (1-this.psychology.temperature)*0.1;
+		this.totalMorale -= this.psychology.runningProb*0.1;
+		if(this.totalFatigue > this.fatigueTreshold){
+			this.killOne("exhausted");
+			this.totalFatigue = 0;
 		}
+		if(this.totalTemperature < 0){
+			this.killOne("freeze");
+			this.totalTemperature = this.temperatureTreshold;
+		}
+		if(this.totalMorale < 0){
+				this.fleeOne();
+				this.totalMorale = this.moraleTreshold;
+		}
+	}
     // tendence si udržovat odstup
     for(var i=0; i<this.length; i++){
         var child1 = this.children[i];
@@ -111,4 +117,14 @@ March.prototype.killOne = function(how) { // kill, freeze, exhausted
 
 March.prototype.fleeOne = function() {
     this.getRandom().flee()
+};
+
+March.prototype.startEffects = function(){
+	this.effectsStopped = false;
+	this.psychologyStopped = false;
+};
+
+March.prototype.stopEffects = function(){
+	this.effectsStopped = true;
+	this.psychologyStopped = true;
 };
