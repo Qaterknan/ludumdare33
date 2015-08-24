@@ -119,6 +119,9 @@ March.prototype.update = function() {
 		if(!this.inDestination){
 			endGame.call(game);
 		}
+		if(game.guard.position.x >= game.finalGate.position.x + 350){
+			game.guard.speed = 0;
+		}
 	}
 };
 
