@@ -300,9 +300,10 @@ PhaserGame.prototype = {
         game.guard.z = 4;
         enviroment.z = 5;
         gate.z = 6;
-        snow.z = 7;
-        this.gui.z = 8;
-		this.startGroup.z = 9;
+        game.finalGate.z = 7;
+        snow.z = 8;
+        this.gui.z = 9;
+		this.startGroup.z = 10;
         game.world.sort();
     },
 
