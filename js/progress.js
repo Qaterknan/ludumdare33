@@ -2,7 +2,7 @@ function Progress(){
 	
 	this.prisonersTransported = 0;
 	
-	this.causalities = 0;
+	this.casualties = 0;
 	this.hypothermia = 0;
 	this.exhaustion = 0;
 	this.executions = 0;
@@ -22,7 +22,7 @@ function Progress(){
 	
 }
 Progress.prototype.updateDeath = function (how, left){
-	this.causalities++;
+	this.casualties++;
 	this.prisonersTransported--;
 	
 	if(how == "freeze")

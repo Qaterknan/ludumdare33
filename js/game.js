@@ -279,7 +279,7 @@ PhaserGame.prototype = {
         killButton.smoothed = false;
         debugGui.add(killButton);
 
-        debugGui.visible = true;
+        debugGui.visible = false;
 		
         this.datgui = new dat.GUI();
         this.datgui.add(game.march.psychology, "speed");
