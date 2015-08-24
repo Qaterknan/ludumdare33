@@ -116,7 +116,7 @@ PhaserGame.prototype = {
 		var _startGroup = this.startGroup;
 		var _gui = this.gui;
 		// Tlačítko start
-		var startButton = game.make.button(0, 200, "startback", function(){
+		var startButton = game.make.button(0, 200, "buttonBorder", function(){
             game.guard.setSpeed(2);
 			game.march.startEffects();
 			var tw1 = game.add.tween(_startGroup);
@@ -184,8 +184,8 @@ PhaserGame.prototype = {
         yard.smoothed = false;
         game.background.addChild(yard);
 
-        var gate = game.add.sprite(200, 240, "gate");
-        gate.anchor.set(0.5, 0.5)
+        var gate = game.add.sprite(400, 240, "gate");
+        gate.anchor.set(0.5, 0.5);
         gate.scale.set(2, 2);
         gate.smoothed = false;
         // groupy
