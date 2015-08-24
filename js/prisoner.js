@@ -115,7 +115,6 @@ Prisoner.prototype.die = function(how) {
 				game.march.psychology.walkKill();
 				game.progress.updateDeath("walkKill", game.march.children.length);
 			}
-            game.jukebox.playEffect("gunshot");
             this.blood.makeParticles("blood", 10, 40);
 			this.blood.start(true, 0, 0, 100);
             this.loadTexture("corpse");

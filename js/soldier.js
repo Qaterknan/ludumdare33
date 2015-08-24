@@ -32,6 +32,7 @@ Soldier.prototype.shoot = function(prisoner) {
             this.delay /= delayMult;
         }
         else if(this.frame == 4){
+            game.jukebox.playEffect("gunshot");
             if(_this.missedPrisoner){
                 _this.statusImage("missed");
             }
