@@ -24,6 +24,9 @@ var Diary = function (game, parent, x, y) {
         tween.easing(Phaser.Easing.Cubic.Out);
         tween.start();
     }
+	var onDown = function(){
+		game.progress.storyline[game.diary.story] = this.name;
+	}
 
     var answers = ["textA", "textB", "textC"];
     for(var i=0;i<answers.length;i++){
@@ -35,15 +38,19 @@ var Diary = function (game, parent, x, y) {
         answer.events.onInputOver.add(this.onOver, this);
         answer.events.onInputOut.add(onOut, answer);
         answer.events.onInputOut.add(this.onOut, this);
+		
+		answer.events.onInputDown.add(onDown, answer);
+		answer.name = answers[i][answers[i].length-1];
     }
 
     this.textStrings = [
         new Text(
-            "Musi jim byt jasne, co je ceka. Proc se proste neseberou a nezkusi nas premoct... Mame zbrane, ale mohli by alespon zemrit rychleji a se cti.",
-            "Jejich slabost jen dokazuje jak podradni jsou. Germani by se nenechali takhle zotrocit.",
-            "Nemaji uz zadnou vlastni vuli. Vytloukli jsme z nich posledni zbytky odporu uz pred dlouhou dobou.",
-            "Kez by to zkusili! Meli bychom to alespon rychleji za sebou a potlaceni vzpoury by nikdo nemohl odsoudit jako valecne zverstvo. "
-            )
+            "What am I still doing here? Russians are closing in...We should let prisoners go and get lost. Screw the doctrine. We are all in the same boat now.But orders are orders. We have to take them to the camp.",
+            "The Reich can still make use of them. And win the war.",
+            "Russians must not get them. Not after they have seen.",
+            "It will be easier and faster to put an end to this in the camp. Plus it's more economical."
+            ),
+		
     ];
     this.story = 0;
 

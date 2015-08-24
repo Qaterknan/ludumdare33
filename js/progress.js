@@ -20,6 +20,8 @@ function Progress(){
 	
 	this.finished = false;
 	
+	this.storyline = [];
+	
 }
 Progress.prototype.updateDeath = function (how, left){
 	this.casualties++;
