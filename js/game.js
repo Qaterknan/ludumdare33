@@ -73,7 +73,7 @@ PhaserGame.prototype = {
 
         var paper = game.make.sprite(game.width/2 - 150, 30, "paper");
         paper.anchor.set(0, 0);
-        var stats = game.make.text(20, 50,
+        var stats = game.make.text(40, 26,
             "transport summary\n\n"+
             "prisoners transported: 10\n"+
             "escapes: 2\n"+
@@ -86,7 +86,7 @@ PhaserGame.prototype = {
             , {
             font: "normal 16px/5px monacoregular"
         });
-        stats.lineSpacing = -6;
+        stats.lineSpacing = 0;
         stats.tint = 0x000000;
         paper.addChild(stats);
         var nextPage = game.make.button(paper.width/2, paper.height-50, "buttonBorder", function(){
@@ -112,7 +112,9 @@ PhaserGame.prototype = {
         });
         next.anchor.set(0.5, 0);
         nextPage.addChild(next);
-        paper.addChild(nextPage)
+        paper.addChild(nextPage);
+
+        // this.gui.addChild(paper);
 		
 		// Start menu
 		this.startGroup = game.add.group(game.world, "startGroup");
@@ -136,9 +138,11 @@ PhaserGame.prototype = {
 		startButton.name = "startButton";
 		this.startGroup.add(startButton);
 		// Nápis start
-		var startText = game.make.bitmapText(0,200, "typewriter", "Start", 24);
+		var startText = game.make.text(0,200, "Start", {
+            font: "normal 16px monacoregular"
+        });
 		startText.anchor.set(0.5);
-		startText.scale.set(2);
+		// startText.scale.set(2);
 		this.startGroup.add(startText);
 		// Tlumící tlačítko
 		var soundButton = game.make.button(0, 300, "sound", function(){
