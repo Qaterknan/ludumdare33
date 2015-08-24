@@ -139,8 +139,8 @@ var Diary = function (game, parent, x, y) {
             "Let's kill them right here, right now, the furnaces are still working. I did a good job!",
             "What have I done? What have we done... to you? I am guilty, we all are. God, I am so sorry!",
             "We will lock them in a barn. Let the Russians or the cold take them. I’m gonna be somewhere far away by then!",
-            "I’m not sure, I was just forced to carry out my orders. What else is there to do? My superiors are guilty!",
-            ),
+            "I’m not sure, I was just forced to carry out my orders. What else is there to do? My superiors are guilty!"
+            )
     ];
     this.story = 0;
 }
