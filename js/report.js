@@ -38,7 +38,7 @@ var Report = function (game, parent, x, y) {
     // nextPage.addChild(next);
     // paper.addChild(nextPage);
 
-    this.changeState("visible");
+    this.changeState("hidden");
 }
 
 Report.prototype = Object.create(Paper.prototype);
@@ -49,7 +49,8 @@ Report.prototype.onOver = function() {
 };
 
 Report.prototype.onOut = function() {
-    this.changeState("visible");
+	if(!game.march.inDestination)
+		this.changeState("visible");
 };
 
 Report.prototype.report = function(progress) {
