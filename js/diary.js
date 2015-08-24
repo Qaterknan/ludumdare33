@@ -6,7 +6,7 @@ var Diary = function (game, parent, x, y) {
         "visible": this.hiddenX - this.background.width*0.2,
         "out": this.hiddenX - this.background.width - 2
     };
-
+	
     this.background.events.onInputOver.add(this.onOver, this);
     this.background.events.onInputOut.add(this.onOut, this);
 
@@ -33,13 +33,13 @@ var Diary = function (game, parent, x, y) {
         }
     }
 	var onDown = function(){
-		game.progress.storyline[game.diary.story] = this.name;
+		game.progress.storyline[game.diary.story-1] = this.personality;
         game.diary.chosen(this);
         this.chosen = true;
         this.alpha = 1;
 	}
 
-    var answers = ["textA", "textB", "textC"];
+    var answers = ["textA", "textB", "textC", "textD"];
     for(var i=0;i<answers.length;i++){
         var answer = this.addText(answers[i]);
         answer.alpha = 0.4;
@@ -51,15 +51,17 @@ var Diary = function (game, parent, x, y) {
         answer.events.onInputOut.add(this.onOut, this);
 		
         answer.events.onInputDown.add(onDown, answer);
-		answer.name = answers[i][answers[i].length-1];
+		answer.code = answers[i][answers[i].length-1];
     }
-
+	// personalityKey - {"A" : "", "B" : "", "C" : "", "D" : ""}
     this.textStrings = [
         new Text(
             "What am I still doing here? Russians are closing in...We should let prisoners go and get lost. Screw the doctrine. We are all in the same boat now.But orders are orders. We have to take them to the camp.",
             "The Reich can still make use of them. And win the war.",
             "Russians must not get them. Not after they have seen.",
-            "It will be easier and faster to put an end to this in the camp. Plus it's more economical."
+            "It will be easier and faster to put an end to this in the camp. Plus it's more economical.",
+			"What happens in the camp is not my responsibility so I will actually keep my hands clean.",
+			{"A" : "N", "B" : "O", "C" : "Z", "D" : "D"}
             ),
         new Text(
             "I wonder why they do not try and kill us.",
@@ -76,7 +78,7 @@ Diary.prototype = Object.create(Paper.prototype);
 Diary.prototype.constructor = Diary;
 
 Diary.prototype.chosen = function(chosen) {
-    var answers = ["textA", "textB", "textC"];
+    var answers = ["textA", "textB", "textC", "textD"];
     for(var i=0;i<answers.length;i++){
         var answer = this.getText(answers[i]);
         if(answer != chosen){
@@ -133,13 +135,16 @@ Diary.prototype.changeQuestion = function(textobj) {
     var textA = this.getText("textA");
     var textB = this.getText("textB");
     var textC = this.getText("textC");
+    var textD = this.getText("textD");
     textA.disabled = textA.chosen = false;
     textB.disabled = textB.chosen = false;
     textC.disabled = textC.chosen = false;
+    textD.disabled = textD.chosen = false;
     textA.visible = true;
     textB.visible = true;
     textC.visible = true;
-    textA.alpha = textB.alpha = textC.alpha = 0.4;
+    textD.visible = true;
+    textA.alpha = textB.alpha = textC.alpha = textD.alpha = 0.4;
 
     text.text = textobj.monologue;
     textA.y = text.bottom;
@@ -148,6 +153,13 @@ Diary.prototype.changeQuestion = function(textobj) {
     textB.text = "2. " + textobj.b;
     textC.y = textB.bottom;
     textC.text = "3. " + textobj.c;
+	textD.y = textC.bottom;
+    textD.text = "4. " + textobj.d;
+	
+	textA.personality = textobj.personalityKey.A;
+	textB.personality = textobj.personalityKey.B;
+	textC.personality = textobj.personalityKey.C;
+	textD.personality = textobj.personalityKey.D;
 };
 
 Diary.prototype.showFate = function(fate) {
@@ -159,6 +171,7 @@ Diary.prototype.showFate = function(fate) {
     this.getText("textA").visible = false;
     this.getText("textB").visible = false;
     this.getText("textC").visible = false;
+    this.getText("textD").visible = false;
     this.changeState("out");
 
     this.nextPageButton.visible = true;
@@ -167,9 +180,12 @@ Diary.prototype.showFate = function(fate) {
         this.nextPageText.text = "end game";
 };
 
-function Text(monologue, a, b, c) {
+function Text(monologue, a, b, c, d, personalityKey) {
     this.monologue = monologue;
     this.a = a;
     this.b = b;
     this.c = c;
+	this.d = d;
+	
+	this.personalityKey = personalityKey;
 }
