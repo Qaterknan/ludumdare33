@@ -18,6 +18,8 @@ function Progress(){
 	this.escapes = 0;
 	this.missedPrisoners = 0;
 	
+	this.finished = false;
+	
 }
 Progress.prototype.updateDeath = function (how, left){
 	this.causalities++;
@@ -35,13 +37,13 @@ Progress.prototype.updateDeath = function (how, left){
 		this.runKill++;
 		this.executions++;
 	}
-	this.checkLeft(left);
+	// this.checkLeft(left);
 }
 Progress.prototype.updateEscape = function(missed, left){
 	this.escapes++;
 	this.missedPrisoners += missed ? 1 : 0;
 	this.prisonersTransported--;
-	this.checkLeft(left);
+	// this.checkLeft(left);
 }
 Progress.prototype.init = function (howMany){console.log("init");
 	this.prisonersTransported = howMany;
@@ -54,13 +56,13 @@ Progress.prototype.updateDistance = function(xposition){
 	this.daysElapsed = (this.timeFromStart - this.startTime)/60000;
 	this.distanceWalked = Math.round((xposition-400)*3);
 }
-Progress.prototype.checkLeft = function(l){
-	if(l == this.prisonersTransported)
-		return true;
-	else{
-		console.warn("Uniká nějaký druh smrti");
-	}
-}
+// Progress.prototype.checkLeft = function(l){
+// 	if(l == this.prisonersTransported)
+// 		return true;
+// 	else{
+// 		console.warn("Uniká nějaký druh smrti" + game.march.children.length + " "+ this.prisonersTransported);
+// 	}
+// }
 Progress.prototype.sendStats = function (){
 	$.ajax({
 		type : "POST",

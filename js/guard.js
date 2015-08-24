@@ -15,6 +15,8 @@ var Guard = function (game) {
 
     this.speed = 0.3;
 
+	this.inDestination = false;
+	
     // debug axes
     // var debugAxes = new Phaser.Graphics(game, 0, 0);
     // debugAxes.lineStyle(1, 0x00ff00, 1);
@@ -32,6 +34,16 @@ Guard.prototype.update = function() {
     // :(((
     this.__proto__.__proto__.update.call(this);
     this.x += this.speed;
+	
+	if(this.position.x  >= game.finalGate.position.x){
+		if(!this.inDestination){
+			game.camera.unfollow();
+			this.inDestination = true;
+		}
+		if(this.position.x - 350 >= game.finalGate.position.x){
+			this.speed = 0;
+		}
+	}
 };
 
 Guard.prototype.setSpeed = function(speedIndex) {
