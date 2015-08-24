@@ -11,7 +11,7 @@ var Order = function (game, parent, x, y) {
 				"Sturmbannführer Karl Wilhelm Florstedt";
 			game.order.changeState("out");
 			game.order.nextPageButton.onInputUp.removeAll();
-			game.order.nextPageButton.onInputUp.add(game.order.changeToPageThree, game.order);
+			game.order.nextPageButton.onInputUp.add(function(){game.order.changeState("hidden");game.startGame();}, game);
 		});
 	};
 	this.changeToPageThree = function (){
