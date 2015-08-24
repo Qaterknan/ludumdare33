@@ -43,10 +43,9 @@ preloadA.prototype = {
     game.load.image('missed', 'images/text4.png');
 
     game.load.audio('cough', 'sounds/cough.ogg');
-    game.load.audio('gunshot', 'sounds/gunshot.ogg');
+    game.load.audio('cough2', 'sounds/cough2.ogg');
+    game.load.audio('cough3', 'sounds/cough3.ogg');
     game.load.audio('gunshot2', 'sounds/gunshot2.ogg');
-    // game.load.audio('howling', 'sounds/howling.ogg');
-    game.load.audio('panting', 'sounds/panting.ogg');
     game.load.audio('twig', 'sounds/twig.ogg');
     game.load.audio('walkFast', 'sounds/walkFast.ogg');
     game.load.audio('walk1', 'sounds/walk1.ogg');
@@ -54,6 +53,9 @@ preloadA.prototype = {
     game.load.audio('wind1', 'sounds/wind1.ogg');
     game.load.audio('wind2', 'sounds/wind2.ogg');
     game.load.audio('wind3', 'sounds/wind3.ogg');
+
+    game.load.audio('tremble', 'sounds/tremble.ogg');
+    game.load.audio('writing', 'sounds/writing-short.ogg');
     },
     
     create : function() {
