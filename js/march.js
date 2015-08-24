@@ -81,12 +81,10 @@ March.prototype.update = function() {
 		this.totalMorale -= this.psychology.runningProb*0.1;
 		if(this.totalFatigue > this.fatigueTreshold){
 			this.killOne("exhausted");
-			game.progress.updateDeath("exhausted", this.children.length);
 			this.totalFatigue = 0;
 		}
 		if(this.totalTemperature < 0){
 			this.killOne("freeze");
-			game.progress.updateDeath("freeze", this.children.length);
 			this.totalTemperature = this.temperatureTreshold;
 		}
 		if(this.totalMorale < 0){
@@ -115,12 +113,17 @@ March.prototype.update = function() {
         }
     }
 	
+	// Check na ukončení hry
+	
 	if(this.position.x >= game.finalGate.position.x){
 		if(!this.inDestination){
-			endGame.call(game);
+			endGame.call(game, false);
 		}
-		if(game.guard.position.x >= game.finalGate.position.x + 350){
-			game.guard.speed = 0;
+	}
+	
+	if(this.children.length <= 0){
+		if(!this.inDestination){
+			endGame.call(game, true);
 		}
 	}
 };

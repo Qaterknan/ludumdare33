@@ -24,6 +24,8 @@ Prisoner.prototype.constructor = Prisoner;
 Prisoner.prototype.super = Person.prototype;
 
 Prisoner.prototype.onHover = function() {
+	if(game.march.inDestination)
+		return;
     this.circle.scale.set(1.5, 1.5);
     var tween = game.add.tween(this.circle.scale);
     tween.to({x : 1, y : 1}, 100);
@@ -36,7 +38,7 @@ Prisoner.prototype.update = function() {
     this.super.update.call(this);
     // select circle
     if(this.input.pointerOver()) {
-        this.circle.visible = this.alive;
+        this.circle.visible = this.alive && !game.march.inDestination;
     }
     else {
         this.circle.visible = false;
@@ -70,9 +72,10 @@ Prisoner.prototype.update = function() {
     
     // mazání mimo kameru
     if(!this.inCamera && (!this.alive || this.fleeing)){
-		if(this.fleeing){// Podařilo se mu utéct
+		if(this.fleeing){
+			// Podařilo se mu utéct
 			game.march.psychology.escape();
-			game.progress.updateEscape(this.aimedAt, this.children.length);
+			game.progress.updateEscape(this.aimedAt, game.march.children.length);
 		}
         this.destroy();
     }
@@ -80,6 +83,8 @@ Prisoner.prototype.update = function() {
 
 Prisoner.prototype.onClick = function(t, pointer) {
     if(this.alive){
+		if(game.march.inDestination)
+			return;
         var soldier = game.guard.getNearest(this.worldPosition);
         soldier.shoot(this);
 		this.aimedAt = true;
@@ -91,20 +96,21 @@ Prisoner.prototype.onShot = function(soldier) {
     this.die("kill");
     var angle = Phaser.Point.angle(this.worldPosition, soldier.worldPosition);
     this.rotation = angle;
-    if(this.fleeing){
-        game.march.psychology.runKill();
-		game.progress.updateDeath("runKill", game.march.children.length);
-        this.fleeing = false;
-    }
-    else {
-        game.march.psychology.walkKill();
-		game.progress.updateDeath("walkKill", game.march.children.length);
-    }
 };
 
 Prisoner.prototype.die = function(how) {
     if(this.alive){
 		if(how == "kill"){
+			// Efekty zabití
+			if(this.fleeing){
+				game.march.psychology.runKill();
+				game.progress.updateDeath("runKill", game.march.children.length);
+				this.fleeing = false;
+			}
+			else {
+				game.march.psychology.walkKill();
+				game.progress.updateDeath("walkKill", game.march.children.length);
+			}
             game.jukebox.playEffect("gunshot");
             this.blood.makeParticles("blood", 10, 40);
 			this.blood.start(true, 0, 0, 100);
@@ -113,9 +119,11 @@ Prisoner.prototype.die = function(how) {
 		}
 		else if(how == "freeze"){
 			this.loadTexture("frozen");
+			game.progress.updateDeath("freeze", game.march.children.length);
 			this.startText("freeze");
 		}
         else if(how == "exhausted"){
+			game.progress.updateDeath("exhausted", game.march.children.length);
 			this.loadTexture("frozen");
 			this.startText("exhausted");
 		}

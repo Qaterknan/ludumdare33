@@ -272,19 +272,12 @@ PhaserGame.prototype = {
         debugGui.add(fleeButton);
 
         var killButton = game.make.button(690, 200, "buttons", function(){
-            game.march.killOne();
+            game.march.getRandom().onClick();
             game.march.psychology.walkKill();
         }, this, 2, 2);
         killButton.scale.set(2);
         killButton.smoothed = false;
         debugGui.add(killButton);
-        
-        var pauseButton = game.make.button(650, 240, "buttons", function(){
-            game.march.psychology.timeForABreak();
-        }, this, 0, 0);
-        pauseButton.scale.set(2);
-        pauseButton.smoothed = false;
-        debugGui.add(pauseButton);
 
         debugGui.visible = false;
 		
@@ -353,10 +346,12 @@ $(document).ready(function(){
     });
 })
 
-function endGame(){
+function endGame(early){
+	this.progress.finished = !early;
 	this.progress.sendStats();
 	this.march.stopEffects();
-	this.camera.unfollow();
 	this.march.inDestination = true;
 	console.log("konec");
+	if(early)
+		game.guard.speed = 0;
 }

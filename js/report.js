@@ -42,7 +42,6 @@ var Report = function (game, parent, x, y) {
     nextPage.addChild(next);
     this.addChild(nextPage);
 
-    this.report({distanceWalked: 10})
     this.changeState("visible");
 }
 
@@ -59,8 +58,18 @@ Report.prototype.onOut = function() {
 
 Report.prototype.report = function(progress) {
     var text =
-        "prisoners transportation report" +
-        "distance walked: " + progress.distanceWalked + "m";
+        "prisoners transportation report\n" +
+        "distance walked: " + progress.distanceWalked + "m \n" +
+		"days elapsed: " + Math.round(progress.daysElapsed*10)/10+" days\n"+
+		"prisoners transported: "+ progress.prisonersTransported+ " \n"+
+		"casualties: " + progress.casualties+ " \n"+
+		"  -  hypothermia: " + progress.hypothermia+" \n"+
+		"  -  exhaustion: " + progress.exhaustion+" \n"+
+		"  -  executions: " + progress.executions+" \n"+
+		"       -  while walking: "+progress.walkKill+" \n"+
+		"       -  while running away: "+progress.runKill+" \n"+
+		"escapes: "+progress.escapes+" \n"+
+		"  -  missed shots: "+progress.missedPrisoners+" \n";
 
     this.getText("text").text = text;
 };
