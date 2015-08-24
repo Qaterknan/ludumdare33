@@ -366,7 +366,7 @@ $(document).ready(function(){
             tw2.start();
 
             // po x sekundách vyjede první deníkový zápis
-            game.time.events.add(5000, function(){
+            game.time.events.add(15000, function(){
                 game.diary.open();
             });
         };
