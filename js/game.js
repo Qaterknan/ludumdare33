@@ -71,50 +71,9 @@ PhaserGame.prototype = {
         game.distanceCounter.anchor.set(0.5, 0.5);
         this.gui.add(game.distanceCounter);
 
-        var paper = game.make.sprite(game.width/2 - 150, 30, "paper");
-        paper.anchor.set(0, 0);
-        var stats = game.make.text(40, 26,
-            "transport summary\n\n"+
-            "prisoners transported: 10\n"+
-            "escapes: 2\n"+
-            "casulties:\n"+
-            " - hypothermia: 6\n"+
-            " - exhaustion: 11\n"+
-            " - executions: 7\n\n"+
-            "distance walked: 18km\n"+
-            "days elapsed: 2 days\n"
-            , {
-            font: "normal 16px/5px monacoregular"
-        });
-        stats.lineSpacing = 0;
-        stats.tint = 0x000000;
-        paper.addChild(stats);
-        var nextPage = game.make.button(paper.width/2, paper.height-50, "buttonBorder", function(){
-            console.log("asdf");
-        });
-        nextPage.anchor.set(0.5, 1);
-        nextPage.tint = 0x000000;
-        nextPage.alpha = 0.4;
-        nextPage.onInputOver.add(function(){
-            var tween = game.add.tween(this);
-            tween.to({alpha : 1}, 300);
-            tween.easing(Phaser.Easing.Circular.In);
-            tween.start();
-        }, nextPage);
-        nextPage.onInputOut.add(function(){
-            var tween = game.add.tween(this);
-            tween.to({alpha : 0.4}, 300);
-            tween.easing(Phaser.Easing.Circular.Out);
-            tween.start();
-        }, nextPage);
-        var next = game.make.text(0, -nextPage.height+4, "next page", {
-            font: "normal 16px monacoregular"
-        });
-        next.anchor.set(0.5, 0);
-        nextPage.addChild(next);
-        paper.addChild(nextPage);
-
-        // this.gui.addChild(paper);
+        game.stage.disableVisibilityChange = true;
+        game.diary = new Diary(game, game.width, game.height/2 - 225);
+        this.gui.addChild(game.diary);
 		
 		// Start menu
 		this.startGroup = game.add.group(game.world, "startGroup");
@@ -161,8 +120,6 @@ PhaserGame.prototype = {
 		// Druhé gui v pozadí
 		this.gui.alpha = 0;
 		
-        // this.gui.add(paper);
-
         game.background = game.add.group(game.world, "background");
         this.snowBackground = game.make.tileSprite(0, 0, 400, 240, "snowBackground");
         this.snowBackground.fixedToCamera = true;
@@ -273,8 +230,9 @@ PhaserGame.prototype = {
 
         // debug gui
         var debugGui = game.add.group(this.gui, "debugGui");
+        debugGui.x = -600;
 
-        game.fpsCounter = game.make.text(0, 0, "fps: ", {
+        game.fpsCounter = game.make.text(600, 0, "fps: ", {
             font: "normal 32px monacoregular"
         });
         debugGui.add(game.fpsCounter);
