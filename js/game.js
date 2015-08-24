@@ -78,6 +78,7 @@ PhaserGame.prototype = {
         // game.stage.disableVisibilityChange = true;
         game.diary = new Diary(game, this.gui, game.width, game.height/2 - 225);
         game.report = new Report(game, this.gui, -332, game.height/2 - 225);
+        game.order = new Order(game, this.gui, -332, game.height/2 - 225);
 		// Start menu
 		this.startGroup = game.add.group(game.world, "startGroup");
         this.startGroup.fixedToCamera = true;
@@ -157,7 +158,7 @@ PhaserGame.prototype = {
         gate.anchor.set(0.5, 0.5);
         gate.scale.set(-2, 2);
         gate.smoothed = false;
-		game.finalGate = game.add.sprite(7000, 240, "gate");
+		game.finalGate = game.add.sprite(900, 240, "gate");
         game.finalGate.anchor.set(0.5, 0.5);
         game.finalGate.scale.set(2, 2);
         game.finalGate.smoothed = false;
@@ -357,6 +358,7 @@ $(document).ready(function(){
             tw1.start();
             tw1.onComplete.add(function(){
                 this.startGroup.visible=false;
+                // game.order.showCommand();
             }, this);
             tw2.start();
 
