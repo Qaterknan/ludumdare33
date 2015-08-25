@@ -40,9 +40,9 @@ function Fates () {
 
 Fates.prototype.chooseFate = function(progress) {
 	var fate;
-	if(progress.escapes >= 10){
+	if(progress.escapes - progress.missedPrisoners >= 7){
 		fate = this.fates["gameOver"];
-		fate.text = fate.text.replace("%n%", progress.escapes);
+		fate.text = fate.text.replace("%n%", progress.escapes-progress.missedPrisoners);
 	}
 	else {
 		var counts = [
