@@ -22,13 +22,13 @@ function Psychology(parent){
 	this.speedToEffort = 0.05;
 	this.speedToTemperature = 0.5;
 	
-	this.baseFreezing = 0.25;
+	this.baseFreezing = 0.20;
 	this.freezing = this.baseFreezing;
 	this.freezingToTemperature = 0.2;
 	
-	this.baseEffort = 0.05;
+	this.baseEffort = 0.02;
 	this.effort = this.baseEffort;
-	this.effortToFatigue = 0.5;
+	this.effortToFatigue = 0.3;
 	
 	this.isBreak = false;
 	this.baseToBreakEffort = 0.25;
