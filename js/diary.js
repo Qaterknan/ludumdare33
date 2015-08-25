@@ -6,6 +6,7 @@ var Diary = function (game, parent, x, y) {
         "visible": this.hiddenX - this.background.width*0.2,
         "out": this.hiddenX - this.background.width - 2
     };
+	
     this.background.events.onInputOver.add(this.onOver, this);
     this.background.events.onInputOut.add(this.onOut, this);
 
@@ -14,7 +15,6 @@ var Diary = function (game, parent, x, y) {
     this.nextPageButton.visible = false;
 
     var text = this.addText("text");
-	text.lineSpacing = -2;
 
     var onOver = function(){
         if(!this.disabled){
@@ -171,7 +171,7 @@ Diary.prototype.chosen = function(chosen) {
     }
     this.opened = false;
 
-    game.time.events.add(2000, this.open, this);
+    game.time.events.add(25000, this.open, this);
 };
 
 Diary.prototype.open = function() {
@@ -265,4 +265,31 @@ function Text(monologue, a, b, c, d, personalityKey) {
 	this.d = d;
 	
 	this.personalityKey = personalityKey;
+	
+	var shuffleArray = [
+		[this.a, this.personalityKey.A],
+		[this.b, this.personalityKey.B],
+		[this.c, this.personalityKey.C],
+		[this.d, this.personalityKey.D],
+	];
+	
+	var newArray = [];
+	var ni;
+	for(var i = 0; i < 4; i++){
+		ni = Math.round(Math.random()*(shuffleArray.length-1));
+		newArray[i] = shuffleArray[ni];
+		shuffleArray.splice(ni,1);
+	}
+	
+	this.a = newArray[0][0];
+	this.b = newArray[1][0];
+	this.c = newArray[2][0];
+	this.d = newArray[3][0];
+	
+	this.personalityKey = {
+		"A" : newArray[0][1],
+		"B" : newArray[1][1],
+		"C" : newArray[2][1],
+		"D" : newArray[3][1],
+	};
 }
