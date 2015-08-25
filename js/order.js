@@ -11,7 +11,6 @@ var Order = function (game, parent, x, y) {
 				"Punish attemts to escape, as success only encourages more such acts.\n\n"+
 				"Sturmbannfuhrer Karl Wilhelm Florstedt";
 			game.order.nextPageText.text = "start";
-			game.order.buttonsPreview.destroy();
 			game.order.changeState("out");
 			game.order.nextPageButton.onInputUp.removeAll();
 			game.order.nextPageButton.onInputUp.add(function(){game.order.changeState("hidden");game.startGame();}, game);
@@ -36,9 +35,8 @@ Order.prototype.constructor = Order;
 
 Order.prototype.showCommand = function() {
     this.getText("text").text = "\nHauptscharfuhrer Hans Heissemeyer!\n\n"+
-		"The enemy is entering your territory. "+
-		"March the prisoners to another camp speedily."+
-		"You can change pace by these buttons: ";
+		"This is an order! The enemy is entering your territory. "+
+		"Speedily march the prisoners to a camp 44 kilometres from you.";
         // "TRANSPORT ORDER \n"+
         // "Dear colonel, \n"+
 		// "you have been chosen for this important task. Take these prisoners to "+

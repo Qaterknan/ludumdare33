@@ -48,10 +48,10 @@ PhaserGame.prototype = {
             game.gameGui.children[id].setFrames(8+id, 4+id, 12+id);
 			game.gameGui.activeButton = id;
 		}
-		var buttPrew = new Phaser.Image(game, 70,250, "buttonsPreview", 0);
-		buttPrew.scale.set(3);
 		
         var pauseButton = game.make.button(400-60-16, 400, "buttons", function(){
+			if(!game.order.understood)
+				return;
             game.guard.setSpeed(0);
 			game.gameGui.changeActiveButton(0);
         }, this, 8, 0, 12);
@@ -60,7 +60,9 @@ PhaserGame.prototype = {
         game.gameGui.add(pauseButton);
 
         var speed1Button = game.make.button(400-20-16, 400, "buttons", function(){
-            game.guard.setSpeed(1);
+            if(!game.order.understood)
+				return;
+			game.guard.setSpeed(1);
 			game.gameGui.changeActiveButton(1);
         }, this, 9, 1, 13);
         speed1Button.scale.set(2);
@@ -68,7 +70,9 @@ PhaserGame.prototype = {
         game.gameGui.add(speed1Button);
 
         var speed2Button = game.make.button(400+20-16, 400, "buttons", function(){
-            game.guard.setSpeed(2);
+            if(!game.order.understood)
+				return;
+			game.guard.setSpeed(2);
 			game.gameGui.changeActiveButton(2);
         }, this, 10, 2, 14);
         speed2Button.scale.set(2);
@@ -76,7 +80,9 @@ PhaserGame.prototype = {
         game.gameGui.add(speed2Button);
 
         var speed3Button = game.make.button(400+60-16, 400, "buttons", function(){
-            game.guard.setSpeed(3);
+            if(!game.order.understood)
+				return;
+			game.guard.setSpeed(3);
 			game.gameGui.changeActiveButton(3);
         }, this, 11, 3, 15);
         speed3Button.scale.set(2);
@@ -97,8 +103,6 @@ PhaserGame.prototype = {
         game.report = new Report(game, this.gui, -332, game.height/2 - 225);
 		// Tutorial
         game.order = new Order(game, this.gui, -332, game.height/2 - 225);
-		game.order.addChild(buttPrew);
-		game.order.buttonsPreview = buttPrew;
 		// Start menu
 		this.startGroup = game.add.group(game.world, "startGroup");
         this.startGroup.fixedToCamera = true;
@@ -371,9 +375,9 @@ $(document).ready(function(){
 			// crossfade gui
             var tw1 = game.add.tween(this.startGroup);
             tw1.to({ alpha : 0 }, 2000);
-            var tw2 = game.add.tween(this.gui);
-            tw2.to({ alpha : 1 }, 2000);
-            tw1.start();
+			var tw2 = game.add.tween(this.gui);
+            tw2.to({ alpha : 1 }, 500);
+			tw1.start();
 			tw2.start();
             tw1.onComplete.add(function(){
                 this.startGroup.visible=false;
@@ -387,6 +391,7 @@ $(document).ready(function(){
             game.march.startEffects();
             game.progress.init(game.march.children.length);
 			game.order.changeState("hidden");
+			game.order.understood = true;
             // po x sekundách vyjede první deníkový zápis
             game.time.events.add(15000, function(){
                 game.diary.open();
