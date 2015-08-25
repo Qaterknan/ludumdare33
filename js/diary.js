@@ -59,7 +59,7 @@ var Diary = function (game, parent, x, y) {
 	// personalityKey - {"A" : "", "B" : "", "C" : "", "D" : ""}
     this.textStrings = [
         new Text(
-            "What am I still doing here? Russians are closing in...We should let prisoners go and get lost. Screw the doctrine. We are all in the same boat now.But orders are orders. We have to take them to the camp.",
+            "What am I still doing here? Russians are closing in...We should let prisoners go and get lost. But orders are orders. We have to take them to the camp.",
             "The Reich can still make use of them. And win the war.",
             "Russians must not get them. Not after they have seen.",
             "It will be easier and faster to put an end to this in the camp. Plus it's more economical.",
