@@ -23,6 +23,17 @@ function Progress(){
 	this.storyline = [];
 	
 }
+
+Progress.prototype.getStorylineCount = function(story) {
+	var count = 0;
+	for(var i=0; i<this.storyline.length; i++){
+		if(this.storyline[i] == story)
+			count++;
+	}
+
+	return count;
+};
+
 Progress.prototype.updateDeath = function (how, left){
 	this.casualties++;
 	this.prisonersTransported--;

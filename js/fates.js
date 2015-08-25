@@ -2,7 +2,7 @@ function Fates () {
 	this.fates = {
 		"gameOver": {
 			paper: "report",
-			text: "COMMANDER EVALUATION\nYou are hereby sentenced to death for neglecting your duties and collaboration with enemies of the state.",
+			text: "COMMANDER EVALUATION\nYou are hereby sentenced to death for neglecting your duties and collaboration with enemies of the state. Particularly, you let %n% prisoners deliberately escape.",
 		},
 
 		"NFate":{
@@ -39,7 +39,47 @@ function Fates () {
 }
 
 Fates.prototype.chooseFate = function(progress) {
-	return this.finalFate = this.fates["testFate"];
+	var fate;
+	if(progress.escapes >= 10){
+		fate = this.fates["gameOver"];
+		fate.text = fate.text.replace("%n%", progress.escapes);
+	}
+	else {
+		var counts = [
+			["N", progress.getStorylineCount("N")],
+			["O", progress.getStorylineCount("O")],
+			["Z", progress.getStorylineCount("Z")],
+			["D", progress.getStorylineCount("D")],
+			];
+		counts.sort(function(a, b) {return b[1] - a[1]});
+		var append = "";
+		if(2*progress.missedPrisoners >= this.escapes)
+			append = "+";
+
+		if(counts[0][1] > counts[1][1]){
+			var fateName = counts[0][0]+"Fate";
+			if(this.fates[fateName + append] !== undefined)
+				fateName = fateName + append;
+
+			fate = this.fates[fateName];
+		}
+		else {
+			var counts = [
+				["N", progress.runKill],
+				["O", progress.hypothermia],
+				["Z", progress.exhaustion],
+				["D", progress.walkKill * 2],
+				];
+			counts.sort(function(a, b) {return b[1] - a[1]});
+			var fateName = counts[0][0]+"Fate";
+			if(this.fates[fateName + append] !== undefined)
+				fateName = fateName + append;
+
+			fate = this.fates[fateName];
+		}
+	}
+
+	return this.finalFate = fate;
 };
 
 Fates.prototype.getFate = function(progress) {
