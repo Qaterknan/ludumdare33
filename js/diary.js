@@ -1,5 +1,5 @@
 var Diary = function (game, parent, x, y) {
-    Paper.call(this, game, parent, x, y, "paper");
+    Paper.call(this, game, parent, x, y, "paper_cri");
 
     this.states = {
         "hidden": this.hiddenX,
@@ -34,6 +34,9 @@ var Diary = function (game, parent, x, y) {
     }
 	var onDown = function(){
 		game.progress.storyline[game.diary.story-1] = this.personality;
+		if(this.personality == "O" && game.diary.story == 7){
+			game.march.fleeOne();
+		}
         game.diary.chosen(this);
         this.chosen = true;
         this.alpha = 1;

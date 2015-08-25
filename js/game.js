@@ -48,6 +48,8 @@ PhaserGame.prototype = {
             game.gameGui.children[id].setFrames(8+id, 4+id, 12+id);
 			game.gameGui.activeButton = id;
 		}
+		var buttPrew = new Phaser.Image(game, 70,250, "buttonsPreview", 0);
+		buttPrew.scale.set(3);
 		
         var pauseButton = game.make.button(400-60-16, 400, "buttons", function(){
             game.guard.setSpeed(0);
@@ -95,6 +97,8 @@ PhaserGame.prototype = {
         game.report = new Report(game, this.gui, -332, game.height/2 - 225);
 		// Tutorial
         game.order = new Order(game, this.gui, -332, game.height/2 - 225);
+		game.order.addChild(buttPrew);
+		game.order.buttonsPreview = buttPrew;
 		// Start menu
 		this.startGroup = game.add.group(game.world, "startGroup");
         this.startGroup.fixedToCamera = true;

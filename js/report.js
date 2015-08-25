@@ -1,5 +1,6 @@
-var Report = function (game, parent, x, y) {
-    Paper.call(this, game, parent, x, y, "paper2");
+var Report = function (game, parent, x, y, key) {
+	var keyz = key === undefined ? "paper2" : key;
+    Paper.call(this, game, parent, x, y, keyz);
 
     this.states = {
         "hidden": this.hiddenX,

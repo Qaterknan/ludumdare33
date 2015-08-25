@@ -21,10 +21,13 @@ preloadA.prototype = {
     game.load.image('footstep','images/footstep.png');
     game.load.image('paper','images/paper.png');
     game.load.image('paper2','images/paper2.png');
+    game.load.image('paper3','images/paper3.png');
+    game.load.image('paper_cri','images/paper_cri.png');
     game.load.image('buttonBorder','images/button-border.png');
     game.load.spritesheet('sound','images/sound.png', 16, 16);
     game.load.spritesheet('quality','images/quality.png', 16, 16);
     game.load.spritesheet('buttons','images/buttons.png', 16, 16);
+    game.load.spritesheet('buttonsPreview','images/buttons.png', 64, 16);
     
     game.load.spritesheet('general', 'images/u.png', 10, 10);
     game.load.spritesheet('generalShoot', 'images/shoot.png', 30, 10);
