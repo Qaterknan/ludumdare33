@@ -36,7 +36,7 @@ Order.prototype.constructor = Order;
 Order.prototype.showCommand = function() {
     this.getText("text").text = "\nHauptscharfuhrer Hans Heissemeyer!\n\n"+
 		"This is an order! The enemy is entering your territory. "+
-		"Speedily march the prisoners to a camp 44 kilometres from you.";
+		"Speedily march the prisoners to a camp 44 kilometres away from you.";
         // "TRANSPORT ORDER \n"+
         // "Dear colonel, \n"+
 		// "you have been chosen for this important task. Take these prisoners to "+
