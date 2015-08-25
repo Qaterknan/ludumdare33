@@ -6,7 +6,6 @@ var Diary = function (game, parent, x, y) {
         "visible": this.hiddenX - this.background.width*0.2,
         "out": this.hiddenX - this.background.width - 2
     };
-	this.getText("text").lineSpacing = -1;
     this.background.events.onInputOver.add(this.onOver, this);
     this.background.events.onInputOut.add(this.onOut, this);
 
@@ -15,6 +14,7 @@ var Diary = function (game, parent, x, y) {
     this.nextPageButton.visible = false;
 
     var text = this.addText("text");
+	text.lineSpacing = -1;
 
     var onOver = function(){
         if(!this.disabled){
