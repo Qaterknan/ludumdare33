@@ -14,7 +14,7 @@ var Diary = function (game, parent, x, y) {
     this.nextPageButton.visible = false;
 
     var text = this.addText("text");
-	text.lineSpacing = -1;
+	text.lineSpacing = -2;
 
     var onOver = function(){
         if(!this.disabled){

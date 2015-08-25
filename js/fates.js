@@ -2,7 +2,7 @@ function Fates () {
 	this.fates = {
 		"gameOver": {
 			paper: "report",
-			text: "COMMANDER EVALUATION\nYou are hereby sentenced to death for neglecting your duties and collaboration with enemies of the state. Particularly, you let %n% prisoners deliberately escape.",
+			text: "COMMANDER EVALUATION\nYou are hereby sentenced to death for neglecting your duties and collaboration with enemies of the state. Namely, you let %n% prisoners deliberately escape.",
 		},
 
 		"NFate":{
