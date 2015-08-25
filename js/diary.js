@@ -14,7 +14,8 @@ var Diary = function (game, parent, x, y) {
     this.nextPageButton.visible = false;
 
     var text = this.addText("text");
-	text.lineSpacing = -2;
+    this.lineSpacing = -2;
+	text.lineSpacing = this.lineSpacing;
 
     var onOver = function(){
         if(!this.disabled){
@@ -46,6 +47,7 @@ var Diary = function (game, parent, x, y) {
     for(var i=0;i<answers.length;i++){
         var answer = this.addText(answers[i]);
         answer.alpha = 0.4;
+        answer.lineSpacing = this.lineSpacing;
         answer.inputEnabled = true;
         answer.input.useHandCursor = true;
         answer.events.onInputOver.add(onOver, answer);
@@ -171,7 +173,7 @@ Diary.prototype.chosen = function(chosen) {
     }
     this.opened = false;
 
-    game.time.events.add(2000, this.open, this);
+    game.time.events.add(15000, this.open, this);
 };
 
 Diary.prototype.open = function() {
@@ -200,6 +202,13 @@ Diary.prototype.onOut = function() {
 
 Diary.prototype.nextQuestion = function() {
     if(this.story < this.textStrings.length){
+        if(this.story == 10){
+            this.getText("text").lineSpacing =  -8;
+            this.getText("textA").lineSpacing = -8;
+            this.getText("textB").lineSpacing = -8;
+            this.getText("textC").lineSpacing = -8;
+            this.getText("textD").lineSpacing = -8;
+        }
         this.changeQuestion(this.textStrings[this.story]);
         this.story++;
         return true;
@@ -245,6 +254,7 @@ Diary.prototype.showFate = function(fate) {
     this.background.events.onInputOut.removeAll();
 
     this.getText("text").text = fate.text;
+    this.getText("text").lineSpacing  = 0;
     this.getText("textA").visible = false;
     this.getText("textB").visible = false;
     this.getText("textC").visible = false;
