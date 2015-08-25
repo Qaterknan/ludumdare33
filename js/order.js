@@ -34,7 +34,7 @@ Order.prototype = Object.create(Report.prototype);
 Order.prototype.constructor = Order;
 
 Order.prototype.showCommand = function() {
-    this.getText("text").text = "\nHauptscharfuhrer Hans Heissemeyer!\n\n"+
+    this.getText("text").text = "\nHauptscharfuhrer Hans Gaertner!\n\n"+
 		"This is an order! The enemy is entering your territory. "+
 		"Speedily march the prisoners to a camp 44 kilometres away from you.";
         // "TRANSPORT ORDER \n"+
