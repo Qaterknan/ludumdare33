@@ -111,7 +111,7 @@ PhaserGame.prototype = {
 		startButton.name = "startButton";
 		this.startGroup.add(startButton);
 		// Nápis start
-		var startText = game.make.text(game.width/2,204, "Start", {
+		var startText = game.make.text(game.width/2,204, "start", {
             font: "normal 32px monacoregular"
         });
 		startText.anchor.set(0.5, 0.5);
