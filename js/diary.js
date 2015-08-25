@@ -1,5 +1,5 @@
 var Diary = function (game, parent, x, y) {
-    Paper.call(this, game, parent, x, y, "paper");
+    Paper.call(this, game, parent, x, y, "paper_cri");
 
     this.states = {
         "hidden": this.hiddenX,
